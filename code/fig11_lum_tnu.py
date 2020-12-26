@@ -306,5 +306,5 @@ plt.tight_layout()
 
 
      
-#plt.show()
-plt.savefig("lum_tnu.eps", dpi=300)
+plt.show()
+#plt.savefig("lum_tnu.eps", dpi=300)

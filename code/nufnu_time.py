@@ -98,9 +98,9 @@ def koala(ax, col, legend):
     ax.errorbar(dt/(1.2714), f, 0.0006*f, c='black', fmt='*', ms=10)
     ax.plot(dt/(1.2714), f, c='black', lw=2)
     ax.text(
-            60, 1.2E40, "ZTF18abvkwla",
-            fontsize=11, horizontalalignment='center',
-            verticalalignment='bottom')
+            dt[-1]*1.5, f[-1]/1.5, "ZTF18abvkwla",
+            fontsize=10, horizontalalignment='center',
+            verticalalignment='top')
 
 
 def at2018cow(ax, col, legend):
@@ -138,15 +138,15 @@ def at2018cow(ax, col, legend):
     eflux = np.sqrt(eflux_sys**2 + eflux_form**2)
     choose = freq == 9
 
-    # add the Margutti point
-    x = np.hstack((days[choose], 83.51))
-    y = np.hstack((flux[choose], 9.1)) * nu
+
+    # add the Margutti point and the Bietenholz point
+    margutti_x = np.array([84,287])
+    margutti_y = np.array([6E28, 3.2E26])/(4*np.pi*d**2)/1E-23/1E-3
+    x = np.hstack((days[choose], margutti_x))
+    y = np.hstack((flux[choose], margutti_y)) * nu
     lum = plot_line(
-            ax[1], d, x, y,
+            axarr[1], d, x, y,
             'AT2018cow', None, col, legend, zorder=10)
-    ax[1].text(x[-1], lum[-1]*1.2, 'AT2018cow', fontsize=11,
-            verticalalignment='bottom',
-            horizontalalignment='center')
 
 
 def maxi(ax):
@@ -260,9 +260,9 @@ def sn2003L(ax, col, legend):
     lum = plot_line(
             ax[1], d, dt[choose], 1E-3*f[choose]*nu_plt, 
             'SN2003L', 'SN', col, legend)
-    ax[1].text(dt[choose][-1]/1.05, lum[-1], 'SN2003L', fontsize=11,
-            verticalalignment='center',
-            horizontalalignment='left')
+    #ax[1].text(dt[choose][-1]/1.05, lum[-1], 'SN2003L', fontsize=11,
+    #        verticalalignment='center',
+    #        horizontalalignment='left')
     
 
 def sn1979c(ax, col, legend):
@@ -484,9 +484,9 @@ def sn2003bg(ax, col, legend):
                 14.61, 14.49, 14.16, 13.25, 13.08, 10.04, 8.92,
                 6.23, 6.18, 4.62, 3.93, 4.69, 4.48])
     lum = plot_line(ax[1], d, t, nu*f, 'SN2003bg', 'SN', col, legend)
-    ax[1].text(t[0]/1.05, lum[0], 'SN2003bg', fontsize=11,
-            verticalalignment='center',
-            horizontalalignment='right')
+    #ax[1].text(t[0]/1.05, lum[0], 'SN2003bg', fontsize=11,
+    #        verticalalignment='center',
+    #        horizontalalignment='right')
 
 
 def sn2009bb(ax, col, legend):
@@ -530,6 +530,25 @@ def sn1998bw(ax, col, legend):
     ax[1].text(t[0]/1.05, lum[0], '1998bw', fontsize=11,
             verticalalignment='center',
             horizontalalignment='right')
+
+
+def css(ax, col, legend):
+    """ 6 GHz light curve """
+    d = Planck15.luminosity_distance(z=0.034).cgs.value
+
+    # low frequency
+    nu = 6E9
+
+    # add the points from Deanne's paper
+    x = np.array([69, 99, 162, 357])
+    y = np.array([4.5, 6.1, 2.3, 0.07])*nu*1E-3*1E-23*4*np.pi*d**2
+
+    ax.errorbar(x/(1.034), y, 0.0006*y, c='black', fmt='*', ms=10)
+    ax.plot(x/(1.034), y, c='black', lw=2)
+    ax.text(
+            x[-1]*1.9, y[-1]/1.3, "CSS161010",
+            fontsize=11, horizontalalignment='center',
+            verticalalignment='top')
 
 
 def othersn(ax):
@@ -594,9 +613,9 @@ if __name__=="__main__":
     # second NOEMA obs was Nov 3
     # third NOEMA obs was Nov 10
     dcm = Planck15.luminosity_distance(z=0.2442).cgs.value
-    dt = [17,24,31,39]
-    fnu = np.array([305,648,1030,868])
-    efnu = np.array([57,44,44,46])
+    dt = [17,24,31,39,46]
+    fnu = np.array([305,648,1030,868,558])
+    efnu = np.array([57,44,44,46,38])
     lum = fnu * 1E-6 * 1E-23 * 4 * np.pi * dcm**2 * 94.245E9 
     elum = efnu * 1E-6 * 1E-23 * 4 * np.pi * dcm**2 * 94.245E9
     axarr[0].errorbar(
@@ -606,11 +625,11 @@ if __name__=="__main__":
             dt[-1]*1.2, lum[-1], 'AT2020xnd', color='Crimson', fontsize=16)
 
     # the first VLA observation was Oct 23
-    dt = [13]
-    fnu = np.array([21])
-    efnu = np.array([5])
-    lum = fnu * 1E-6 * 1E-23 * 4 * np.pi * dcm**2 * 10E9
-    elum = efnu * 1E-6 * 1E-23 * 4 * np.pi * dcm**2 * 10E9
+    dt = [13, 25, 36, 51]
+    fnu = np.array([21, 57, 80, 154])
+    efnu = np.array([5, 5, 5, 5])
+    lum = fnu * 1E-6 * 1E-23 * 4 * np.pi * dcm**2 * 8E9
+    elum = efnu * 1E-6 * 1E-23 * 4 * np.pi * dcm**2 * 8E9
     axarr[1].errorbar(
             dt, lum, yerr=elum, fmt='D-', mec='k', c='Crimson',
             mfc='Crimson', zorder=20, ms=6)
@@ -620,6 +639,9 @@ if __name__=="__main__":
 
     # Koala
     koala(axarr[1], 'k', None)
+
+    # CSS transient
+    css(axarr[1], 'k', None)
 
     axarr[0].set_ylabel(
             r"Luminosity $\nu L_{\nu}$ [erg s$^{-1}$]", 

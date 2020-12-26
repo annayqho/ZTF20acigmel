@@ -24,8 +24,8 @@ def get_data_all():
         "%s/radio_lc.dat" %data_dir, delimiter="&", format='ascii.no_header')
     days = np.array(dat['col1'])
     tel = np.array(dat['col2'])
-    freq = np.array(dat['col5']).astype(float)
-    flux_raw = np.array(dat['col6'])
+    freq = np.array(dat['col4']).astype(float)
+    flux_raw = np.array(dat['col5'])
     flux = np.zeros(len(flux_raw))
     eflux_form = np.zeros(len(flux_raw))
     eflux_sys = np.zeros(len(flux_raw))
@@ -60,23 +60,16 @@ def get_spectrum(day):
     """ 
     Get full for a specific day
     For each frequency band, you will have to interpolate.
-    You're also allowed to extrapolate if you're at lower frequencies,
-    since the self-absorbed parts are well-behaved.
-
-    For the SMA data, scale the data according to variation
-    in the reference quasar.
     """
+
     # First, get *all* of the data
-    tel, freq, days, flux, eflux_form, eflux_sys = get_data_all()
+    islim, tel, freq, days, flux, eflux_form, eflux_sys = get_data_all()
     print(day)
-    # Don't generate eflux_tot here,
+
+    # Don't generate eflux_tot yet,
     # because the right thing to do depends on the telescope
 
     # The way we interpolate depends on the telescope.
-    # For ATCA data, you can assume that the data is rising as a power law
-    # in log-log space.
-    # The frequencies are 5.5, 9, 16.7, 21.2, and 34 GHz.
-    # ignore upper limits
     choose_tel = np.logical_and(tel == 'ATCA', eflux_form > 0)
     ufreq = np.unique(freq[choose_tel])
     nus = [] # which frequencies to keep
