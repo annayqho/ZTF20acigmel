@@ -37,11 +37,13 @@ def plot_radio(ax):
             ha='right')
 
     # Plot the ATCA 34 GHz LC
-    choose = np.logical_and(freq==27.3, islim==False)
+    # also use VLA 33 GHz
+    choose = np.logical_and(
+            np.logical_or(freq==27.3,freq==26.5), islim==False)
     ax.errorbar(
             days[choose]/(1+z), flux[choose], 
             yerr=np.sqrt(eflux_form[choose]**2+eflux_sys[choose]**2), 
-            fmt='D', c='orange', label='ATCA 34 GHz', ms=10)
+            fmt='D', c='orange', label='ATCA/VLA 34 GHz', ms=10)
 
     choose = np.logical_and(freq==27.3, islim==True)
     ax.scatter(days[choose][0]/(1+z), flux[choose][0], marker='_', c='orange', s=ms*10)
@@ -84,7 +86,7 @@ plot_xray(axarr[1])
 ax = axarr[0]
 ax.set_ylabel("$f_{\\nu}$ [mJy]", fontsize=large)
 ax.set_ylim(0.015,1.2)
-ax.set_xlim(11,75)
+ax.set_xlim(11,150)
 ax.set_xscale('log')
 ax.set_yscale('log')
 ax.set_yticks([0.1, 1, 0.05])
@@ -93,7 +95,7 @@ ax.legend(loc='lower right', fontsize=medium)
 ax.minorticks_off()
 
 #ax.axvline(x=65)
-#ax.axvline(x=90)
+ax.axvline(x=130/1.2442)
 
 ax = axarr[1]
 ax.set_xlabel("Rest-frame days since $t_0$", fontsize=large)
@@ -112,5 +114,5 @@ for ax in axarr:
 
 # Display
 plt.tight_layout()
-plt.show()
-#plt.savefig("radio_lc.png", dpi=300)
+#plt.show()
+plt.savefig("radio_lc.png", dpi=300)

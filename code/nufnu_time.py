@@ -330,9 +330,10 @@ def sn2011dh(ax, col, legend):
     """
     d = 2.5E25
 
+    dt, nu, f, ef, islim = read_2011dh()
+
     # HIGH FREQUENCY
     # use two freq: 107E9 and 93E9
-    dt, nu, f, ef, islim = read_2011dh()
     choose = np.logical_and(~islim, np.logical_or(nu==107E9, nu==93E9))
     lum = plot_line(
             ax[0], d, dt[choose], nu[choose]*f[choose], 
@@ -625,9 +626,9 @@ if __name__=="__main__":
             dt[-1]*1.2, lum[-1], 'AT2020xnd', color='Crimson', fontsize=16)
 
     # the first VLA observation was Oct 23
-    dt = [13, 25, 36, 51]
-    fnu = np.array([21, 57, 80, 154])
-    efnu = np.array([5, 5, 5, 5])
+    dt = [13, 25, 36, 51, 71, 94]
+    fnu = np.array([21, 57, 80, 154, 158, 174])
+    efnu = np.array([5, 5, 5, 5, 9, 10])
     lum = fnu * 1E-6 * 1E-23 * 4 * np.pi * dcm**2 * 8E9
     elum = efnu * 1E-6 * 1E-23 * 4 * np.pi * dcm**2 * 8E9
     axarr[1].errorbar(

@@ -228,14 +228,25 @@ def lumtnu(ax):
             x1, y1, marker='*', s=300, 
             facecolors='Crimson', edgecolors='Crimson')
     ax.text(
-            x1/1.2, y1, "AT2020xnd", fontsize=bigsize, 
+            x1/1.2, y1, "AT2020xnd", fontsize=medsize, 
             verticalalignment='center',
             horizontalalignment='right', color='Crimson')
     ax.text(
             x1, y1/1.2, "$\Delta t$=22d", fontsize=10, 
             verticalalignment='top',
             horizontalalignment='left')
-     
+
+    x2 = 94*16/5
+    y2 = 6E29
+    ax.scatter(
+            x2, y2, marker='*', s=100, 
+            facecolors='Crimson', edgecolors='Crimson')
+    ax.text(
+            x2/1.1, y2/1, "$\Delta t$=94d", fontsize=10,
+            verticalalignment='bottom',
+            horizontalalignment='right')
+    plt.arrow(x1,y1,x2-x1,y2-y1, color='Crimson', lw=2)
+
     # AT2018cow
     x1 = 22*100/5
     y1 = 4.4E29
@@ -243,14 +254,13 @@ def lumtnu(ax):
             x1, y1, marker='o', s=200, 
             facecolors='k', edgecolors='k')
     ax.text(
-            22*100/7, 5.5E29, "AT2018cow", fontsize=bigsize, 
+            22*100/7*1.2, 5.5E29, "AT2018cow", fontsize=medsize, 
             verticalalignment='bottom',
             horizontalalignment='left', color='k')
     ax.text(
             x1, y1/1.2, "$\Delta t$=22d", fontsize=10, 
             verticalalignment='top',
             horizontalalignment='left')
-
     x2 = 91*10/5
     y2 = 4.3E28
     ax.scatter(
@@ -306,5 +316,5 @@ plt.tight_layout()
 
 
      
-plt.show()
-#plt.savefig("lum_tnu.eps", dpi=300)
+#plt.show()
+plt.savefig("lum_tnu.eps", dpi=300)
