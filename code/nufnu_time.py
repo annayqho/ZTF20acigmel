@@ -626,9 +626,9 @@ if __name__=="__main__":
             dt[-1]*1.2, lum[-1], 'AT2020xnd', color='Crimson', fontsize=16)
 
     # the first VLA observation was Oct 23
-    dt = [13, 25, 36, 51, 71, 94]
-    fnu = np.array([21, 57, 80, 154, 158, 174])
-    efnu = np.array([5, 5, 5, 5, 9, 10])
+    dt = [13, 25, 36, 51, 71, 94, 131]
+    fnu = np.array([24, 57, 79, 154, 180, 168, 109])
+    efnu = np.array([6, 5, 10, 5, 23, 22, 10])
     lum = fnu * 1E-6 * 1E-23 * 4 * np.pi * dcm**2 * 8E9
     elum = efnu * 1E-6 * 1E-23 * 4 * np.pi * dcm**2 * 8E9
     axarr[1].errorbar(

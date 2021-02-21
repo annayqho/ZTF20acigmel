@@ -94,8 +94,7 @@ ax.get_yaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
 ax.legend(loc='lower right', fontsize=medium)
 ax.minorticks_off()
 
-#ax.axvline(x=65)
-ax.axvline(x=130/1.2442)
+#ax.axvline(x=124/1.2442)
 
 ax = axarr[1]
 ax.set_xlabel("Rest-frame days since $t_0$", fontsize=large)
