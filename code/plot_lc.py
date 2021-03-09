@@ -16,7 +16,7 @@ ms=10
 z = 0.2442
 
 # Initializing plot
-fig,axarr = plt.subplots(2,1,figsize=(6,8),gridspec_kw={'height_ratios': [2,1]}, sharex=True)
+fig,axarr = plt.subplots(2,5,figsize=(6,8))
 
 def plot_radio(ax):
     # Get radio data
@@ -63,27 +63,7 @@ def plot_radio(ax):
             fmt='s', c='purple', label='VLA 8 GHz', ms=10)
 
 
-def plot_xray(ax):
-    dt = np.array([25.8, 31.8, 47.1])/(1+z)
-    ymin = np.array([1.27, 0.67, 0.11])*10
-    ymax = np.array([0.96, 0.75, 0.17])*10
-    y = np.array([3.46, 2.79, 0.15])*10
-    ax.errorbar(dt, y, yerr=(-(y-ymin), ymax-y), c='k', fmt='o')
-
-    # Overplot the 18cow X-ray light curve
-    t0_offset = (Time('2018-06-19T10:34:30.742') - Time(58285, format='mjd')).value
-    dat = Table.read("../data/AT2018cow/swift_lc.txt", format='ascii')
-    t = dat['col1'].data / (3600*24) # in days
-    # count to flux conversion (absorbed): 4.26 × 10-11 erg cm-2 ct-1
-    flux = dat['col4'].data * 4.26 * 10**(-11)
-    eflux = dat['col5'].data * 4.26 * 10**(-11)
-    t_xray = (t-t[0])+3
-
-    ax.plot(t_xray, flux/1E-15/400, lw=0.5, c='k', label='AT2018cow')
-
-
 plot_radio(axarr[0])
-plot_xray(axarr[1])
 
 # Formatting
 ax = axarr[0]
