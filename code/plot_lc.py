@@ -38,16 +38,16 @@ def plot_panel(ax, choose):
             fmt='o-', c='k', ms=5)
 
 
-def plot_tpow(ax, choose, pow):
+def plot_tpow(ax, choose, pow, ind=1, tjust='right'):
     """ Plot line of t^2 """
     islim, tel, freq, days, flux, eflux = get_data_all()
 
-    xvals = np.linspace(10,100)
-    yvals = flux[choose][1]*(xvals/days[choose][1])**pow
+    xvals = np.linspace(10,200)
+    yvals = flux[choose][ind]*(xvals/days[choose][ind])**pow
     ax.plot(xvals/(1+z),yvals,c='k',lw=0.5,ls='--')
-    ax.text(days[choose][1]/(1+z), flux[choose][1], 
+    ax.text(days[choose][ind]/(1+z), flux[choose][ind], 
             '$f_\\nu \propto t^{%s}$' %pow, 
-            fontsize=medium, ha='right')
+            fontsize=small, ha=tjust, va='bottom')
 
 
  
@@ -67,6 +67,7 @@ if __name__=="__main__":
             0.95,0.12,'(NOEMA)',fontsize=medium,
             transform=ax.transAxes,ha='right', va='top')
     plot_tpow(ax, choose, 2)
+    plot_tpow(ax, choose, -3.5, 5, 'left')
 
     ax = axarr[0,1]
     choose = freq==79
@@ -78,6 +79,7 @@ if __name__=="__main__":
             0.95,0.12,'(NOEMA)',fontsize=medium,
             transform=ax.transAxes,ha='right', va='top')
     plot_tpow(ax, choose, 2)
+    plot_tpow(ax, choose, -3, 5, 'left')
 
     ax = axarr[0,2]
     choose = freq==36.2
@@ -88,7 +90,7 @@ if __name__=="__main__":
     ax.text(
             0.95,0.12,'(VLA)',fontsize=medium,
             transform=ax.transAxes,ha='right', va='top')
-
+    plot_tpow(ax, choose, -2.5, 2, 'left')
 
     ax = axarr[1,0]
     choose = np.logical_and(freq>26, freq<29)
@@ -97,6 +99,7 @@ if __name__=="__main__":
             0.05,0.12,'26/27 GHz (VLA/ATCA)',fontsize=medium,
             transform=ax.transAxes,ha='left', va='top')
     plot_tpow(ax, choose, 2.5)
+    plot_tpow(ax, choose, -4, 6, 'left')
 
     ax = axarr[1,1]
     choose = freq==17.7
@@ -104,6 +107,7 @@ if __name__=="__main__":
     ax.text(
             0.05, 0.12,'17.7 GHz (VLA)',fontsize=medium,
             transform=ax.transAxes,ha='left', va='top')
+    plot_tpow(ax, choose, -4, 1, 'left')
 
     ax = axarr[1,2]
     choose = freq==14.5
@@ -119,6 +123,7 @@ if __name__=="__main__":
             0.95, 0.12, '12 GHz (VLA)',fontsize=medium,
             transform=ax.transAxes,ha='right', va='top')
     plot_tpow(ax, choose, 2.5)
+    plot_tpow(ax, choose, -2.5, 3, 'left')
 
     ax = axarr[2,1]
     choose = freq==8
@@ -135,7 +140,6 @@ if __name__=="__main__":
             0.95, 0.12, '4 GHz (VLA)',fontsize=medium,
             transform=ax.transAxes,ha='right', va='top')
     plot_tpow(ax, choose, 1)
-
 
     # Formatting
     axarr[0,0].set_yscale('log')
