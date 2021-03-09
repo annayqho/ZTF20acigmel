@@ -16,8 +16,7 @@ def get_data_all():
     freq: freq of the data point
     days: day of the data point, from time of explosion
     flux: flux of the data point
-    eflux_form: formal uncertainty in flux of the data point
-    eflux_sys: estimate of systematic uncertainty in flux of the data point
+    eflux: estimate of uncertainty in flux of the data point
     """
     data_dir = "../data"
     dat = Table.read(
@@ -27,8 +26,7 @@ def get_data_all():
     freq = np.array(dat['col4']).astype(float)
     flux_raw = np.array(dat['col5'])
     flux = np.zeros(len(flux_raw))
-    eflux_form = np.zeros(len(flux_raw))
-    eflux_sys = np.zeros(len(flux_raw))
+    eflux= np.zeros(len(flux_raw))
     islim = np.zeros(len(flux_raw), dtype=bool)
 
     # Now, go through and get the appropriate uncertainties
@@ -40,20 +38,8 @@ def get_data_all():
             flux[ii] = float(val[2:].split('$')[0])
         else:
             flux[ii] = float(val.split("pm")[0][1:])
-            if tel[ii] == 'SMA':
-                # SMA points have formal uncertainties
-                eflux_form[ii] = float(val.split("pm")[1][0:-1])
-                # 10% systematic uncertainty
-                eflux_sys[ii] = 0.10*flux[ii]
-            elif tel[ii] == 'ATCA':
-                # ATCA points have both formal and systematic uncertainties
-                eflux_form[ii] = float(val.split("pm")[1][0:-1])
-                eflux_sys[ii] = 0.10*flux[ii]
-            elif tel[ii] == 'NOEMA':
-                # NOEMA points have just formal (??)
-                eflux_form[ii] = float(val.split("pm")[1][0:-1])
-                eflux_sys[ii] = 0 # placeholder
-    return islim, tel, freq, days, flux, eflux_form, eflux_sys 
+            eflux[ii] = float(val.split("pm")[1][0:-1])
+    return islim, tel, freq, days, flux, eflux
 
 
 def get_spectrum(day):

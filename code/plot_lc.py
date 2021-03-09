@@ -20,14 +20,13 @@ fig,axarr = plt.subplots(2,1,figsize=(6,8),gridspec_kw={'height_ratios': [2,1]},
 
 def plot_radio(ax):
     # Get radio data
-    islim, tel, freq, days, flux, eflux_form, eflux_sys = get_data_all()
+    islim, tel, freq, days, flux, eflux = get_data_all()
 
-    # Plot the NOEMA LC
+    # Plot the NOEMA LCs
     choose = freq==79
     ax.errorbar(
-            days[choose]/(1+z), flux[choose], 
-            yerr=np.sqrt(eflux_form[choose]**2+eflux_sys[choose]**2), 
-            fmt='o', c='k', label='NOEMA 100 GHz', ms=10)
+            days[choose]/(1+z), flux[choose], yerr=eflux[choose],
+            fmt='o', c='k', label='NOEMA 79 GHz', ms=10)
 
     # Plot line of t^2
     xvals = np.linspace(10,40)
@@ -41,8 +40,7 @@ def plot_radio(ax):
     choose = np.logical_and(
             np.logical_or(freq==27.3,freq==26.5), islim==False)
     ax.errorbar(
-            days[choose]/(1+z), flux[choose], 
-            yerr=np.sqrt(eflux_form[choose]**2+eflux_sys[choose]**2), 
+            days[choose]/(1+z), flux[choose], yerr=eflux[choose],
             fmt='D', c='orange', label='ATCA/VLA 34 GHz', ms=10)
 
     choose = np.logical_and(freq==27.3, islim==True)
@@ -52,20 +50,25 @@ def plot_radio(ax):
             length_includes_head=True, head_length=flux[choose][0]/10, 
             head_width=days[choose][0]/20, color='orange')
 
+    # Plot the VLA 17.7 GHz
+    choose = freq==17.7
+    ax.errorbar(
+            days[choose]/(1+z), flux[choose], yerr=eflux[choose],
+            fmt='o', c='red', label='VLA 17.7 GHz', ms=10)
+
     # Plot the VLA 10 GHz LC
     choose = np.logical_and(freq==8, islim==False)
     ax.errorbar(
-            days[choose]/(1+z), flux[choose], 
-            yerr=np.sqrt(eflux_form[choose]**2+eflux_sys[choose]**2), 
-            fmt='s', c='purple', label='VLA 10 GHz', ms=10)
+            days[choose]/(1+z), flux[choose], yerr=eflux[choose],
+            fmt='s', c='purple', label='VLA 8 GHz', ms=10)
 
 
 def plot_xray(ax):
-    dt = np.array([26, 32, 48])/(1+z)
-    ymin = np.array([0.93,0.71,0.01])
-    ymax = np.array([1.94,1.61,0.55])
-    y = np.array([1.37, 1.10, 0.26])
-    ax.errorbar(dt, y, yerr=(y-ymin, ymax-y), c='k', fmt='o')
+    dt = np.array([25.8, 31.8, 47.1])/(1+z)
+    ymin = np.array([1.27, 0.67, 0.11])*10
+    ymax = np.array([0.96, 0.75, 0.17])*10
+    y = np.array([3.46, 2.79, 0.15])*10
+    ax.errorbar(dt, y, yerr=(-(y-ymin), ymax-y), c='k', fmt='o')
 
     # Overplot the 18cow X-ray light curve
     t0_offset = (Time('2018-06-19T10:34:30.742') - Time(58285, format='mjd')).value
@@ -99,9 +102,9 @@ ax.minorticks_off()
 ax = axarr[1]
 ax.set_xlabel("Rest-frame days since $t_0$", fontsize=large)
 ax.set_ylabel("$10^{-15}$ erg cm$^{-2}$ s$^{-1}$", fontsize=large)
-ax.set_ylim(1E-1,40)
+ax.set_ylim(2E-1,65)
 ax.set_yscale('log')
-ax.set_yticks([0.1, 1, 10])
+ax.set_yticks([0.2, 1, 10])
 ax.set_xticks([15, 20, 30, 50, 70])
 ax.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
 ax.get_yaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
@@ -113,5 +116,5 @@ for ax in axarr:
 
 # Display
 plt.tight_layout()
-#plt.show()
-plt.savefig("radio_lc.png", dpi=300)
+plt.show()
+#plt.savefig("radio_lc.png", dpi=300)
