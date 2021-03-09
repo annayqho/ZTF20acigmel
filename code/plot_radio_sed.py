@@ -117,7 +117,10 @@ def day46(days, freq, flux, eflux, ax):
 
     # SMA upper limit
     choose = days==47
-    ax.arrow(freq[choose], flux[choose], 0, -flux[choose]/3, color='k')
+    ax.arrow(freq[choose][0], flux[choose][0], 
+            0, -flux[choose][0]/2, head_width=freq[choose][0]/6, 
+            length_includes_head=True, head_length=flux[choose][0]/5,
+            color='k')
 
     # Label
     ax.text(0.05,0.85,"$\Delta t$=46-51d", transform=ax.transAxes)
@@ -127,55 +130,19 @@ def day71(days, freq, flux, eflux, ax):
     """ 
     Just plot VLA
     """
-    day=71
-
-    # Plot the VLA LC
-    x = 8
-    choose = np.logical_and(days==day,freq==x)
-    ax.errorbar(x, flux[choose], eflux[choose], marker='o', c='k')
-
-    x = 12
-    choose = np.logical_and(days==day,freq==x)
-    ax.errorbar(x, flux[choose], eflux[choose], marker='o', c='k')
-
-    x = 17.7
-    choose = np.logical_and(days==day,freq==x)
-    ax.errorbar(x, flux[choose], eflux[choose], marker='o', c='k')
-
-    x = 26.5
-    choose = np.logical_and(days==day,freq==x)
-    ax.errorbar(x, flux[choose], eflux[choose], marker='o', c='k')
-
-    x = 36.2
-    choose = np.logical_and(days==day,freq==x)
-    ax.errorbar(x, flux[choose], eflux[choose], marker='o', c='k')
+    choose = np.logical_and(days>66, days<72)
+    ax.errorbar(freq[choose], flux[choose], eflux[choose], fmt='o', c='k')
 
     # Label
-    ax.text(0.05,0.85,"$\Delta t$=71d", transform=ax.transAxes)
+    ax.text(0.05,0.85,"$\Delta t$=67-71d", transform=ax.transAxes)
 
 
 def day94(days, freq, flux, eflux, ax):
     """ 
     Just plot VLA
     """
-    day=94
-
-    # Plot the VLA LC
-    x = 8
-    choose = np.logical_and(days==day,freq==x)
-    ax.errorbar(x, flux[choose], eflux[choose], marker='o', c='k')
-
-    x = 12
-    choose = np.logical_and(days==day,freq==x)
-    ax.errorbar(x, flux[choose], eflux[choose], marker='o', c='k')
-
-    x = 17.7
-    choose = np.logical_and(days==day,freq==x)
-    ax.errorbar(x, flux[choose], eflux[choose], marker='o', c='k')
-
-    x = 26.5
-    choose = np.logical_and(days==day,freq==x)
-    ax.errorbar(x, flux[choose], eflux[choose], marker='o', c='k')
+    choose = days==94
+    ax.errorbar(freq[choose], flux[choose], eflux[choose], fmt='o', c='k')
 
     # Label
     ax.text(0.05,0.85,"$\Delta t$=94d", transform=ax.transAxes)
@@ -185,30 +152,15 @@ def day131(days, freq, flux, eflux, ax):
     """ 
     Just plot VLA
     """
-    day=131
-
-    # Plot the VLA LC
-    x = 4
-    choose = np.logical_and(days==day,freq==x)
-    ax.errorbar(x, flux[choose], eflux[choose], marker='o', c='k')
-
-    x = 8
-    choose = np.logical_and(days==day,freq==x)
-    ax.errorbar(x, flux[choose], eflux[choose], marker='o', c='k')
-
-    x = 12
-    choose = np.logical_and(days==day,freq==x)
-    ax.errorbar(x, flux[choose], eflux[choose], marker='o', c='k')
-
-    x = 17.7
-    choose = np.logical_and(days==day,freq==x)
-    ax.errorbar(x, flux[choose], eflux[choose], marker='o', c='k')
-
-    ax.scatter(26.5, 0.048, marker='_', c='k')
-    ax.arrow(26.5, 0.048, 0, -0.015, head_length=0.005, length_includes_head=True, head_width=3, color='k')
+    choose = days==131
+    ax.errorbar(freq[choose], flux[choose], eflux[choose], fmt='o', c='k')
+    ax.arrow(freq[choose][-1], flux[choose][-1], 
+            0, -flux[choose][-1]/2, head_width=freq[choose][-1]/6,
+            length_includes_head=True, head_length=flux[choose][-1]/5,
+            color='k')
 
     # Label
-    ax.text(0.05,0.85,"$\Delta t$=94d", transform=ax.transAxes)
+    ax.text(0.05,0.85,"$\Delta t$=131d", transform=ax.transAxes)
 
 
 if __name__=="__main__":
@@ -219,9 +171,9 @@ if __name__=="__main__":
     day31(axarr[1,0])
     day36(axarr[1,1])
     day46(days, freq, flux, eflux, axarr[2,0])
-    #day71(days, freq, flux, eflux, axarr[2,0])
-    #day94(days, freq, flux, eflux, axarr[2,1])
-    #day131(days, freq, flux, eflux, axarr[3,0])
+    day71(days, freq, flux, eflux, axarr[2,1])
+    day94(days, freq, flux, eflux, axarr[3,0])
+    day131(days, freq, flux, eflux, axarr[3,1])
 
     # Formatting
     ax = axarr[0,0]
@@ -236,5 +188,5 @@ if __name__=="__main__":
 
     # Final formatting
     plt.tight_layout()
-    plt.show()
-    #plt.savefig("radio_sed_evolution.png", dpi=300)
+    #plt.show()
+    plt.savefig("radio_sed_evolution.png", dpi=300)
