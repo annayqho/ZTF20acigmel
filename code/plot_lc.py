@@ -16,18 +16,22 @@ ms=10
 z = 0.2442
 
 # Initializing plot
-fig,axarr = plt.subplots(2,5,figsize=(6,8))
+fig,axarr = plt.subplots(2,5,figsize=(10,4), sharex=True, sharey=True)
+
+
+def plot_all(ax):
+    """ Plot all of the frequencies as grey in the background """
+    islim, tel, freq, days, flux, eflux = get_data_all()
+    plot_freqs = np.unique(freq)
+    for plot_freq in plot_freqs:
+        choose = freq==plot_freq
+        ax.plot(days[choose]/(1+z), flux[choose], c='grey', alpha=0.3)
+
 
 def plot_panel(ax, choose_freq):
     """ Plot a single panel """
     islim, tel, freq, days, flux, eflux = get_data_all()
 
-    # Plot all of the frequencies as grey in the background
-    plot_freqs = np.unique(freq)
-
-    for plot_freq in plot_freqs:
-        choose = freq==plot_freq
-        ax.plot(days[choose]/(1+z), flux[choose], c='grey', alpha=0.3)
 
 #     # Plot the NOEMA LCs
 #     choose = freq==79
@@ -70,36 +74,39 @@ def plot_panel(ax, choose_freq):
 #             fmt='s', c='purple', label='VLA 8 GHz', ms=10)
 # 
 
-plot_panel(axarr[0], 8)
+for ax in axarr.flatten():
+    plot_all(ax)
 
 # Formatting
-ax = axarr[0]
-ax.set_ylabel("$f_{\\nu}$ [mJy]", fontsize=large)
-ax.set_ylim(0.015,1.2)
-ax.set_xlim(11,150)
-ax.set_xscale('log')
-ax.set_yscale('log')
-ax.set_yticks([0.1, 1, 0.05])
-ax.get_yaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
-ax.legend(loc='lower right', fontsize=medium)
-ax.minorticks_off()
+for ax in axarr[:,0]:
+    ax.set_ylabel("$f_{\\nu}$ [mJy]", fontsize=large)
+for ax in axarr[1,:]:
+    ax.set_xlabel("$\Delta t$ [d]", fontsize=large)
 
-#ax.axvline(x=124/1.2442)
-
-ax = axarr[1]
-ax.set_xlabel("Rest-frame days since $t_0$", fontsize=large)
-ax.set_ylabel("$10^{-15}$ erg cm$^{-2}$ s$^{-1}$", fontsize=large)
-ax.set_ylim(2E-1,65)
-ax.set_yscale('log')
-ax.set_yticks([0.2, 1, 10])
-ax.set_xticks([15, 20, 30, 50, 70])
-ax.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
-ax.get_yaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
-ax.legend(loc='upper right', fontsize=medium)
-ax.minorticks_off()
-
-for ax in axarr:
-    ax.tick_params(axis='both', labelsize=large)
+# ax.set_ylim(0.015,1.2)
+# ax.set_xlim(11,150)
+# ax.set_xscale('log')
+# ax.set_yscale('log')
+# ax.set_yticks([0.1, 1, 0.05])
+# ax.get_yaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
+# ax.legend(loc='lower right', fontsize=medium)
+# ax.minorticks_off()
+# 
+# #ax.axvline(x=124/1.2442)
+# 
+# ax = axarr[1]
+# ax.set_ylabel("$10^{-15}$ erg cm$^{-2}$ s$^{-1}$", fontsize=large)
+# ax.set_ylim(2E-1,65)
+# ax.set_yscale('log')
+# ax.set_yticks([0.2, 1, 10])
+# ax.set_xticks([15, 20, 30, 50, 70])
+# ax.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
+# ax.get_yaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
+# ax.legend(loc='upper right', fontsize=medium)
+# ax.minorticks_off()
+# 
+# for ax in axarr:
+#     ax.tick_params(axis='both', labelsize=large)
 
 # Display
 plt.tight_layout()
