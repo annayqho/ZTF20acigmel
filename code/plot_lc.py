@@ -18,52 +18,59 @@ z = 0.2442
 # Initializing plot
 fig,axarr = plt.subplots(2,5,figsize=(6,8))
 
-def plot_radio(ax):
-    # Get radio data
+def plot_panel(ax, choose_freq):
+    """ Plot a single panel """
     islim, tel, freq, days, flux, eflux = get_data_all()
 
-    # Plot the NOEMA LCs
-    choose = freq==79
-    ax.errorbar(
-            days[choose]/(1+z), flux[choose], yerr=eflux[choose],
-            fmt='o', c='k', label='NOEMA 79 GHz', ms=10)
+    # Plot all of the frequencies as grey in the background
+    plot_freqs = np.unique(freq)
 
-    # Plot line of t^2
-    xvals = np.linspace(10,40)
-    yvals = flux[choose][1]*(xvals/days[choose][1])**2
-    ax.plot(xvals/(1+z),yvals,c='k',lw=0.5,ls='--')
-    ax.text(17, 0.5, '$f_\\nu \propto t^2$', fontsize=large,
-            ha='right')
+    for plot_freq in plot_freqs:
+        choose = freq==plot_freq
+        ax.plot(days[choose]/(1+z), flux[choose], c='grey', alpha=0.3)
 
-    # Plot the ATCA 34 GHz LC
-    # also use VLA 33 GHz
-    choose = np.logical_and(
-            np.logical_or(freq==27.3,freq==26.5), islim==False)
-    ax.errorbar(
-            days[choose]/(1+z), flux[choose], yerr=eflux[choose],
-            fmt='D', c='orange', label='ATCA/VLA 34 GHz', ms=10)
+#     # Plot the NOEMA LCs
+#     choose = freq==79
+#     ax.errorbar(
+#             days[choose]/(1+z), flux[choose], yerr=eflux[choose],
+#             fmt='o', c='k', label='NOEMA 79 GHz', ms=10)
+# 
+#     # Plot line of t^2
+#     xvals = np.linspace(10,40)
+#     yvals = flux[choose][1]*(xvals/days[choose][1])**2
+#     ax.plot(xvals/(1+z),yvals,c='k',lw=0.5,ls='--')
+#     ax.text(17, 0.5, '$f_\\nu \propto t^2$', fontsize=large,
+#             ha='right')
+# 
+#     # Plot the ATCA 34 GHz LC
+#     # also use VLA 33 GHz
+#     choose = np.logical_and(
+#             np.logical_or(freq==27.3,freq==26.5), islim==False)
+#     ax.errorbar(
+#             days[choose]/(1+z), flux[choose], yerr=eflux[choose],
+#             fmt='D', c='orange', label='ATCA/VLA 34 GHz', ms=10)
+# 
+#     choose = np.logical_and(freq==27.3, islim==True)
+#     ax.scatter(days[choose][0]/(1+z), flux[choose][0], marker='_', c='orange', s=ms*10)
+#     ax.arrow(
+#             days[choose][0]/(1+z), flux[choose][0], 0, -flux[choose][0]/5, 
+#             length_includes_head=True, head_length=flux[choose][0]/10, 
+#             head_width=days[choose][0]/20, color='orange')
+# 
+#     # Plot the VLA 17.7 GHz
+#     choose = freq==17.7
+#     ax.errorbar(
+#             days[choose]/(1+z), flux[choose], yerr=eflux[choose],
+#             fmt='o', c='red', label='VLA 17.7 GHz', ms=10)
+# 
+#     # Plot the VLA 10 GHz LC
+#     choose = np.logical_and(freq==8, islim==False)
+#     ax.errorbar(
+#             days[choose]/(1+z), flux[choose], yerr=eflux[choose],
+#             fmt='s', c='purple', label='VLA 8 GHz', ms=10)
+# 
 
-    choose = np.logical_and(freq==27.3, islim==True)
-    ax.scatter(days[choose][0]/(1+z), flux[choose][0], marker='_', c='orange', s=ms*10)
-    ax.arrow(
-            days[choose][0]/(1+z), flux[choose][0], 0, -flux[choose][0]/5, 
-            length_includes_head=True, head_length=flux[choose][0]/10, 
-            head_width=days[choose][0]/20, color='orange')
-
-    # Plot the VLA 17.7 GHz
-    choose = freq==17.7
-    ax.errorbar(
-            days[choose]/(1+z), flux[choose], yerr=eflux[choose],
-            fmt='o', c='red', label='VLA 17.7 GHz', ms=10)
-
-    # Plot the VLA 10 GHz LC
-    choose = np.logical_and(freq==8, islim==False)
-    ax.errorbar(
-            days[choose]/(1+z), flux[choose], yerr=eflux[choose],
-            fmt='s', c='purple', label='VLA 8 GHz', ms=10)
-
-
-plot_radio(axarr[0])
+plot_panel(axarr[0], 8)
 
 # Formatting
 ax = axarr[0]
