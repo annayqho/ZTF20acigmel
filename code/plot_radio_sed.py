@@ -179,7 +179,7 @@ if __name__=="__main__":
     ax = axarr[0,0]
     for ax in axarr[:,0]:
         ax.set_ylabel("Flux Density [mJy]")
-    for ax in axarr[1]:
+    for ax in axarr[3]:
         ax.set_xlabel("Frequency [GHz]")
     ax.set_xscale('log')
     ax.set_yscale('log')

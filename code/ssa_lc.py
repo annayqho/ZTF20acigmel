@@ -1,26 +1,34 @@
 """ SSA light curves """
 import numpy as np
+from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
 from astropy.cosmology import Planck15
 from get_radio import *
 
-alpha_r = 1
-p = 3
-s = 1.4
 
-# CONSTANTS
+use_nu = [94, 79, 26, 12, 8]
+
+# Explosion Constants
+p = 3
+eps_e = 0.1
+eps_B = 0.1
+eps = eps_e / eps_B
+f = 0.5 # filling factor
+z = 0.2442
+d_mpc = Planck15.luminosity_distance(z=z).value
+d_cm = Planck15.luminosity_distance(z=z).cgs.value
+
+
+# Numerical Constants
 c = 3E10
 m_p = 1.67E-24
 c6 = 8.16E-41
 c5 = 6.29E-24
 c1 = 6.27E18
 El = 8.17E-7
-f = 0.5
 q_e = 4.8E-10
 m_e = 9.1E-28
 sigmat = 6.6524E-25
-eps_e = 1/3
-eps_B = 1/3
 
 
 def get_R(Fp, nup, d_mpc):
@@ -126,26 +134,52 @@ def Fpeak(t):
     return 0.5*(t/57)**exponent
 
 
-def Fnu(nu, t):
+def Fnu(nu, t, alpha_r, k, s, opt_thick_index, t0, Fa0, nua0):
     """ calculate the expected light curve at a given frequency """
+    t_sec = t*86400 # original t is in days, need it in sec for cgs things
 
-    # First: calculate the cooling frequency over time
+    # Step 1: Calculate the magnetic field strength
+    # this equation assumes nu_a > nu_c, probably valid at early times
+    B0 = 0.14*(eps)**(-4/13)*(Fa0)**(-2/13)*(d_mpc)**(-4/13)*(nua0/5)**(21/13)*(t0/100)**(4/13)
+    B = B0*(t/t0)**(-alpha_r*k/2)
 
+    # Step 2: Calculate the cooling frequency
+    nu_c = 18*np.pi*m_e*c*q_e / (sigmat**2 * B**3 * t_sec**2)
 
+    # Step 3: Assert nu_c < nu_a (as at early times), and check
+    exponent = 2*(alpha_r-1)/(2*p+5) - ((p+3)*alpha_r*k)/(2*(p+5))
+    nua1 = nua0 * (t/t0)**exponent
+    exponent = ((2*p+15)*alpha_r - (2*p+5)*alpha_r*k/2 - 5) / (p+5)
+    Fa1 = Fa0 * (t/t0)**exponent
+    is_right_1 = nu_c/1E9 < nua1
 
-    ft = np.zeros(len(t))
+    # Step 4: Assert nu_c > nu_a (as at late times) and check
+    exponent = alpha_r*((4-k*(p+6))/(2*(p+4)))
+    nua2 = nua0 * (t/t0)**exponent
+    exponent = alpha_r*(2*p+13)*(2-k)/(2*(p+4))
+    Fa2 = Fa0 * (t/t0)**exponent
+    is_right_2 = nu_c/1E9 > nua2
 
-    choose = nu < nu_m(t)
-    ft[choose] = Fpeak(t)[choose] \
-            * (nu_m(t)[choose]/nu_a(t)[choose])**(5/2) \
-            * (nu/nu_m(t)[choose])**2 
+    # Step 5: Solve for Fa(t)
+    Fa = np.zeros(len(nu_c))
+    Fa[is_right_1] = Fa1[is_right_1]
+    Fa[is_right_2] = Fa2[is_right_2]
+    nua = np.zeros(len(nu_c))
+    nua[is_right_1] = nua1[is_right_1]
+    nua[is_right_2] = nua2[is_right_2]
 
-    choose = np.logical_and(nu > nu_m(t), nu < nu_a(t))
-    ft[choose] = Fpeak(t)[choose] * (nu/nu_a(t)[choose])**(5/2)
+    # Step 6: Solve for F(nu,t)
+    F = np.zeros(len(nu_c))
 
-    choose = nu > nu_a(t)
-    ft[choose] = Fpeak(t)[choose] * (nu/nu_a(t)[choose])**(-(p-1)/2)
-    return ft
+    choose = is_right_1
+    F[choose] = Fa[choose]*((nu/nua[choose])**(-s*(opt_thick_index))+\
+            (nu/nua[choose])**(-s*(-p/2)))**(-1/s)
+
+    choose = is_right_2
+    F[choose] = Fa[choose]*((nu/nua[choose])**(-s*(opt_thick_index))+\
+            (nu/nua[choose])**(-s*(-(p-1)/2)))**(-1/s)
+
+    return F,is_right_1,nua,Fa
 
 
 def nu_m(t):
@@ -156,22 +190,81 @@ def nu_a(t):
     return 35*(t/57)**(((p*(5-s/2)-3*s)*alpha_r-5*p+2)/(p+4))
 
 
+def fit_func(x_in, alpha_r, k, s, opt_thick_index, t0, Fa0, nua0):
+    """ The fitting function """
+    use_nu = [94, 79, 26, 12, 8]
+    t,nplt = x_in
+    out = []
+    for nu in use_nu:
+        choose = nplt==nu
+        Fnut = Fnu(nu, t[choose], alpha_r, k, s, opt_thick_index, t0, Fa0, nua0)[0]
+        [out.append(val) for val in Fnut]
+    out = np.array(out)
+
+    return out
+
+
 if __name__=="__main__":
-    # Get the data
+    # Fit Parameters
+    alpha_r = 1
+    k = 3.8
+    s = 1 # spectral smoothness
+    opt_thick_index = 1.2
+    t0 = 25 # days
+    Fa0 = 3 # mJy
+    nua0 = 110 # GHz
+    p0 = [alpha_r, k, s, opt_thick_index, t0, Fa0, nua0]
+
     islim, tel, freq, days, flux, eflux = get_data_all()
+    use_nu = [94, 79, 26, 12, 8] # freqs to fit
+    t = []
+    y = []
+    ey = []
+    nplt = []
 
-    # Get some fiducial parameters
-    #run(57, 20, 0.5*1E-3, p, 0.2442)
+    for nu in use_nu:
+        if nu!=26:
+            choose = np.logical_and(freq==nu, islim==False)
+        else:
+            freq_crit = np.logical_and(freq>25, freq<28)
+            choose = np.logical_and(freq_crit, islim==False)
+        [t.append(val) for val in list(days[choose]/1.2442)]
+        [y.append(val) for val in list(flux[choose])]
+        [ey.append(val) for val in list(eflux[choose])]
+        [nplt.append(val) for val in [nu]*sum(choose)]
+    t = np.array(t)
+    y = np.array(y)
+    ey = np.array(ey)
+    nplt = np.array(nplt)
 
-    # Start with the 10 GHz light curve
-    choose = np.logical_and(freq==12, islim==False)
+    # Plot the data
+    cols = ['#003f5c', '#58508d', '#bc5090', '#ff6361', '#ffa600']
 
-    # Plot and take a look
-    plt.errorbar(days[choose]/1.2442, flux[choose], eflux[choose], fmt='o', c='grey')
-    
-    t = np.linspace(5,100)
+    for ii,nu in enumerate(use_nu):
+        choose = nplt==nu
+        plt.errorbar(t[choose], y[choose], ey[choose], fmt='o', c=cols[ii], label=r"$%s$ GHz" %nu)
 
-    nu = 12
-    flux = Fnu(nu, t)
+    # Fit for the parameters
+    popt, pcov = curve_fit(fit_func, (t,nplt), y, p0=p0)
+    print(popt)
+    for ii in np.arange(len(popt)):
+        print(np.sqrt(pcov[ii,ii]))
 
+    # Plot the best-fit curve
+    plot_t = np.logspace(1,3,1000)
+    for ii,nu in enumerate(use_nu):
+        out = Fnu(nu, plot_t, *popt)[0]
+        plt.plot(plot_t[out>0], out[out>0], c=cols[ii])
+
+    out = Fnu(nu, plot_t, *popt)
+
+    plt.xscale('log')
+    plt.yscale('log')
+    plt.ylim(0.01,2)
+    plt.xlim(8,200)
+    plt.legend(loc='upper right', fontsize=12)
+    plt.xlabel("Days", fontsize=16)
+    plt.ylabel("Flux Density (mJy)", fontsize=16)
+    plt.tick_params(axis='both', labelsize=14)
+    plt.tight_layout()
     plt.show()

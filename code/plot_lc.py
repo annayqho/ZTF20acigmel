@@ -3,6 +3,7 @@
 import matplotlib
 from astropy.time import Time
 from get_radio import *
+from ssa_lc import *
 
 # Font sizes
 large = 14
@@ -23,8 +24,10 @@ def plot_all(ax):
     """ Plot all of the frequencies as grey in the background """
     islim, tel, freq, days, flux, eflux = get_data_all()
     plot_freqs = np.unique(freq)
+    plot_freqs = plot_freqs[plot_freqs < 140]
+
     for plot_freq in plot_freqs:
-        choose = freq==plot_freq
+        choose = np.logical_and(freq==plot_freq, islim==False)
         ax.plot(days[choose]/(1+z), flux[choose], c='grey', alpha=0.3)
 
 
@@ -32,7 +35,8 @@ def plot_panel(ax, choose):
     """ Plot a single panel """
     islim, tel, freq, days, flux, eflux = get_data_all()
 
-    # Plot  LC at a single frequency
+    # Plot LC at a single frequency
+    plot = np.logical_and(islim==False, choose)
     ax.errorbar(
             days[choose]/(1+z), flux[choose], yerr=eflux[choose],
             fmt='o-', c='k', ms=5)
@@ -151,6 +155,8 @@ if __name__=="__main__":
     for ax in axarr[2,:]:
         ax.set_xlabel("$\Delta t$ [d]", fontsize=large)
         ax.tick_params(axis='both', labelsize=large)
+    #for ax in axarr.flatten():
+    #    ax.axvline(x=204)
 
     # ax.set_xlim(11,150)
     # ax.set_xscale('log')
@@ -176,5 +182,6 @@ if __name__=="__main__":
 
     # Display
     plt.tight_layout()
-    #plt.show()
-    plt.savefig("radio_lc.png", dpi=300)
+    plt.show()
+    #plt.savefig("radio_lc.png", dpi=300)
+    #plt.close()

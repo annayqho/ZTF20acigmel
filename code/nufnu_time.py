@@ -659,7 +659,7 @@ if __name__=="__main__":
     axarr[1].legend(fontsize=12, loc='upper right')
 
     plt.subplots_adjust(wspace=0.05)
-    #plt.show()
-    plt.savefig(
-            "lum_evolution.png", dpi=200,
-            bbox_inches='tight', pad_inches=0.1)
+    plt.show()
+    #plt.savefig(
+    #        "lum_evolution.png", dpi=200,
+    #        bbox_inches='tight', pad_inches=0.1)

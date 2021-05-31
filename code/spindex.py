@@ -25,3 +25,4 @@ def run(nu, f, ef):
     # Measure the mean and standard deviation
     alpha = np.mean(alphas)
     ealpha = np.std(alphas)
+    return alpha,ealpha
