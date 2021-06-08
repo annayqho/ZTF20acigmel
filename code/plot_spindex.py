@@ -2,6 +2,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+fig,ax = plt.subplots(1,1,figsize=(6,4.5))
+
 # Highest: NOEMA to SMA (146 to 185)
 # c = '#ffa600'
 # dt = 46.5
@@ -26,17 +28,32 @@ import numpy as np
 #        head_length=0.5, head_width=3)
 
 # NOEMA 131 to 146
-# c = '#ff7c43'
-# nu1 = 131
-# nu2 = 146
-# dt = 46
-# f1 = 0.253
-# f2 = 0.153
-# ef1 = 0.050
-# ef2 = 0.056
-# alpha = np.log(f1/f2)/np.log(nu1/nu2)
-# ealpha = (1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1)
-# plt.errorbar(dt, alpha, yerr=ealpha, fmt='o', c=c, mfc='white', mec=c, label='131/146', lw=0.5)
+c = 'k'
+nu1 = 131
+nu2 = 146
+dt = 46
+f1 = 0.318
+f2 = 0.179
+ef1 = 0.049
+ef2 = 0.056
+alpha = np.log(f1/f2)/np.log(nu1/nu2)
+ealpha = (1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1)
+#plt.errorbar(dt, alpha, yerr=ealpha, fmt='o', c=c, mfc='white', mec=c, label='131/146', lw=0.5)
+
+# NOEMA 94 to 131
+c = 'k'
+nu1 = 94
+nu2 = 131
+dt = 46
+f1 = 0.569
+f2 = 0.318
+ef1 = 0.042
+ef2 = 0.049
+alpha = np.log(f1/f2)/np.log(nu1/nu2)
+ealpha = (1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1)
+plt.errorbar(
+        dt, alpha, yerr=ealpha, fmt='o', c=c, 
+        mfc='white', mec=c, label='94/131', lw=0.5)
 
 # NOEMA 79 to 94
 c = '#ffa600'
@@ -91,8 +108,8 @@ ef2 = 0.036
 alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
 ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
 
-plt.scatter(dt, alpha, marker='o', c=c, label="79/94")
-plt.errorbar(dt, alpha, yerr=ealpha, fmt='o-', c=c, lw=0.5)
+ax.scatter(dt, alpha, marker='o', c=c, label="79/94")
+ax.errorbar(dt, alpha, yerr=ealpha, fmt='o-', c=c, lw=0.5)
 
 # NOEMA 79 to VLA 36.2
 c = '#ff6e54'
@@ -113,8 +130,8 @@ ef2 = 0.048
 alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
 ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
 
-plt.scatter(dt, alpha, marker='s', c=c, label="36.2/79")
-plt.errorbar(dt, alpha, yerr=ealpha, fmt='s-', c=c, lw=0.5)
+ax.scatter(dt, alpha, marker='s', c=c, label="36.2/79")
+ax.errorbar(dt, alpha, yerr=ealpha, fmt='s-', c=c, lw=0.5)
 
 # VLA/ATCA 27 to VLA 36.2
 c = '#dd5182'
@@ -135,9 +152,9 @@ ef2 = 0.168
 alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
 ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
 
-plt.scatter(
-        dt, alpha, marker='P', c=c, label="27/36.2")
-plt.errorbar(dt, alpha, yerr=ealpha, fmt='P-', c=c, lw=0.5)
+ax.scatter(
+        dt, alpha, marker='P', c=c, label="27/36.2", s=50)
+ax.errorbar(dt, alpha, yerr=ealpha, fmt='P-', c=c, lw=0.5, ms=8)
 
 # VLA 17.7 to VLA/ATCA 27
 c = '#955196'
@@ -162,8 +179,8 @@ f1 = 0.087
 f2 = 0.048
 alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
 ealpha.append(0)
-plt.scatter(dt, alpha, marker='X', c=c, label="17.7/27")
-plt.errorbar(dt, alpha, yerr=ealpha, fmt='X-', c=c, lw=0.5)
+ax.scatter(dt, alpha, marker='X', c=c, label="17.7/27")
+ax.errorbar(dt, alpha, yerr=ealpha, fmt='X-', c=c, lw=0.5, ms=8)
 
 # 12 GHz to 17.7 GHz
 c = '#444e86'
@@ -188,8 +205,8 @@ f1 = 0.122
 f2 = 0.087
 alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
 ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
-plt.scatter(dt, alpha, marker='D', c=c, label="12/17.7")
-plt.errorbar(dt, alpha, yerr=ealpha, fmt='D-', c=c, lw=0.5)
+ax.scatter(dt, alpha, marker='D', c=c, label="12/17.7")
+ax.errorbar(dt, alpha, yerr=ealpha, fmt='D-', c=c, lw=0.5)
 
 
 # VLA 8 to 12 GHz
@@ -202,7 +219,7 @@ f1 = 0.027
 f2 = 0.037
 alpha = [np.log(f1/f2)/np.log(nu1/nu2)]
 ealpha = [0]
-plt.arrow(
+ax.arrow(
         dt[0], alpha[0], 0, alpha[0]/3, length_includes_head=True, color=c,
         head_width=dt[0]/15, head_length=alpha[0]/5)
 
@@ -237,17 +254,20 @@ ef1 = 0.010
 ef2 = 0.016
 alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
 ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
-plt.scatter(dt, alpha, c=c, marker='*', label="8/12")
-plt.errorbar(dt, alpha, yerr=ealpha, marker='*', c=c, lw=0.5)
+ax.scatter(dt, alpha, c=c, marker='*', label="8/12", s=50)
+ax.errorbar(dt, alpha, yerr=ealpha, marker='*', c=c, lw=0.5, ms=10)
 
-plt.xscale('log')
-plt.ylim(-3.0,2.1)
-plt.xlabel("Days since $t_0$")
-plt.ylabel("Spectral index")
+ax.set_xscale('log')
+ax.set_ylim(-4.0,2.1)
+ax.set_xlabel("Days since $t_0$", fontsize=16)
+ax.set_ylabel(r"Spectral index $\alpha$ ($f_\nu \propto \nu^{\alpha}$)", fontsize=16)
+plt.legend(loc='lower left', ncol=2, fontsize=10.5)
+ax.tick_params(axis='both', labelsize=14)
+ax.set_xticks([20,30,40,60,100])
+ax.set_xticklabels([20,30,40,60,100])
 plt.tight_layout()
-plt.legend(loc='lower left', ncol=2)
-plt.show()
-#plt.savefig("spindex_time.png", dpi=200)
+#plt.show()
+plt.savefig("spindex_time.png", dpi=200)
 
-#plt.close()
+plt.close()
 

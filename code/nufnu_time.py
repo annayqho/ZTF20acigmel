@@ -593,7 +593,7 @@ if __name__=="__main__":
     tde(axarr, '#57106e', legend=True)
     asassn14li(axarr, '#57106e', None)
 
-    sn2003L(axarr, 'lightblue', legend=True)
+    #sn2003L(axarr, 'lightblue', legend=True)
     sn1979c(axarr, 'lightblue', None)
     sn1993J(axarr, 'lightblue', None)
     sn2011dh(axarr, 'lightblue', None)

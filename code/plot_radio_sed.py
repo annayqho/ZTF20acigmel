@@ -61,11 +61,47 @@ def day17(days, freq, flux, eflux, ax):
 
 def day24(ax):
     """ 
-    Plot VLA and NOEMA
+    Plot VLA and NOEMA and SMA upper limit
     """
 
-    choose = np.logical_and(days>23, days<26)
-    ax.errorbar(freq[choose], flux[choose], eflux[choose], fmt='o', c='k')
+    choose = np.logical_and(days>20, days<26)
+    order = np.argsort(freq[choose])
+
+    # VLA
+    ax.errorbar(
+            freq[choose][order][0:3], flux[choose][order][0:3], eflux[choose][order][0:3], 
+            fmt='o', c='k', label="VLA (25d)")
+
+    # NOEMA
+    ax.errorbar(
+            freq[choose][order][3:5], flux[choose][order][3:5], eflux[choose][order][3:5], 
+            fmt='s', c='k', label="NOEMA (24d)")
+   
+    # SMA
+    x = freq[choose][order][5]
+    y = flux[choose][order][5]
+    ax.scatter(x, y, 
+            marker='D', c='k', label="SMA (21d)")
+    ax.arrow(x, y, 
+            0, -y/2, head_width=x/7, 
+            length_includes_head=True, head_length=y/7, color='k')
+
+    # repeat for 17d
+    choose = np.logical_and(days==17, freq==12)
+
+    # VLA
+    ax.errorbar(
+            freq[choose], flux[choose], eflux[choose], 
+            fmt='o', mec='k', mfc='white', label="VLA (17d)", c='k')
+
+    choose = np.logical_and(days==17, freq>70)
+
+    # NOEMA
+    ax.errorbar(
+            freq[choose], flux[choose], eflux[choose], 
+            fmt='s', c='k', mec='k', mfc='white', label="NOEMA (17d)")
+
+    ax.legend(loc='lower right')
 
     # Plot the nu^{-0.5} line
     # xplot = np.linspace(30,200)
@@ -83,7 +119,7 @@ def day24(ax):
     # ax.text(x, y, r'$F_\nu \propto \nu^{5/2}$', ha='right')
 
     # Label
-    ax.text(0.05,0.85,"$\Delta t$=24-25d", transform=ax.transAxes)
+    # ax.text(0.05,0.85,"$\Delta t$=21-25d", transform=ax.transAxes)
 
 
 def day31(ax):
@@ -101,11 +137,30 @@ def day36(ax):
     """ 
     Plot VLA from day 35 and NOEMA from day 39
     """
-    choose = np.logical_and(days>35, days<40)
-    ax.errorbar(freq[choose], flux[choose], eflux[choose], fmt='o', c='k')
+    choose = np.logical_and(days>34, days<40)
+    order = np.argsort(freq[choose])
+
+    x = freq[choose][order][0:3]
+    y = flux[choose][order][0:3]
+    ey = eflux[choose][order][0:3]
+    ax.errorbar(x, y, ey, fmt='o', c='k', label="VLA (36d)")
+
+    x = freq[choose][order][3:5]
+    y = flux[choose][order][3:5]
+    ey = eflux[choose][order][3:5]
+    ax.errorbar(x, y, ey, fmt='s', c='k', label="NOEMA (39d)")
+
+    x = freq[choose][order][5]
+    y = flux[choose][order][5]
+    ey = eflux[choose][order][5]
+    ax.errorbar(x, y, ey, fmt='D', c='k', label="SMA (35d)")
+    ax.arrow(x, y, 
+            0, -y/2, head_width=x/7, 
+            length_includes_head=True, head_length=y/7, color='k')
 
     # Label
-    ax.text(0.05,0.85,"$\Delta t$=36-39d", transform=ax.transAxes)
+    #ax.text(0.05,0.85,"$\Delta t$=36-39d", transform=ax.transAxes)
+    ax.legend(loc='lower right')
 
 
 def day46(days, freq, flux, eflux, ax):
@@ -164,23 +219,21 @@ def day131(days, freq, flux, eflux, ax):
 
 
 if __name__=="__main__":
-    fig,axarr = plt.subplots(4, 2, figsize=(7,8), sharex=True, sharey=True)
+    fig,axarr = plt.subplots(2, 1, figsize=(5,6), sharex=True, sharey=True)
     islim, tel, freq, days, flux, eflux = get_data_all()
-    day17(days, freq, flux, eflux, axarr[0,0])
-    day24(axarr[0,1])
-    day31(axarr[1,0])
-    day36(axarr[1,1])
-    day46(days, freq, flux, eflux, axarr[2,0])
-    day71(days, freq, flux, eflux, axarr[2,1])
-    day94(days, freq, flux, eflux, axarr[3,0])
-    day131(days, freq, flux, eflux, axarr[3,1])
+    day24(axarr[0])
+    day36(axarr[1])
+    #day36(axarr[1,1])
+    #day46(days, freq, flux, eflux, axarr[2,0])
+    #day71(days, freq, flux, eflux, axarr[2,1])
+    #day94(days, freq, flux, eflux, axarr[3,0])
+    #day131(days, freq, flux, eflux, axarr[3,1])
 
     # Formatting
-    ax = axarr[0,0]
-    for ax in axarr[:,0]:
+    for ax in axarr:
         ax.set_ylabel("Flux Density [mJy]")
-    for ax in axarr[3]:
-        ax.set_xlabel("Frequency [GHz]")
+    ax = axarr[1]
+    ax.set_xlabel("Frequency [GHz]")
     ax.set_xscale('log')
     ax.set_yscale('log')
     ax.set_ylim(0.01, 1.8)
@@ -188,5 +241,5 @@ if __name__=="__main__":
 
     # Final formatting
     plt.tight_layout()
-    #plt.show()
-    plt.savefig("radio_sed_evolution.png", dpi=300)
+    plt.show()
+    #plt.savefig("radio_sed_evolution.png", dpi=300)
