@@ -101,7 +101,7 @@ def day24(ax):
             freq[choose], flux[choose], eflux[choose], 
             fmt='s', c='k', mec='k', mfc='white', label="NOEMA (17d)")
 
-    ax.legend(loc='lower right')
+    ax.legend(loc='lower right', ncol=2, fontsize=8)
 
     # Plot the nu^{-0.5} line
     # xplot = np.linspace(30,200)
@@ -160,36 +160,70 @@ def day36(ax):
 
     # Label
     #ax.text(0.05,0.85,"$\Delta t$=36-39d", transform=ax.transAxes)
-    ax.legend(loc='lower right')
+    ax.legend(loc='lower right', fontsize=8)
 
 
 def day46(days, freq, flux, eflux, ax):
     """ 
     Interpolate VLA/ATCA, fix NOEMA
     """
-    choose = np.logical_and(days>45, days<52)
-    ax.errorbar(freq[choose], flux[choose], eflux[choose], fmt='o', c='k')
+    choose = days==51
+    ax.errorbar(freq[choose], flux[choose], eflux[choose], fmt='o', c='k',
+            label="VLA (51d)")
+
+    choose = days==46
+    ax.errorbar(freq[choose], flux[choose], eflux[choose], fmt='s', c='k',
+            label="NOEMA (46d)")
 
     # SMA upper limit
     choose = days==47
+    ax.errorbar(freq[choose], flux[choose], eflux[choose], fmt='D', c='k',
+            label="SMA (47d)")
     ax.arrow(freq[choose][0], flux[choose][0], 
             0, -flux[choose][0]/2, head_width=freq[choose][0]/6, 
             length_includes_head=True, head_length=flux[choose][0]/5,
             color='k')
 
     # Label
-    ax.text(0.05,0.85,"$\Delta t$=46-51d", transform=ax.transAxes)
+    #ax.text(0.05,0.85,"$\Delta t$=46-51d", transform=ax.transAxes)
+    ax.legend(ncol=2, fontsize=8)
 
 
 def day71(days, freq, flux, eflux, ax):
     """ 
     Just plot VLA
     """
-    choose = np.logical_and(days>66, days<72)
-    ax.errorbar(freq[choose], flux[choose], eflux[choose], fmt='o', c='k')
+    choose = days==71
+    ax.errorbar(
+            freq[choose], flux[choose], eflux[choose], 
+            fmt='o', c='k', label="VLA (71d)")
+
+    choose = days==94
+    ax.errorbar(
+            freq[choose], flux[choose], eflux[choose], 
+            fmt='o', c='grey', label="VLA (94d)")
+
+    choose = days==131
+    ax.errorbar(
+            freq[choose], flux[choose], eflux[choose], 
+            fmt='o', c='k', mec='k', mfc='white', label="VLA (131d)")
+    ax.arrow(freq[choose][-1], flux[choose][-1], 
+            0, -flux[choose][-1]/2, head_width=freq[choose][-1]/6, 
+            length_includes_head=True, head_length=flux[choose][-1]/5,
+            color='k')
+
+    choose = days==67
+    ax.errorbar(
+            freq[choose], flux[choose], eflux[choose], 
+            fmt='s', c='k', label="NOEMA (67d)")
+    ax.arrow(freq[choose][-1], flux[choose][-1], 
+            0, -flux[choose][-1]/2, head_width=freq[choose][-1]/6, 
+            length_includes_head=True, head_length=flux[choose][-1]/5,
+            color='k')
 
     # Label
-    ax.text(0.05,0.85,"$\Delta t$=67-71d", transform=ax.transAxes)
+    #ax.text(0.05,0.85,"$\Delta t$=67-71d", transform=ax.transAxes)
+    ax.legend(fontsize=8, loc='upper right', ncol=4, columnspacing=0.5)
 
 
 def day94(days, freq, flux, eflux, ax):
@@ -219,20 +253,19 @@ def day131(days, freq, flux, eflux, ax):
 
 
 if __name__=="__main__":
-    fig,axarr = plt.subplots(2, 1, figsize=(5,6), sharex=True, sharey=True)
+    fig,axarr = plt.subplots(4, 1, figsize=(5,8), sharex=True, sharey=True)
     islim, tel, freq, days, flux, eflux = get_data_all()
     day24(axarr[0])
     day36(axarr[1])
-    #day36(axarr[1,1])
-    #day46(days, freq, flux, eflux, axarr[2,0])
-    #day71(days, freq, flux, eflux, axarr[2,1])
+    day46(days, freq, flux, eflux, axarr[2])
+    day71(days, freq, flux, eflux, axarr[3])
     #day94(days, freq, flux, eflux, axarr[3,0])
     #day131(days, freq, flux, eflux, axarr[3,1])
 
     # Formatting
     for ax in axarr:
         ax.set_ylabel("Flux Density [mJy]")
-    ax = axarr[1]
+    ax = axarr[-1]
     ax.set_xlabel("Frequency [GHz]")
     ax.set_xscale('log')
     ax.set_yscale('log')
@@ -241,5 +274,6 @@ if __name__=="__main__":
 
     # Final formatting
     plt.tight_layout()
-    plt.show()
-    #plt.savefig("radio_sed_evolution.png", dpi=300)
+    #plt.show()
+    plt.savefig("radio_sed_evolution.png", dpi=300)
+    plt.close()
