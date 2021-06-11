@@ -2,12 +2,14 @@
 
 import matplotlib.pyplot as plt
 from get_radio import *
-from plot_sed import day46
+from plot_radio_sed import day46
+
+day46(days, freq, flux, eflux, ax):
 
 fig,ax = plt.subplots(1,1,figsize=(6,4))
 
 islim, tel, freq, days, flux, eflux_form, eflux_sys = get_data_all()
-day46(days, freq, flux, eflux_form, ax)
+day46(days, freq, flux, eflux, ax)
 
 m_e = 9.1E-28
 c = 3E10

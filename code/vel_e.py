@@ -6,9 +6,6 @@ Combine with the Chevalier diagram
 These are two classic figures
 """
 
-from matplotlib import rc
-rc("font", family="serif")
-rc("text", usetex=True)
 import matplotlib.pyplot as plt
 import numpy as np
 from astropy.table import Table
@@ -18,20 +15,30 @@ squaresize = 50
 
 def vele(ax):
     # only use this to plot the GRBs
-    direc = "/Users/annaho/Dropbox/Projects/Research/AT2018cow/data"
-    inputf = direc + "/Soderberg2009Fig4.1.txt"
+    # direc = "/Users/annaho/Dropbox/Projects/Research/AT2018cow/data"
+    # inputf = direc + "/Soderberg2009Fig4.1.txt"
 
-    dat = Table.read(inputf, format='ascii')
-    x = dat['col1']
-    y = dat['col2']
+    # dat = Table.read(inputf, format='ascii')
+    # x = dat['col1']
+    # y = dat['col2']
 
-    choose = np.logical_and(x > 1, y > 3E49)
+    # choose = np.logical_and(x > 1, y > 3E49)
     #ax.scatter(
     #        x[choose], y[choose], marker='x', c='k', s=50, label="GRBs")
 
     # Swift TDE
     # just use one epoch
     # epoch 3: day 18
+
+    # Dillon's MAXI source
+    v = 0.025
+    E = 2E49
+    ax.scatter(
+            v, E, marker='D', edgecolor='k', facecolor='k', s=50, label=None)
+    ax.text(
+            v/1.5, E/1.1, "VT1210+4956", fontsize=12,
+            horizontalalignment='center',
+            verticalalignment='top')
 
     # ASASSN14li
     # Using Day 143, the first day the peak is resolved
@@ -41,6 +48,16 @@ def vele(ax):
             v, E, marker='o', edgecolor='k', facecolor='k', s=50, label=None)
     ax.text(
             v/1.5, E/1.1, "ASASSN14li", fontsize=12,
+            horizontalalignment='center',
+            verticalalignment='top')
+
+    # PTF11qcj
+    v = 0.05
+    E = 3E48
+    ax.scatter(
+            v, E, marker='+', edgecolor='k', facecolor='k', s=100, label=None)
+    ax.text(
+            v/1.5, E/1.1, "PTF11qcj", fontsize=12,
             horizontalalignment='center',
             verticalalignment='top')
  
@@ -146,11 +163,42 @@ def vele(ax):
     E = 3.68387786116342e+48
     ax.scatter(
             v, E, 
-            marker='*', s=300, facecolors='black', edgecolors='black')
+            marker='*', s=300, c='#7a5195')
     ax.text(
-            v, E*1.1, "AT2018cow", 
+            v, E*1.1, "AT2018cow", color='#7a5195',
             fontsize=14, 
             verticalalignment='bottom', horizontalalignment='center')
+
+    v = 0.25
+    E = 1E49
+    ax.scatter(
+            v, E, 
+            marker='*', s=300, c='#ef5675')
+    ax.text(
+            v, E*1.1, "AT2020xnd", 
+            fontsize=14, color='#ef5675',
+            verticalalignment='bottom', horizontalalignment='center')
+
+    v = 0.4
+    E = 3E49
+    ax.scatter(
+            v, E, 
+            marker='*', s=300, c='#003f5c')
+    ax.text(
+            v, E*1.1, "Koala", 
+            fontsize=14, color='#003f5c',
+            verticalalignment='bottom', horizontalalignment='center')
+
+    v = 0.55
+    E = 5.6E49
+    ax.scatter(
+            v, E, 
+            marker='*', s=300, c='#ffa600')
+    ax.text(
+            v, E*1.1, "CSS161010", 
+            fontsize=14, color='#ffa600',
+            verticalalignment='bottom', horizontalalignment='center')
+
 
     ax.set_xscale('log')
     ax.set_yscale('log')
@@ -159,9 +207,9 @@ def vele(ax):
         "Blastwave Velocity $(\\Gamma \\beta)$",
         fontsize=14)
     ax.set_ylabel(
-            "Energy (erg) $= U_B/\epsilon_B$, \qquad $\epsilon_e=\epsilon_B=0.33$", 
+            "Energy (erg) $= U_B/\epsilon_B$, $\qquad \epsilon_e=\epsilon_B=0.33$", 
             fontsize=14)
-    ax.set_ylim(5E47, 1.3E49)
+    ax.set_ylim(5E47, 9E49)
     ax.tick_params(axis='both', labelsize=14)
     ax.legend(loc='upper left', fontsize=10)
 
@@ -169,7 +217,7 @@ def vele(ax):
     # make a twin axis
     ax2 = ax.twinx()
     ax2.set_ylabel(
-            "Energy (erg) $= U_B/\epsilon_B$, $\qquad \epsilon_e=0.1;\epsilon_B=0.01$", 
+            r"Energy (erg) $= U_B/\epsilon_B$, $\qquad \epsilon_e=0.1;\epsilon_B=0.01$", 
             fontsize=14, rotation=270, labelpad=15.0)
     y_f = lambda y_i: y_i*9
     ymin, ymax = ax.get_ylim()
@@ -180,9 +228,10 @@ def vele(ax):
     ax2.set_xlim(4E-3, 8)
     ax.set_xlim(4E-3, 8)
 
-fig,ax = plt.subplots(1,1, figsize=(5,6), dpi=100)
+fig,ax = plt.subplots(1,1, figsize=(6,6), dpi=100)
 vele(ax)
 
+plt.tight_layout()
 #plt.show()
-plt.savefig("vel_e.eps", format='eps', bbox_inches='tight')
+plt.savefig("vel_e.png", dpi=200)
 plt.close()

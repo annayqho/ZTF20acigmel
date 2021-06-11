@@ -1,4 +1,13 @@
-""" Plot radio/mm light curve """
+""" Plot radio/mm light curves
+
+If you plot frequencies with >=3 detections then you have
+8, 12, 17.7, 26.5, 36.2, 79, 94 (7 bands)
+
+If you plot frequencies with >=2 detections then you add
+4, 14.5, 27.3, 131 (4 bands; total 11)
+
+"""
+
 
 import matplotlib
 from astropy.time import Time
@@ -17,7 +26,7 @@ ms=10
 z = 0.2442
 
 # Initializing plot
-fig,axarr = plt.subplots(3,3,figsize=(8,6), sharex=True, sharey=True)
+fig,axarr = plt.subplots(4,3,figsize=(8,7), sharex=True, sharey=True)
 
 
 def plot_all(ax):
@@ -36,10 +45,21 @@ def plot_panel(ax, choose):
     islim, tel, freq, days, flux, eflux = get_data_all()
 
     # Plot LC at a single frequency
-    plot = np.logical_and(islim==False, choose)
+    det = np.logical_and(islim==False, choose)
     ax.errorbar(
-            days[choose]/(1+z), flux[choose], yerr=eflux[choose],
-            fmt='o-', c='k', ms=5)
+            days[det]/(1+z), flux[det], yerr=eflux[det],
+            fmt='o', c='k', ms=5)
+    nondet = np.logical_and(islim==True, choose)
+    ax.errorbar(
+            days[nondet]/(1+z), flux[nondet], yerr=eflux[nondet],
+            fmt='o', c='k', mfc='white', mec='k', ms=5)
+
+    ax.plot(days[choose]/(1+z), flux[choose], c='k')
+
+    for ii,x in enumerate(days[nondet]/(1+z)):
+        y = flux[nondet][ii]
+        ax.arrow(x, y, 0, -y/3, head_width=x/10,
+            length_includes_head=True, head_length=y/10, color='k')
 
 
 def plot_tpow(ax, choose, pow, ind=1, tjust='right'):
@@ -58,92 +78,37 @@ def plot_tpow(ax, choose, pow, ind=1, tjust='right'):
 if __name__=="__main__":
     islim, tel, freq, days, flux, eflux = get_data_all()
 
-    for ax in axarr.flatten():
+    for ax in axarr.flatten()[0:-2]:
         plot_all(ax)
 
-    ax = axarr[0,0]
-    choose = freq==94
-    plot_panel(ax, choose)
-    ax.text(
-            0.95,0.25,'94 GHz',fontsize=medium,
-            transform=ax.transAxes,ha='right', va='top')
-    ax.text(
-            0.95,0.12,'(NOEMA)',fontsize=medium,
-            transform=ax.transAxes,ha='right', va='top')
-    plot_tpow(ax, choose, 2)
-    plot_tpow(ax, choose, -3.5, 5, 'left')
+    plot_freq = []
+    for f in np.unique(freq):
+        if np.logical_and(sum(~islim[freq==f])>=2, f!=34):
+            plot_freq.append(f)
+    plot_freq = np.array(plot_freq)[::-1]
 
-    ax = axarr[0,1]
-    choose = freq==79
-    plot_panel(ax, choose)
-    ax.text(
-            0.95,0.25,'79 GHz',fontsize=medium,
-            transform=ax.transAxes,ha='right', va='top')
-    ax.text(
-            0.95,0.12,'(NOEMA)',fontsize=medium,
-            transform=ax.transAxes,ha='right', va='top')
-    plot_tpow(ax, choose, 2)
-    plot_tpow(ax, choose, -3, 5, 'left')
+    for ii,f in enumerate(plot_freq):
+        ax = axarr.flatten()[ii]
+        choose = freq==f
+        fstr = int(f)
+        if f==33:
+            choose = np.logical_and(freq>32, freq<35)
+            fstr = "33/34"
+        plot_panel(ax, choose)
+        ax.text(
+                0.95,0.15,'%s GHz' %fstr,fontsize=medium,
+                transform=ax.transAxes,ha='right', va='top')
 
-    ax = axarr[0,2]
-    choose = freq==36.2
-    plot_panel(ax, choose)
-    ax.text(
-            0.95,0.25,'36 GHz',fontsize=medium,
-            transform=ax.transAxes,ha='right', va='top')
-    ax.text(
-            0.95,0.12,'(VLA)',fontsize=medium,
-            transform=ax.transAxes,ha='right', va='top')
-    plot_tpow(ax, choose, -2.5, 2, 'left')
-
-    ax = axarr[1,0]
-    choose = np.logical_and(freq>26, freq<29)
-    plot_panel(ax, choose)
-    ax.text(
-            0.05,0.12,'26/27 GHz (VLA/ATCA)',fontsize=medium,
-            transform=ax.transAxes,ha='left', va='top')
-    plot_tpow(ax, choose, 2.5)
-    plot_tpow(ax, choose, -4, 6, 'left')
-
-    ax = axarr[1,1]
-    choose = freq==17.7
-    plot_panel(ax, choose)
-    ax.text(
-            0.05, 0.12,'17.7 GHz (VLA)',fontsize=medium,
-            transform=ax.transAxes,ha='left', va='top')
-    plot_tpow(ax, choose, -4, 1, 'left')
-
-    ax = axarr[1,2]
-    choose = freq==14.5
-    plot_panel(ax, choose)
-    ax.text(
-            0.05, 0.12,'14.5 GHz (VLA)',fontsize=medium,
-            transform=ax.transAxes,ha='left', va='top')
-
-    ax = axarr[2,0]
-    choose = freq==12
-    plot_panel(ax, choose)
-    ax.text(
-            0.95, 0.12, '12 GHz (VLA)',fontsize=medium,
-            transform=ax.transAxes,ha='right', va='top')
-    plot_tpow(ax, choose, 2.5)
-    plot_tpow(ax, choose, -2.5, 3, 'left')
-
-    ax = axarr[2,1]
-    choose = freq==8
-    plot_panel(ax, choose)
-    ax.text(
-            0.95, 0.12, '8 GHz (VLA)',fontsize=medium,
-            transform=ax.transAxes,ha='right', va='top')
-    plot_tpow(ax, choose, 1)
-
-    ax = axarr[2,2]
-    choose = freq==4
-    plot_panel(ax, choose)
-    ax.text(
-            0.95, 0.12, '4 GHz (VLA)',fontsize=medium,
-            transform=ax.transAxes,ha='right', va='top')
-    plot_tpow(ax, choose, 1)
+        if np.logical_or.reduce((f==117, f==98, f==33, f==15)):
+            plot_tpow(ax, choose, 2)
+        if f==10:
+            plot_tpow(ax, choose, 1, ind=2)
+        if f==117:
+            plot_tpow(ax, choose, -4, 5, 'left')
+        if f==33:
+            plot_tpow(ax, choose, -4, 6, 'left')
+        if f==22:
+            plot_tpow(ax, choose, -4, 1, 'left')
 
     # Formatting
     axarr[0,0].set_yscale('log')
@@ -152,36 +117,16 @@ if __name__=="__main__":
     for ax in axarr[:,0]:
         ax.set_ylabel("$f_{\\nu}$ [mJy]", fontsize=large)
         ax.tick_params(axis='both', labelsize=large)
-    for ax in axarr[2,:]:
+    for ax in axarr[-1,:]:
         ax.set_xlabel("$\Delta t$ [d]", fontsize=large)
         ax.tick_params(axis='both', labelsize=large)
-    #for ax in axarr.flatten():
-    #    ax.axvline(x=204)
 
-    # ax.set_xlim(11,150)
-    # ax.set_xscale('log')
-    # ax.set_yscale('log')
-    # ax.set_yticks([0.1, 1, 0.05])
-    # ax.get_yaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
-    # ax.legend(loc='lower right', fontsize=medium)
-    # ax.minorticks_off()
-    # 
-    # #ax.axvline(x=124/1.2442)
-    # 
-    # ax = axarr[1]
-    # ax.set_ylabel("$10^{-15}$ erg cm$^{-2}$ s$^{-1}$", fontsize=large)
-    # ax.set_ylim(2E-1,65)
-    # ax.set_yticks([0.2, 1, 10])
-    # ax.set_xticks([15, 20, 30, 50, 70])
-    # ax.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
-    # ax.get_yaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
-    # ax.legend(loc='upper right', fontsize=medium)
-    # ax.minorticks_off()
-    # 
-    # for ax in axarr:
+    axarr[-1,-1].axis('off')
+    axarr[3,1].axis('off')
 
     # Display
     plt.tight_layout()
-    plt.show()
-    #plt.savefig("radio_lc.png", dpi=300)
-    #plt.close()
+    plt.subplots_adjust(hspace=0.1)
+    #plt.show()
+    plt.savefig("radio_lc.png", dpi=300)
+    plt.close()

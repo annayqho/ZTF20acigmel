@@ -268,6 +268,5 @@ ax.set_xticklabels([20,30,40,60,100])
 plt.tight_layout()
 #plt.show()
 plt.savefig("spindex_time.png", dpi=200)
-
 plt.close()
 

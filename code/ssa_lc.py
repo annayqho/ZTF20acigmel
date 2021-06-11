@@ -192,6 +192,7 @@ def nu_a(t):
 
 def fit_func(x_in, alpha_r, k, s, opt_thick_index, t0, Fa0, nua0):
     """ The fitting function """
+    alpha_r=1
     use_nu = [94, 79, 26, 12, 8]
     t,nplt = x_in
     out = []

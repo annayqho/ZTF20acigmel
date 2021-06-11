@@ -136,7 +136,7 @@ def lumtnu(ax):
             tnu[1]*1.2, lpeak[1], "$\Delta t$=343d", fontsize=10,
             verticalalignment='center',
             horizontalalignment='left', c=col)
-    ax.text(tnu[0], lpeak[0]*1.2, "ZTF18abvkwla", fontsize=medsize,
+    ax.text(tnu[0], lpeak[0]*1.2, "Koala", fontsize=medsize,
             horizontalalignment='center', c=col)
 
     # CSS 161010
@@ -277,31 +277,32 @@ def lumtnu(ax):
     y = vel_lines(ax, 550, 0.01)
 
     # AT2020xnd
-    x1 = 22*100/5
-    y1 = 2E30
+    x1 = 24*80/5
+    dcm = Planck15.luminosity_distance(z=0.2442).cgs.value
+    y1 = (0.7*1E-3*1E-23*4*np.pi*dcm**2)
     col = '#ef5675'
-    ax.scatter(
-            x1, y1, marker='*', s=300, 
-            facecolors=col, edgecolors=col)
-    ax.text(
-            x1/1.2, y1, "AT2020xnd", fontsize=medsize, 
-            verticalalignment='center',
-            horizontalalignment='right', color=col)
-    ax.text(
-            x1, y1/1.2, "$\Delta t$=22d", fontsize=10, 
-            verticalalignment='top',
-            horizontalalignment='left', c=col)
+    #ax.scatter(
+    #        x1, y1, marker='*', s=300, 
+    #        facecolors=col, edgecolors=col)
+    #ax.text(
+    #        x1, y1/1.2, "$\Delta t$=22d", fontsize=10, 
+    #        verticalalignment='top',
+    #        horizontalalignment='left', c=col)
 
-    x2 = 94*16/5
-    y2 = 6E29
+    x2 = 71*16/5
+    y2 = (0.5*1E-3*1E-23*4*np.pi*dcm**2)
     ax.scatter(
-            x2, y2, marker='*', s=100, 
+            x2, y2, marker='*', s=300, 
             facecolors=col, edgecolors=col)
     ax.text(
-            x2/1.1, y2/1, "$\Delta t$=94d", fontsize=10,
-            verticalalignment='bottom',
-            horizontalalignment='right', c=col)
-    plt.arrow(x1,y1,x2-x1,y2-y1, color=col, lw=2)
+            x2/1.1, y2/1.2, "$\Delta t$=71d", fontsize=10,
+            verticalalignment='top',
+            horizontalalignment='center', c=col)
+    ax.text(
+            x2*1.2, y2, "AT2020xnd", fontsize=medsize, 
+            verticalalignment='center',
+            horizontalalignment='left', color=col)
+    #plt.arrow(x1,y1,x2-x1,y2-y1, color=col, lw=2)
 
     # AT2018cow
     col = '#7a5195'
@@ -373,6 +374,6 @@ plt.tight_layout()
 
 
      
-#plt.show()
-plt.savefig("lum_tnu.png", dpi=300)
-plt.close()
+plt.show()
+#plt.savefig("lum_tnu.png", dpi=300)
+#plt.close()
