@@ -144,16 +144,23 @@ ef1 = 0.011
 ef2 = 0.171
 alpha = [np.log(f1/f2)/np.log(nu1/nu2)]
 ealpha = [(1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1)]
-dt.append(51)
+dt.append(51.9)
 f1 = 0.621
 f2 = 0.668
 ef1 = 0.132
 ef2 = 0.168
 alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
 ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
+dt.append(71.9)
+f1 = 0.450
+f2 = 0.209
+ef1 = 0.096
+ef2 = 0.063
+alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
+ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
 
 ax.scatter(
-        dt, alpha, marker='P', c=c, label="27/36.2", s=50)
+        dt, alpha, marker='P', c=c, label="33/45", s=50)
 ax.errorbar(dt, alpha, yerr=ealpha, fmt='P-', c=c, lw=0.5, ms=8)
 
 # VLA 17.7 to VLA/ATCA 27
@@ -179,7 +186,7 @@ f1 = 0.087
 f2 = 0.048
 alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
 ealpha.append(0)
-ax.scatter(dt, alpha, marker='X', c=c, label="17.7/27")
+ax.scatter(dt, alpha, marker='X', c=c, label="22/33")
 ax.errorbar(dt, alpha, yerr=ealpha, fmt='X-', c=c, lw=0.5, ms=8)
 
 # 12 GHz to 17.7 GHz
@@ -205,7 +212,7 @@ f1 = 0.122
 f2 = 0.087
 alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
 ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
-ax.scatter(dt, alpha, marker='D', c=c, label="12/17.7")
+ax.scatter(dt, alpha, marker='D', c=c, label="15/22")
 ax.errorbar(dt, alpha, yerr=ealpha, fmt='D-', c=c, lw=0.5)
 
 
@@ -254,12 +261,12 @@ ef1 = 0.010
 ef2 = 0.016
 alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
 ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
-ax.scatter(dt, alpha, c=c, marker='*', label="8/12", s=50)
+ax.scatter(dt, alpha, c=c, marker='*', label="10/15", s=50)
 ax.errorbar(dt, alpha, yerr=ealpha, marker='*', c=c, lw=0.5, ms=10)
 
 ax.set_xscale('log')
 ax.set_ylim(-4.0,2.1)
-ax.set_xlabel("Days since $t_0$", fontsize=16)
+ax.set_xlabel("Days since 2020 Oct 10.0", fontsize=16)
 ax.set_ylabel(r"Spectral index $\alpha$ ($f_\nu \propto \nu^{\alpha}$)", fontsize=16)
 plt.legend(loc='lower left', ncol=2, fontsize=10.5)
 ax.tick_params(axis='both', labelsize=14)

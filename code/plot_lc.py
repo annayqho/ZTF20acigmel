@@ -1,18 +1,15 @@
 """ Plot radio/mm light curves
-
 If you plot frequencies with >=3 detections then you have
 8, 12, 17.7, 26.5, 36.2, 79, 94 (7 bands)
 
 If you plot frequencies with >=2 detections then you add
 4, 14.5, 27.3, 131 (4 bands; total 11)
-
 """
-
 
 import matplotlib
 from astropy.time import Time
 from get_radio import *
-from ssa_lc import *
+from ssa_lc_fixalpha import *
 
 # Font sizes
 large = 14
@@ -110,10 +107,16 @@ if __name__=="__main__":
         if f==22:
             plot_tpow(ax, choose, -4, 1, 'left')
 
+        # Maybe plot a model
+        tplot = np.logspace(1,3,1000)
+        model_fnu = (1+z)*Fnu(f/(1+z), tplot, 2.9, 4.4, 0.95, 0.91, 30.8)[0]
+        ax.plot(tplot*(1+z), model_fnu, c='Crimson', ls='-', lw=0.5)
+
     # Formatting
     axarr[0,0].set_yscale('log')
     axarr[0,0].set_ylim(0.015,1.3)
     axarr[0,0].set_xscale('log')
+    axarr[0,0].set_xlim(7,200)
     for ax in axarr[:,0]:
         ax.set_ylabel("$f_{\\nu}$ [mJy]", fontsize=large)
         ax.tick_params(axis='both', labelsize=large)
@@ -127,6 +130,6 @@ if __name__=="__main__":
     # Display
     plt.tight_layout()
     plt.subplots_adjust(hspace=0.1)
-    #plt.show()
-    plt.savefig("radio_lc.png", dpi=300)
-    plt.close()
+    plt.show()
+    #plt.savefig("radio_lc.png", dpi=300)
+    #plt.close()

@@ -28,35 +28,21 @@ def interpolate(target_day, x1, y1, ey1):
     return y, ey
 
 
-def day17(days, freq, flux, eflux, ax):
+def day17(days, freq, flux, eflux, ax, col):
     """
     Plot the VLA and NOEMA observations from Day 17
     """
+    choose = np.logical_and(days>17.7, days<19.6)
+    ax.errorbar(freq[choose], flux[choose], eflux[choose], fmt='o', c=col)
 
-    day = 17
-    # Plot the VLA LC
-    x = 8
-    choose = np.logical_and(days==day,freq==x)
-    y = np.min(flux[choose])
-    ax.scatter(x, y, marker='_', c='k')
-    ax.arrow(x, y, 0, -y/4, head_width=x/10, 
-            length_includes_head=True, head_length=y/10, color='k')
-    
-    x = 12 
-    choose = np.logical_and(days==day,freq==x)
-    ax.errorbar(x, flux[choose], eflux[choose], marker='o', c='k')
-
-    # Plot the NOEMA LC
-    x = 79
-    choose = np.logical_and(days==day,freq==x)
-    ax.errorbar(x, flux[choose], eflux[choose], marker='o', c='k')
-
-    x = 94
-    choose = np.logical_and(days==day,freq==x)
-    ax.errorbar(x, flux[choose], eflux[choose], marker='o', c='k')
-
-    # Label
-    ax.text(0.05,0.85,"$\Delta t$=17d", transform=ax.transAxes)
+    nondet = np.logical_and(choose, eflux==0)
+    for i,x in enumerate(freq[nondet]):
+        print(x)
+        y = flux[nondet][i]
+        print(y)
+        ax.arrow(x, y, 
+                0, -y/2, head_width=x/7, 
+                length_includes_head=True, head_length=y/7, color=col)
 
 
 def day24(ax):
@@ -252,30 +238,61 @@ def day131(days, freq, flux, eflux, ax):
     ax.text(0.05,0.85,"$\Delta t$=131d", transform=ax.transAxes)
 
 
-def plot_sep_panels():
-    fig,axarr = plt.subplots(4, 1, figsize=(5,8), sharex=True, sharey=True)
+if __name__=="__main__":
+    cols = ['#003f5c', '#58508d', '#bc5090', '#ff6361', '#ffa600']
+    markers = ['o', 's', 'D', 'P', '*', 'X']
+
+    fig,ax = plt.subplots(1, 1, figsize=(5,4))
     islim, tel, freq, days, flux, eflux = get_data_all()
-    day24(axarr[0])
-    day36(axarr[1])
-    day46(days, freq, flux, eflux, axarr[2])
-    day71(days, freq, flux, eflux, axarr[3])
+
+    bins = [24, 38, 71, 95, 132]
+
+    for b,bin in enumerate(bins):
+        col = cols[b]
+        choose = np.logical_and.reduce((
+            days>bin-bin/20, days<bin+bin/20, eflux>0))
+        if bin!=71:
+            order = np.argsort(freq[choose])
+            ax.errorbar(
+                    freq[choose][order], flux[choose][order], eflux[choose][order], 
+                    fmt='%s-' %markers[b], c=col, label='%s d' %bin)
+            nondet = np.logical_and(choose, eflux==0)
+            #for i,x in enumerate(freq[nondet]):
+            #    print(x)
+            #    y = flux[nondet][i]
+            #    print(y)
+            #    ax.arrow(x, y, 
+            #            0, -y/2, head_width=x/7, 
+            #            length_includes_head=True, head_length=y/7, color=col)
+
+        else:
+            keep = freq[choose] < 80
+            ax.errorbar(
+                    freq[choose][keep], flux[choose][keep], eflux[choose][keep], 
+                    fmt='%s-' %markers[b], c=col, label='%s d' %bin)
+
+
+    #day17(days, freq, flux, eflux, ax, cols[-1])
+    #day24(axarr[0])
+    #day36(axarr[1])
+    #day46(days, freq, flux, eflux, axarr[2])
+    #day71(days, freq, flux, eflux, axarr[3])
     #day94(days, freq, flux, eflux, axarr[3,0])
     #day131(days, freq, flux, eflux, axarr[3,1])
 
     # Formatting
-    for ax in axarr:
-        ax.set_ylabel("Flux Density [mJy]")
-    ax = axarr[-1]
-    ax.set_xlabel("Frequency [GHz]")
+    ax.set_ylabel("Flux Density [mJy]")
+    ax.set_xlabel("Observed Frequency [GHz]")
     ax.set_xscale('log')
     ax.set_yscale('log')
-    ax.set_ylim(0.01, 1.8)
-    ax.set_xlim(3, 230)
+    ax.set_ylim(0.03, 1.1)
+    ax.set_xlim(5, 130)
+    ax.legend(loc='lower right', fontsize=12)
 
     # Final formatting
     plt.tight_layout()
     #plt.show()
-    plt.savefig("radio_sed_evolution.png", dpi=300)
+    plt.savefig("radio_sed.png", dpi=300)
     plt.close()
 
 

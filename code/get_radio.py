@@ -32,7 +32,6 @@ def get_data_all():
     # Now, go through and get the appropriate uncertainties
     for ii,val in enumerate(flux_raw):
         # Identify an upper limit
-        print(val)
         if '<' in val:
             islim[ii] = True
             flux[ii] = float(val[2:].split('$')[0])

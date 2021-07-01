@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 from astropy.cosmology import Planck15
 from get_radio import *
 
-
 use_nu = [94, 79, 26, 12, 8]
 
 # Explosion Constants
@@ -193,7 +192,6 @@ def nu_a(t):
 def fit_func(x_in, alpha_r, k, s, opt_thick_index, t0, Fa0, nua0):
     """ The fitting function """
     alpha_r=1
-    use_nu = [94, 79, 26, 12, 8]
     t,nplt = x_in
     out = []
     for nu in use_nu:
@@ -217,7 +215,6 @@ if __name__=="__main__":
     p0 = [alpha_r, k, s, opt_thick_index, t0, Fa0, nua0]
 
     islim, tel, freq, days, flux, eflux = get_data_all()
-    use_nu = [94, 79, 26, 12, 8] # freqs to fit
     t = []
     y = []
     ey = []
