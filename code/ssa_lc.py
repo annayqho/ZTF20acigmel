@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from astropy.cosmology import Planck15
 from get_radio import *
 
-use_nu = [94, 79, 26, 12, 8]
+use_nu = [117,98,33,15,10]
 
 # Explosion Constants
 p = 3

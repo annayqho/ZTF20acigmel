@@ -79,6 +79,8 @@ if __name__=="__main__":
         plot_all(ax)
 
     plot_freq = []
+
+    # Plot all frequencies with >=2 points
     for f in np.unique(freq):
         if np.logical_and(sum(~islim[freq==f])>=2, f!=34):
             plot_freq.append(f)
