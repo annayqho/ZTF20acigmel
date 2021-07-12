@@ -1,274 +1,134 @@
 """ Plot spectral index between various bands as a function of time """
+
 import matplotlib.pyplot as plt
 import numpy as np
+from get_radio import *
+
+cols = ['k', '#003f5c', '#2f4b7c', '#665191', '#a05195', '#d45087', '#f95d6a', '#ff7c43', '#ffa600']
+cols = cols[::-1]
+markers = ['o', 's', 'D', 'P', '*', 'X', 'o', 's', 'D']
+msize = [6, 6, 6, 10, 12, 10, 6, 6, 6]
+
 
 fig,ax = plt.subplots(1,1,figsize=(6,4.5))
+islim, tel, freq_obs, days_obs, flux_obs, eflux_obs = get_data_all()
 
-# Highest: NOEMA to SMA (146 to 185)
-# c = '#ffa600'
-# dt = 46.5
-# nu1 = 146
-# nu2 = 185
-# f1 = 0.153
-# f2 = 0.150
-# alpha = np.log(f1/f2)/np.log(nu1/nu2)
-# plt.scatter(dt, alpha, c=c, marker='s', label='146/185')
-# plt.arrow(dt, alpha, 0, -1, color=c, length_includes_head=True,
-#         head_length=0.5, head_width=3)
-# 
-# Highest: NOEMA to SMA (94 to 185)
-#dt = 22.5
-#nu1 = 94
-#nu2 = 185
-#f1 = 0.648
-#f2 = 0.48
-#alpha = np.log(f1/f2)/np.log(nu1/nu2)
-#plt.scatter(dt, alpha, edgecolor=c, facecolor='white', marker='s', label='94/185')
-#plt.arrow(dt, alpha, 0, -1, color=c, length_includes_head=True,
-#        head_length=0.5, head_width=3)
+# merge 33 and 34 GHz
+freq_obs[freq_obs==34] = 33
 
-# NOEMA 131 to 146
-c = 'k'
-nu1 = 131
-nu2 = 146
-dt = 46
-f1 = 0.318
-f2 = 0.179
-ef1 = 0.049
-ef2 = 0.056
-alpha = np.log(f1/f2)/np.log(nu1/nu2)
-ealpha = (1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1)
-#plt.errorbar(dt, alpha, yerr=ealpha, fmt='o', c=c, mfc='white', mec=c, label='131/146', lw=0.5)
+z = 0.2442
 
-# NOEMA 94 to 131
-c = 'k'
-nu1 = 94
-nu2 = 131
-dt = 46
-f1 = 0.569
-f2 = 0.318
-ef1 = 0.042
-ef2 = 0.049
-alpha = np.log(f1/f2)/np.log(nu1/nu2)
-ealpha = (1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1)
-plt.errorbar(
-        dt, alpha, yerr=ealpha, fmt='o', c=c, 
-        mfc='white', mec=c, label='94/131', lw=0.5)
+# Convert to the rest-frame
+freq = freq_obs * (1+z)
+flux = flux_obs / (1+z)
+eflux = eflux_obs / (1+z)
+days = days_obs / (1+z)
 
-# NOEMA 79 to 94
-c = '#ffa600'
-nu1 = 79
-nu2 = 94
+# For each freq, get the one above it
+freq_sorted = np.sort(np.unique(freq))
+plot_ind = 0
 
-dt = [17]
-f1 = 0.392
-f2 = 0.305
-ef1 = 0.059
-ef2 = 0.057
-alpha = [np.log(f1/f2)/np.log(nu1/nu2)]
-ealpha = [(1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1)]
+for ii,nu in enumerate(freq_sorted[:-1]):
+    nu_lo = nu
+    nu_hi = freq_sorted[ii+1]
+    print("checking freq %s/%s" %(nu_lo/1.2442, nu_hi/1.2442))
 
-dt.append(24)
-f1 = 0.679
-f2 = 0.648
-ef1 = 0.046
-ef2 = 0.044
-alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
-ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
+    # arrays to plot
+    t = []
+    alpha = []
+    ealpha = []
+    arrow = []
 
-dt.append(31)
-f1 = 1.09
-f2 = 1.03
-ef1 = 0.049
-ef2 = 0.044
-alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
-ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
+    # all the days when this frequency was observed
+    low_crit = freq==nu_lo
+    days_lo = days[low_crit]
+    days_hi = days[freq==nu_hi]
+    fluxes_lo = flux[low_crit]
+    efluxes_lo = eflux[low_crit]
+    fluxes_hi = flux[freq==nu_hi]
+    efluxes_hi = eflux[freq==nu_hi]
+    islims_lo = islim[low_crit]
+    islims_hi = islim[freq==nu_hi]
 
-dt.append(39)
-f1 = 0.924
-f2 = 0.868
-ef1 = 0.050
-ef2 = 0.046
-alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
-ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
+    # for each day, check if the high frequency was observed within days/10d
+    for jj,day_lo in enumerate(days_lo):
+        print("checking day %s" %(day_lo*1.2442))
 
-dt.append(46)
-f1 = 0.822
-f2 = 0.569
-ef1 = 0.048
-ef2 = 0.042
-alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
-ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
+        is_coeval = np.abs(days_hi-day_lo)<day_lo/20
 
-dt.append(67)
-f1 = 0.247
-f2 = 0.130
-ef1 = 0.037
-ef2 = 0.036
-alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
-ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
+        if sum(is_coeval)>0:
+            print("yes, has a pair")
+            
+            islim_lo = islims_lo[jj]
+            islim_hi = islims_hi[is_coeval][0]
 
-ax.scatter(dt, alpha, marker='o', c=c, label="79/94")
-ax.errorbar(dt, alpha, yerr=ealpha, fmt='o-', c=c, lw=0.5)
+            if np.logical_or(islim_lo==False, islim_hi==False):
+                print("at least one is a detection")
+                # choose one point
+                day_hi = days_hi[is_coeval][0]
+                
+                # average time
+                t.append((day_lo+day_hi)/2)
 
-# NOEMA 79 to VLA 36.2
-c = '#ff6e54'
-nu1 = 36.2
-nu2 = 79
-dt = [37.5]
-f1 = 0.675
-f2 = 0.924
-ef1 = 0.171
-ef2 = 0.050
-alpha = [np.log(f1/f2)/np.log(nu1/nu2)]
-ealpha = [(1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1)]
-dt.append(48.5)
-f1 = 0.668
-f2 = 0.822
-ef1 = 0.168
-ef2 = 0.048
-alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
-ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
+                # get fluxes and errors
+                flux_lo = fluxes_lo[jj]
+                flux_hi = fluxes_hi[is_coeval][0]
+                eflux_lo = efluxes_lo[jj]
+                eflux_hi = efluxes_hi[is_coeval][0]
+                print(flux_lo*1.2442, flux_hi*1.2442, eflux_lo*1.2442, eflux_hi*1.2442)
 
-ax.scatter(dt, alpha, marker='s', c=c, label="36.2/79")
-ax.errorbar(dt, alpha, yerr=ealpha, fmt='s-', c=c, lw=0.5)
+                alpha.append(np.log(flux_lo/flux_hi)/np.log(nu_lo/nu_hi))
+                ealpha.append(np.abs((1/np.log(nu_lo/nu_hi)) * (1/(flux_lo*flux_hi)) * (flux_lo*eflux_hi-flux_hi*eflux_lo)))
+                if islim_lo==True:
+                    arrow.append('up')
+                elif islim_hi==True:
+                    arrow.append('down')
+                else:
+                    arrow.append('')
 
-# VLA/ATCA 27 to VLA 36.2
-c = '#dd5182'
-nu1 = 27
-nu2 = 36.2
-dt = [36]
-f1 = 0.497
-f2 = 0.675
-ef1 = 0.011
-ef2 = 0.171
-alpha = [np.log(f1/f2)/np.log(nu1/nu2)]
-ealpha = [(1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1)]
-dt.append(51.9)
-f1 = 0.621
-f2 = 0.668
-ef1 = 0.132
-ef2 = 0.168
-alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
-ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
-dt.append(71.9)
-f1 = 0.450
-f2 = 0.209
-ef1 = 0.096
-ef2 = 0.063
-alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
-ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
-
-ax.scatter(
-        dt, alpha, marker='P', c=c, label="33/45", s=50)
-ax.errorbar(dt, alpha, yerr=ealpha, fmt='P-', c=c, lw=0.5, ms=8)
-
-# VLA 17.7 to VLA/ATCA 27
-c = '#955196'
-nu1 = 17.7
-nu2 = 27
-dt = [71]
-f1 = 0.484
-f2 = 0.450
-ef1 = 0.010
-ef2 = 0.096
-alpha = [np.log(f1/f2)/np.log(nu1/nu2)]
-ealpha = [(1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1)]
-dt.append(94)
-f1 = 0.301
-f2 = 0.213
-ef1 = 0.065
-ef2 = 0.048
-alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
-ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
-dt.append(131)
-f1 = 0.087
-f2 = 0.048
-alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
-ealpha.append(0)
-ax.scatter(dt, alpha, marker='X', c=c, label="22/33")
-ax.errorbar(dt, alpha, yerr=ealpha, fmt='X-', c=c, lw=0.5, ms=8)
-
-# 12 GHz to 17.7 GHz
-c = '#444e86'
-nu1 = 12
-nu2 = 17.7
-dt = [71]
-f1 = 0.401
-f2 = 0.484
-ef1 = 0.046
-ef2 = 0.010
-alpha = [np.log(f1/f2)/np.log(nu1/nu2)]
-ealpha = [(1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1)]
-dt.append(94)
-f1 = 0.278
-f2 = 0.301
-ef1 = 0.032
-ef2 = 0.065
-alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
-ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
-dt.append(131)
-f1 = 0.122
-f2 = 0.087
-alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
-ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
-ax.scatter(dt, alpha, marker='D', c=c, label="15/22")
-ax.errorbar(dt, alpha, yerr=ealpha, fmt='D-', c=c, lw=0.5)
-
-
-# VLA 8 to 12 GHz
-c = '#003f5c'
-nu1 = 8
-nu2 = 12
-
-dt = [17]
-f1 = 0.027
-f2 = 0.037
-alpha = [np.log(f1/f2)/np.log(nu1/nu2)]
-ealpha = [0]
-ax.arrow(
-        dt[0], alpha[0], 0, alpha[0]/3, length_includes_head=True, color=c,
-        head_width=dt[0]/15, head_length=alpha[0]/5)
-
-dt.append(25)
-f1 = 0.057
-f2 = 0.095
-ef1 = 0.005
-ef2 = 0.011
-alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
-ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
-
-dt.append(71)
-f1 = 0.180
-f2 = 0.401
-ef1 = 0.023
-ef2 = 0.046
-alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
-ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
-
-dt.append(94)
-f1 = 0.168
-f2 = 0.278
-ef1 = 0.022
-ef2 = 0.032
-alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
-ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
-
-dt.append(131)
-f1 = 0.109
-f2 = 0.122
-ef1 = 0.010
-ef2 = 0.016
-alpha.append(np.log(f1/f2)/np.log(nu1/nu2))
-ealpha.append((1/np.log(nu1/nu2)) * (1/(f1*f2)) * (f1*ef2-f2*ef1))
-ax.scatter(dt, alpha, c=c, marker='*', label="10/15", s=50)
-ax.errorbar(dt, alpha, yerr=ealpha, marker='*', c=c, lw=0.5, ms=10)
+    if len(t)>0:
+        t = np.array(t)
+        alpha = np.array(alpha)
+        ealpha = np.array(ealpha)
+        arrow = np.array(arrow)
+        print("done generating arrays for this frequency")
+        print(t)
+        print(alpha)
+        print(ealpha)
+        print(arrow)
+        ax.scatter(
+                t, alpha, marker=markers[plot_ind], c=cols[plot_ind], 
+                label="%s/%s" %(int(nu_lo), int(nu_hi)))
+        ax.plot(t, alpha, c=cols[plot_ind])
+        choose = arrow==''
+        ax.errorbar(
+                t[choose], alpha[choose], yerr=ealpha[choose], ms=msize[plot_ind],
+                fmt='%s-' %markers[plot_ind], c=cols[plot_ind], lw=0.5)
+        choose = arrow!=''
+        for k,tval in enumerate(t[choose]):
+            print("plotting a pair with a limit")
+            fac = 1
+            if arrow[k]=='up':
+                print("arrow is up")
+                fac = 1
+            else:
+                print("arrow is down")
+                fac = -1
+            arrowypos = alpha[choose][k]
+            ax.arrow(
+                tval, arrowypos, 0, fac*np.abs(arrowypos)/2, 
+                length_includes_head=True, 
+                color=cols[plot_ind],
+                head_width=tval/15, head_length=np.abs(arrowypos/5))
+        plot_ind += 1
 
 ax.set_xscale('log')
-ax.set_ylim(-4.0,2.1)
-ax.set_xlabel("Days since 2020 Oct 10.0", fontsize=16)
+ax.set_ylim(-3.0,2.1)
+ax.set_xlabel("Rest-frame days since 2020 Oct 10.0", fontsize=16)
 ax.set_ylabel(r"Spectral index $\alpha$ ($f_\nu \propto \nu^{\alpha}$)", fontsize=16)
-plt.legend(loc='lower left', ncol=2, fontsize=10.5)
+plt.legend(
+        bbox_to_anchor=(0,1.02,1,1.02),loc='lower left',mode='expand', borderaxespad=0.,
+        ncol=5, fontsize=10.5)
 ax.tick_params(axis='both', labelsize=14)
 ax.set_xticks([20,30,40,60,100])
 ax.set_xticklabels([20,30,40,60,100])

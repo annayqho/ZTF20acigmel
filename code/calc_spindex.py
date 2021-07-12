@@ -2,6 +2,7 @@
 
 import numpy as np
 
+
 # The optically thin spectral index on Day 21
 f1 = 0.234
 f2 = 0.146
