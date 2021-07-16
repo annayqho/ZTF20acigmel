@@ -89,7 +89,7 @@ ax.errorbar(x, y, ey,
 p0 = [5E-4, 5E4, 1]
 
 # Fit for the Maxwellian in terms of physical quantities
-p0 = [2, 40]
+p0 = [2.0, 40.0]
 popt, pcov = curve_fit(fitfunc_physical, x[1:], y[1:], sigma=ey[1:], absolute_sigma=True, p0=p0)
 xfit = np.linspace(1,300)
 yfit = fitfunc_physical(xfit, *popt)
@@ -97,27 +97,6 @@ print("Maxwellian fit:")
 for i,param in enumerate(popt):
     print("%s +/- %s" %(param,np.sqrt(pcov[i,i])))
 ax.plot(xfit,yfit, c='k', ls='--', zorder=5, label='Maxwellian')
-
-dcm = Planck15.luminosity_distance(z=0.2442).cgs.value
-Lm = popt[0] * 1E-3 * 1E-23 * 4 * np.pi * dcm**2
-taum = popt[1]
-num = popt[2]
-beta = 0.1*((Lm/4.59E22) / (num/0.033)**2)**(1/4)
-R = 1E16*(beta/0.1)*(t/50)
-B = (num/0.033)/(beta/0.1)**4
-ne = 0.036 / (B**(-1) * (beta/0.1)**(-9))
-rel_T = 3.44*(beta/0.1)**2
-
-nufit = np.arange(10, 300) 
-yfit = fitfunc(nufit, *popt)
-
-
-# Also plot a power law
-#yfit = flux[choose][order][1]*(nufit/freq[choose][order][1])**(-1.5)
-#ax.plot(nufit,yfit, c='k', ls=':', zorder=5, label=r'Power law ($\nu^{-1.5}$)')
-
-#yfit = flux[choose][order][1]*(nufit/freq[choose][order][1])**(-1)
-#ax.plot(nufit,yfit, c='k', ls='-', lw=0.8, zorder=5, label=r'Power law ($\nu^{-1}$)')
 
 ax.set_xscale('log')
 ax.set_yscale('log')
