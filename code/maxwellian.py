@@ -3,105 +3,140 @@
 import matplotlib.pyplot as plt
 from get_radio import *
 from scipy.optimize import curve_fit
+from astropy.cosmology import Planck15
 
 
-def fitfunc(nu_ghz, A, C):
-    nu = nu_ghz * 1E9
-    m_e = 9.1E-28
-    c = 3E10
-    e = 4.8E-10
-    k = 1.38E-16
+def fitfunc(nu_ghz, L, tau_m, nu_m):
+    """ Treat all frequencies in GHz """
+    # Eq 29 from Mahadevan paper
+    xM = nu_ghz/nu_m
+    Inu = 2.5651*(1+1.92/xM**(1/3)+0.9977/xM**(2/3))*np.exp(-1.8899*xM**(1/3))
 
-    #theta_e = k*T / (m_e * c**2)
-    #w_b = e*B/(m_e*c)
-    #X = w/w_b
-    #xM = 2*X/(3*theta_e**2)
+    # Ben's equation
+    exponent = -tau_m * (nu_ghz/nu_m)**(-1) * Inu
+    Lnu = L * xM**2 * (1-np.exp(exponent))
 
-    w = nu*(2*np.pi)
-    xM = C*(2*m_e**3*c**5*w) / (3*k**2*e)
-    y = A*2.5651*(1+1.92/xM**(1/3)+0.9977/xM**(2/3))*np.exp(-1.8899*xM**(1/3))
-
-    return y
+    return Lnu
 
 
-islim, tel, freq, days, flux, eflux = get_data_all()
-bin = 46
-col = '#a05195'
-marker = '*'
-msize = 14
+def fitfunc_physical(nu_ghz, B, ne):
+    """ This time with physical parameters
+
+    Te_rel = kT/mc^2
+    beta = v/c
+    R = in cm
+    B = in Gauss
+
+    Treat all frequencies in GHz """
+    beta = 0.2
+
+    # Scale factor in mJy
+    v_cgs = beta*3E10
+    L = 4.59E22 * B**2 * (beta/0.1)**12 * (td/50)**2
+    dcm = Planck15.luminosity_distance(z=0.2442).cgs.value
+    fmjy = (L / (4*np.pi*dcm**2)) / 1E-23 / 1E-3
+
+    # Synchrotron frequency in GHz
+    nu_m = (0.033) * (beta/0.1)**4 * B
+
+    # taum
+    tau_m = 1.18E6 * ne * B**(-1) * (beta/0.1)**(-9) * (td/50)
+
+    # Eq 29 from Mahadevan paper
+    xM = nu_ghz/nu_m
+    Inu = 2.5651*(1+1.92/xM**(1/3)+0.9977/xM**(2/3))*np.exp(-1.8899*xM**(1/3))
+
+    # Ben's equation
+    exponent = -tau_m * (nu_ghz/nu_m)**(-1) * Inu
+    fnu = fmjy * xM**2 * (1-np.exp(exponent))
+
+    return fnu
+
+
+def fitfunc_powlaw(x, A, beta):
+    return A*x**(beta)
 
 fig,ax = plt.subplots(1,1,figsize=(5.5,4))
 
-choose = np.logical_and.reduce((
-    days>bin-bin/20, days<bin+bin/20, eflux>0))
-if bin!=71:
-    order = np.argsort(freq[choose])
-    ax.errorbar(
-            freq[choose][order], flux[choose][order], eflux[choose][order],
-            fmt='%s-' %marker, c=col, label=None, ms=msize)
-    ax.scatter(0, 0, marker='%s' %marker, c=col, label='%s d' %bin, s=100)
-    nondet = np.logical_and(choose, eflux==0)
-else:
-    keep = freq[choose] < 80
-    order = np.argsort(freq[choose][keep])
-    ax.errorbar(
-            freq[choose][keep][order], flux[choose][keep][order], 
-            eflux[choose][keep],
-            fmt='%s-' %'D', c=col, label='%s d' %bin)
+islim, tel, freq, days, flux, eflux = get_data_all()
+z = 0.2442
 
+# Choose two epochs of observations to fit together
+#choose = np.logical_and.reduce((days>41, days<52, islim==False))
+choose = np.logical_and.reduce((days>70, days<72, islim==False))
+# Get values in rest-frame
+x = freq[choose] * (1+z)
+y = flux[choose] / (1+z)
+ey = eflux[choose] / (1+z)
+# Sort
+order = np.argsort(x)
+x = x[order]
+y = y[order]
+ey = ey[order]
+td = np.average(days[choose])
 
-p0 = [23.9, 3E-23]
-popt, pcov = curve_fit(
-        fitfunc, freq[choose][order][1:], flux[choose][order][1:], 
-        p0, sigma=eflux[choose][order][1:], absolute_sigma=True)
+# Plot the data
+#col = '#a05195'
+col = 'darkblue'
+#marker = '*'
+marker = 'o'
+#msize = 14
+msize = 10
+ax.errorbar(x, y, ey, 
+        fmt='%s-' %marker, c=col, label=None, ms=msize)
 
-# I actually get (2.73 +/- 1.13) x 10^(-23)
+# Fit for a Maxwellian w/o physical parameters
+p0 = [5E-4, 5E4, 1]
 
-B = np.logspace(0,2)
-T = np.sqrt(3.7E22 / B)
+# Fit for the Maxwellian in terms of physical quantities
+p0 = [2, 40]
+popt, pcov = curve_fit(fitfunc_physical, x[1:], y[1:], sigma=ey[1:], absolute_sigma=True, p0=p0)
+xfit = np.linspace(1,300)
+yfit = fitfunc_physical(xfit, *popt)
+print("Maxwellian fit:")
+for i,param in enumerate(popt):
+    print("%s +/- %s" %(param,np.sqrt(pcov[i,i])))
+ax.plot(xfit,yfit, c='k', ls='--', zorder=5, label='Maxwellian')
 
-nu_g = e*B / (m_e*c)
-nu_cutoff = (k*T/(m_e*c**2))**2 * nu_g
+dcm = Planck15.luminosity_distance(z=0.2442).cgs.value
+Lm = popt[0] * 1E-3 * 1E-23 * 4 * np.pi * dcm**2
+taum = popt[1]
+num = popt[2]
+beta = 0.1*((Lm/4.59E22) / (num/0.033)**2)**(1/4)
+R = 1E16*(beta/0.1)*(t/50)
+B = (num/0.033)/(beta/0.1)**4
+ne = 0.036 / (B**(-1) * (beta/0.1)**(-9))
+rel_T = 3.44*(beta/0.1)**2
 
-# Best fit: A = 23.9 +/- 19.2
-# B and T basically unconstrained...huge uncertainties
-# oh, that's because there was a degeneracy between them
-# B = 19.64 G
-# T = 4.32E10 K
+nufit = np.arange(10, 300) 
+yfit = fitfunc(nufit, *popt)
 
-nufit = np.arange(50, 300) 
-
-yfit = fitfunc(nufit, *p0)
-ax.plot(nufit,yfit, c='k', ls='--', zorder=5, label='Maxwellian')
 
 # Also plot a power law
-yfit = flux[choose][order][1]*(nufit/freq[choose][order][1])**(-1.5)
-ax.plot(nufit,yfit, c='k', ls=':', zorder=5, label=r'Power law ($\nu^{-1.5}$)')
+#yfit = flux[choose][order][1]*(nufit/freq[choose][order][1])**(-1.5)
+#ax.plot(nufit,yfit, c='k', ls=':', zorder=5, label=r'Power law ($\nu^{-1.5}$)')
 
-yfit = flux[choose][order][1]*(nufit/freq[choose][order][1])**(-1)
-ax.plot(nufit,yfit, c='k', ls='-', lw=0.8, zorder=5, label=r'Power law ($\nu^{-1}$)')
-
-print(freq[choose][order], flux[choose][order])
-
+#yfit = flux[choose][order][1]*(nufit/freq[choose][order][1])**(-1)
+#ax.plot(nufit,yfit, c='k', ls='-', lw=0.8, zorder=5, label=r'Power law ($\nu^{-1}$)')
 
 ax.set_xscale('log')
 ax.set_yscale('log')
 
-ax.set_xticks([30,50,100,200])
-ax.set_xticklabels([30,50,100,200])
+ax.set_xticks([10,30,50,100,200])
+ax.set_xticklabels([10,30,50,100,200])
 ax.set_yticks([0.1, 0.2, 0.3, 0.4, 0.6, 1])
 ax.set_yticklabels([0.1, 0.2, 0.3, 0.4, 0.6, 1])
 plt.minorticks_off()
 
-ax.set_xlabel("Frequency [GHz]", fontsize=14)
-ax.set_ylabel("Flux Density (mJy)", fontsize=14)
+ax.set_xlabel("Rest Frequency [GHz]", fontsize=14)
+ax.set_ylabel("Rest Flux Density (mJy)", fontsize=14)
 ax.tick_params(axis='both', labelsize=12)
 
-ax.set_xlim(30, 250)
-ax.set_ylim(1E-1, 1)
+ax.set_xlim(9, 300)
+ax.set_ylim(7E-2, 1)
 
-plt.legend(loc='lower left', fontsize=11)
+plt.legend(loc='upper left', fontsize=11)
 plt.tight_layout()
-#plt.show()
-plt.savefig("camel_sed_maxwellian.png", dpi=300)
-plt.close()
+plt.show()
+#plt.savefig("camel_sed_maxwellian.png", dpi=300)
+#plt.close()

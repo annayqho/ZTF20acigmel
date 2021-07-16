@@ -20,6 +20,7 @@ if __name__=="__main__":
     islim, tel, freq, days, flux, eflux = get_data_all()
 
     bins = [18, 24, 30.3, 38, 46, 51.9, 71, 95, 132]
+    bins = bins[6:7]
 
     for b,bin in enumerate(bins):
         col = cols[b]

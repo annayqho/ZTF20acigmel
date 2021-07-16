@@ -7,6 +7,7 @@ from scipy.optimize import curve_fit
 from get_radio import *
 
 z = 0.2442
+z = 0 
 
 t0 = 72 / (1+z) # reference time
 
@@ -59,6 +60,7 @@ islim, tel, freq_obs, days_obs, flux_obs, eflux_obs = get_data_all()
 #eflux_obs = eflux_obs[keep]
 
 # Put everything into the rest-frame before modeling
+z = 0
 freq = freq_obs[islim==False] * (1+z)
 flux = flux_obs[islim==False] / (1+z)
 eflux = eflux_obs[islim==False] / (1+z)
@@ -68,7 +70,8 @@ days = days_obs[islim==False] / (1+z)
 bins_obs = np.array([13, 18, 24, 28.3, 31.8, 38, 46, 51.9, 71, 95, 132])
 bins = bins_obs / (1+z)
 
-use_ind = np.arange(len(bins))[8:]
+use_ind = np.arange(len(bins))[4:]
+#use_ind = np.arange(len(bins))[0:8]
 
 # Choose two bins for now
 t = [] # time 
@@ -99,7 +102,8 @@ print(t,x)
 #fig,ax = plt.subplots(1,1,figsize=(6,4))
 fig,ax = plt.subplots(1,1,figsize=(4,3))
 
-col = ['pink', 'red', 'orange', 'yellow', 'lightgreen', 'forestgreen', 'darkgreen', 'lightblue', 'darkblue', 'violet', 'purple', 'k']
+#col = ['#003f5c', '#bc5090', '#ffa600']
+col = ['k', '#003f5c', '#2f4b7c', '#665191', '#a05195', '#d45087', '#f95d6a', '#ff7c43', '#ffa600']
 j = 0
 for ii in use_ind:
     choose = t==bins[ii]
@@ -141,11 +145,12 @@ print("reduced X2: %s" %red_chisq)
 
 plt.yscale('log')
 plt.xscale('log')
-plt.legend(loc='lower center', ncol=6)
-plt.ylim(3E-3, 1.5)
+plt.legend(loc='upper left', ncol=3)
+plt.text(0.05, 0.7, r'$\chi^2=0.7$', transform=ax.transAxes, fontsize=12)
+plt.ylim(1E-2, 1.5)
 plt.xlabel("Freq. (GHz)", fontsize=14)
 plt.ylabel("Flux density [mJy]", fontsize=14)
 plt.tight_layout()
 plt.show()
-#plt.savefig("nup_Fp_fits_low_freq_vla.png", dpi=200)
+#plt.savefig("nup_Fp_fits_high_freq.png", dpi=200)
 #plt.close()

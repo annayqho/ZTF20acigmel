@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from get_radio import *
 
-cols = ['k', '#003f5c', '#2f4b7c', '#665191', '#a05195', '#d45087', '#f95d6a', '#ff7c43', '#ffa600']
+cols = ['k', 'k', '#003f5c', '#2f4b7c', '#665191', '#a05195', '#d45087', '#f95d6a', '#ff7c43', '#ffa600']
 cols = cols[::-1]
-markers = ['o', 's', 'D', 'P', '*', 'X', 'o', 's', 'D']
-msize = [6, 6, 6, 10, 12, 10, 6, 6, 6]
+markers = ['o', '*', 'D', 's', 'D', 'P', '*', 'X', 'o', 's', 'D']
+msize = [6, 12, 6, 6, 6, 10, 12, 10, 6, 6, 6]
 
 
 fig,ax = plt.subplots(1,1,figsize=(6,4.5))
@@ -16,7 +16,17 @@ islim, tel, freq_obs, days_obs, flux_obs, eflux_obs = get_data_all()
 # merge 33 and 34 GHz
 freq_obs[freq_obs==34] = 33
 
+# don't include 18 GHz because it's from the ATels...
+discard = np.logical_or(freq_obs==18, flux_obs/eflux_obs<3)
+islim = islim[~discard]
+tel = tel[~discard]
+freq_obs = freq_obs[~discard]
+days_obs = days_obs[~discard]
+flux_obs = flux_obs[~discard]
+eflux_obs = eflux_obs[~discard]
+
 z = 0.2442
+z = 0
 
 # Convert to the rest-frame
 freq = freq_obs * (1+z)
@@ -31,7 +41,8 @@ plot_ind = 0
 for ii,nu in enumerate(freq_sorted[:-1]):
     nu_lo = nu
     nu_hi = freq_sorted[ii+1]
-    print("checking freq %s/%s" %(nu_lo/1.2442, nu_hi/1.2442))
+    #print("checking freq %s/%s" %(nu_lo/1.2442, nu_hi/1.2442))
+    print("checking freq %s/%s" %(nu_lo, nu_hi))
 
     # arrays to plot
     t = []
@@ -52,9 +63,9 @@ for ii,nu in enumerate(freq_sorted[:-1]):
 
     # for each day, check if the high frequency was observed within days/10d
     for jj,day_lo in enumerate(days_lo):
-        print("checking day %s" %(day_lo*1.2442))
+        print("checking day %s" %(day_lo))
 
-        is_coeval = np.abs(days_hi-day_lo)<day_lo/20
+        is_coeval = np.abs(days_hi-day_lo)<0.1*day_lo
 
         if sum(is_coeval)>0:
             print("yes, has a pair")
@@ -75,10 +86,15 @@ for ii,nu in enumerate(freq_sorted[:-1]):
                 flux_hi = fluxes_hi[is_coeval][0]
                 eflux_lo = efluxes_lo[jj]
                 eflux_hi = efluxes_hi[is_coeval][0]
-                print(flux_lo*1.2442, flux_hi*1.2442, eflux_lo*1.2442, eflux_hi*1.2442)
+                #print(flux_lo*1.2442, flux_hi*1.2442, eflux_lo*1.2442, eflux_hi*1.2442)
+                print(flux_lo, flux_hi, eflux_lo, eflux_hi)
 
-                alpha.append(np.log(flux_lo/flux_hi)/np.log(nu_lo/nu_hi))
-                ealpha.append(np.abs((1/np.log(nu_lo/nu_hi)) * (1/(flux_lo*flux_hi)) * (flux_lo*eflux_hi-flux_hi*eflux_lo)))
+                index = np.log(flux_lo/flux_hi)/np.log(nu_lo/nu_hi)
+                alpha.append(index)
+                eindex = np.abs((1/np.log(nu_lo/nu_hi)) * (1/(flux_lo*flux_hi)) * (flux_lo*eflux_hi-flux_hi*eflux_lo))
+                ealpha.append(eindex)
+                print("measured index is %s +/- %s" %(alpha,ealpha))
+    
                 if islim_lo==True:
                     arrow.append('up')
                 elif islim_hi==True:
@@ -86,7 +102,7 @@ for ii,nu in enumerate(freq_sorted[:-1]):
                 else:
                     arrow.append('')
 
-    if len(t)>0:
+    if np.logical_and(len(t)>0, nu_lo!=130.872):
         t = np.array(t)
         alpha = np.array(alpha)
         ealpha = np.array(ealpha)
@@ -116,15 +132,15 @@ for ii,nu in enumerate(freq_sorted[:-1]):
                 fac = -1
             arrowypos = alpha[choose][k]
             ax.arrow(
-                tval, arrowypos, 0, fac*np.abs(arrowypos)/2, 
+                tval, arrowypos, 0, fac*0.5,
                 length_includes_head=True, 
                 color=cols[plot_ind],
-                head_width=tval/15, head_length=np.abs(arrowypos/5))
+                head_width=tval/15, head_length=0.2)
         plot_ind += 1
 
 ax.set_xscale('log')
-ax.set_ylim(-3.0,2.1)
-ax.set_xlabel("Rest-frame days since 2020 Oct 10.0", fontsize=16)
+#ax.set_ylim(-3.0,2.1)
+ax.set_xlabel("Days since 2020 Oct 10.0", fontsize=16)
 ax.set_ylabel(r"Spectral index $\alpha$ ($f_\nu \propto \nu^{\alpha}$)", fontsize=16)
 plt.legend(
         bbox_to_anchor=(0,1.02,1,1.02),loc='lower left',mode='expand', borderaxespad=0.,
