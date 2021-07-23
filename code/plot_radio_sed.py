@@ -20,7 +20,7 @@ if __name__=="__main__":
     islim, tel, freq, days, flux, eflux = get_data_all()
 
     bins = [18, 24, 30.3, 38, 46, 51.9, 71, 95, 132]
-    bins = bins[6:7]
+    #bins = bins[6:7]
 
     for b,bin in enumerate(bins):
         col = cols[b]
@@ -43,7 +43,8 @@ if __name__=="__main__":
             #            length_includes_head=True, head_length=y/7, color=col)
 
         else:
-            keep = freq[choose] < 80
+            #keep = freq[choose] < 80
+            keep = freq[choose] < 500
             ax.errorbar(
                     freq[choose][keep], flux[choose][keep], eflux[choose][keep], 
                     fmt='%s-' %markers[b], c=col, label=None, ms=msize[b], lw=2,

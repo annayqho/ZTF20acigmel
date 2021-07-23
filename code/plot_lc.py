@@ -23,7 +23,7 @@ ms=10
 z = 0.2442
 
 # Initializing plot
-fig,axarr = plt.subplots(4,3,figsize=(8,7), sharex=True, sharey=True)
+fig,axarr = plt.subplots(3,4,figsize=(9,6), sharex=True, sharey=True)
 
 
 def plot_all(ax):
@@ -67,7 +67,7 @@ def plot_tpow(ax, choose, pow, ind=1, tjust='right'):
     yvals = flux[choose][ind]*(xvals/days[choose][ind])**pow
     ax.plot(xvals/(1+z),yvals,c='k',lw=0.5,ls='--')
     ax.text(days[choose][ind]/(1+z), flux[choose][ind], 
-            '$f_\\nu \propto t^{%s}$' %pow, 
+            '$\propto t^{%s}$' %pow, 
             fontsize=small, ha=tjust, va='bottom')
 
 
@@ -82,9 +82,12 @@ if __name__=="__main__":
 
     # Plot all frequencies with >=2 points
     for f in np.unique(freq):
+        print(f)
+        print(sum(~islim[freq==f])>=2)
         if np.logical_and(sum(~islim[freq==f])>=2, f!=34):
             plot_freq.append(f)
     plot_freq = np.array(plot_freq)[::-1]
+    print(plot_freq)
 
     for ii,f in enumerate(plot_freq):
         ax = axarr.flatten()[ii]
@@ -102,36 +105,50 @@ if __name__=="__main__":
             plot_tpow(ax, choose, 2)
         if f==10:
             plot_tpow(ax, choose, 1, ind=2)
-        if f==117:
+        if f==130.872:
+            plot_tpow(ax, choose, -4, 2, 'left')
+        if f==94.244:
+            plot_tpow(ax, choose, 2, 1, 'right')
             plot_tpow(ax, choose, -4, 5, 'left')
+        if f==78.756:
+            plot_tpow(ax, choose, 2, 1, 'right')
+            plot_tpow(ax, choose, -4, 5, 'left')
+        if f==45:
+            plot_tpow(ax, choose, -4, 2, 'left')
         if f==33:
             plot_tpow(ax, choose, -4, 6, 'left')
         if f==22:
             plot_tpow(ax, choose, -4, 1, 'left')
+        if f==18:
+            plot_tpow(ax, choose, 1, 1, 'right')
 
         # Maybe plot a model
-        tplot = np.logspace(1,3,1000)
-        model_fnu = (1+z)*Fnu(f/(1+z), tplot, 2.9, 4.4, 0.95, 0.91, 30.8)[0]
-        ax.plot(tplot*(1+z), model_fnu, c='Crimson', ls='-', lw=0.5)
+        #tplot = np.logspace(1,3,1000)
+        #model_fnu = (1+z)*Fnu(f/(1+z), tplot, 2.9, 4.4, 0.95, 0.91, 30.8)[0]
+        #ax.plot(tplot*(1+z), model_fnu, c='Crimson', ls='-', lw=0.5)
 
     # Formatting
     axarr[0,0].set_yscale('log')
     axarr[0,0].set_ylim(0.015,1.3)
     axarr[0,0].set_xscale('log')
-    axarr[0,0].set_xlim(7,200)
+    axarr[0,0].set_xlim(9,130)
     for ax in axarr[:,0]:
         ax.set_ylabel("$f_{\\nu}$ [mJy]", fontsize=large)
         ax.tick_params(axis='both', labelsize=large)
     for ax in axarr[-1,:]:
         ax.set_xlabel("$\Delta t$ [d]", fontsize=large)
         ax.tick_params(axis='both', labelsize=large)
+    #axarr[1,2].set_xlabel("$\Delta t$ [d]", fontsize=large)
+    #axarr[1,2].tick_params(axis='both', labelsize=large)
+    #axarr[1,3].set_xlabel("$\Delta t$ [d]", fontsize=large)
+    #axarr[1,3].tick_params(axis='both', labelsize=large)
 
     axarr[-1,-1].axis('off')
-    axarr[3,1].axis('off')
+    axarr.flatten()[-2].axis('off')
 
     # Display
-    plt.tight_layout()
-    plt.subplots_adjust(hspace=0.1)
-    plt.show()
-    #plt.savefig("radio_lc.png", dpi=300)
-    #plt.close()
+    #plt.tight_layout()
+    plt.subplots_adjust(hspace=0.05, wspace=0.1)
+    #plt.show()
+    plt.savefig("radio_lc.png", dpi=300, bbox_inches='tight')
+    plt.close()
