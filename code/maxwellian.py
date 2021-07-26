@@ -1,6 +1,8 @@
 """ Fit a relativistic Maxwellian """
 
 import matplotlib.pyplot as plt
+from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes
+from mpl_toolkits.axes_grid1.inset_locator import mark_inset,inset_axes
 from get_radio import *
 from scipy.optimize import curve_fit
 from astropy.cosmology import Planck15
@@ -58,8 +60,10 @@ def fitfunc_powlaw(x, A, beta):
 
 
 def fitfunc_exponential(nu, const, nuM):
-    xM = nu/nuM
-    return const*np.exp(-1.8899*xM**(1/3))
+    xM = 2*nu/(3*nuM)
+    Inu = (1+1.92/xM**(1/3)+0.9977/xM**(2/3))*np.exp(-1.8899*xM**(1/3))
+    #return const*nu*np.exp(-1.8899*xM**(1/3))
+    return const*nu*Inu
 
 
 def at2020xnd(ax):
@@ -93,30 +97,87 @@ def at2020xnd(ax):
     p0 = [0.0003, 5.5E4, 0.7]
 
     # Fit for the Maxwellian in terms of physical quantities
-    popt, pcov = curve_fit(fitfunc, x, y, p0=p0, #maxfev=1000000,
-            sigma=ey, absolute_sigma=True)
+    popt, pcov = curve_fit(fitfunc, x[1:], y[1:], p0=p0, #maxfev=1000000,
+            sigma=ey[1:], absolute_sigma=True, 
+            bounds=((0.0001,1E4,0.1),(0.0005,7E4,1.2)))
     xfit = np.linspace(1,300)
     yfit = fitfunc(xfit, *popt)
     print("Maxwellian fit:")
     for i,param in enumerate(popt):
         print("%s +/- %s" %(param,np.sqrt(pcov[i,i])))
 
-    yfit = fitfunc(xfit, *p0)
+    #yfit = fitfunc(xfit, *p0)
+    yfit = fitfunc(xfit, *popt)
     ax.plot(
             xfit,yfit, c='k', ls='--', zorder=5, 
             label=r'Maxwellian ($\nu_m\approx4$)')
 
-    ax.set_xticks([10,30,50,100,200])
-    ax.set_xticklabels([10,30,50,100,200])
-    ax.set_yticks([0.1, 0.2, 0.3, 0.4, 0.6, 1])
-    ax.set_yticklabels([0.1, 0.2, 0.3, 0.4, 0.6, 1])
+    ax.set_xticks([50,100,150,200,250])
+    ax.set_xticklabels([50,100,150,200,250])
+    ax.set_yticks([0.2, 0.4, 0.6, 0.8])
+    ax.set_yticklabels([0.2, 0.4, 0.6, 0.8])
     plt.minorticks_off()
+    ax.set_xlim(0, 300)
+    ax.set_ylim(0, 0.9)
 
-    ax.set_xlim(9, 300)
-    ax.set_ylim(7E-2, 1)
 
-    #plt.savefig("camel_sed_maxwellian.png", dpi=300)
-    #plt.close()
+
+def at2020xnd_low_freq_late(ax):
+    islim, tel, freq, days, flux, eflux = get_data_all()
+    z = 0.2442
+
+    bins = [71,95,132]
+    col = ['#003f5c', '#bc5090', '#ffa600']
+
+    for i,b in enumerate(bins):
+        choose = np.logical_and.reduce((days>b-3, days<b+3, islim==False))
+        # Get values in rest-frame
+        x = freq[choose] * (1+z)
+        y = flux[choose] / (1+z)
+        ey = eflux[choose] / (1+z)
+        # Sort
+        order = np.argsort(x)
+        x = x[order]
+        y = y[order]
+        ey = ey[order]
+        td = np.average(days[choose]) / (1+z)
+
+        if b==132:
+            x = x[1:]
+            y = y[1:]
+            ey = ey[1:]
+
+        # Plot the data
+        marker = 'o'
+        msize = 5
+        ax.errorbar(x, y, ey, 
+                fmt='%s-' %marker, c=col[i], ms=msize, label=str(b))
+
+        # Fit for a Maxwellian w/o physical parameters
+        p0 = [0.0003, 5.5E4, 0.7]
+
+        # Fit for the Maxwellian in terms of physical quantities
+        popt, pcov = curve_fit(fitfunc, x, y, p0=p0, #maxfev=1000000,
+                sigma=ey, absolute_sigma=True, 
+                bounds=((0.00001,0.01E4,0.1),(0.0006,6E4,1.0)))
+        xfit = np.linspace(1,100)
+        yfit = fitfunc(xfit, *popt)
+        print("Maxwellian fit:")
+        for i,param in enumerate(popt):
+            print("%s +/- %s" %(param,np.sqrt(pcov[i,i])))
+
+        yfit = fitfunc(xfit, *popt)
+        ax.plot(
+                xfit,yfit, c='k', ls='--', zorder=5)
+
+        ax.set_xticks([10,20,30,40,50])
+        ax.set_xticklabels([10,20,30,40,50])
+        ax.set_yticks([0.2, 0.4, 0.6, 0.8])
+        ax.set_yticklabels([0.2, 0.4, 0.6, 0.8])
+        plt.minorticks_off()
+        ax.set_xlim(7, 60)
+        ax.set_ylim(0, 0.45)
+        ax.legend()
 
 
 def at2020xnd_high_freq(ax):
@@ -133,9 +194,9 @@ def at2020xnd_high_freq(ax):
     ey = eflux[choose] / (1+z)
     # Sort
     order = np.argsort(x)
-    x = x[order][4:]
-    y = y[order][4:]
-    ey = ey[order][4:]
+    x = x[order][1:]
+    y = y[order][1:]
+    ey = ey[order][1:]
     td = np.average(days[choose]) / (1+z)
 
     # Plot the data
@@ -147,7 +208,8 @@ def at2020xnd_high_freq(ax):
 
     # Fit for a Maxwellian w/o physical parameters
     # This function is only the exponential, so a constant and nuM
-    p0 = [0.0003, 0.7]
+    #p0 = [0.0003, 0.7]
+    p0 = [0.0003, 100]
     popt, pcov = curve_fit(
             fitfunc_exponential, x, y, sigma=ey, absolute_sigma=True, p0=p0,
             bounds=((0, 0), (np.inf, np.inf)))
@@ -174,7 +236,7 @@ def at2020xnd_high_freq(ax):
     for i,param in enumerate(popt):
         print("%s +/- %s" %(param,np.sqrt(pcov[i,i])))
     ax.plot(xfit,yfit, c='k', ls='--', zorder=5, 
-            label=r'Maxwellian ($\nu_m\approx4\,\mathrm{GHz}$)')
+            label=r'Maxwellian ($\nu_m\approx1\,\mathrm{GHz}$)')
 
     # Fit for a power law
     popt, pcov = curve_fit(fitfunc_powlaw, x, y, maxfev=1000000)
@@ -191,7 +253,7 @@ def at2020xnd_high_freq(ax):
 
 
 def at2018cow():
-    fig,ax = plt.subplots(1,1,figsize=(5.5,4))
+    fig,ax = plt.subplots(1,1,figsize=(5,4))
 
     x = np.array([9.0, 34.0, 243.3, 259.3, 341.5, 357.5])
     y = np.array([0.27, 5.6, 36.6, 31.21, 19.49, 17.42])
@@ -215,13 +277,22 @@ def at2018cow():
         print("%s +/- %s" %(param,np.sqrt(pcov[i,i])))
     ax.plot(xfit,yfit, c='k', ls='--', zorder=5, label='Maxwellian')
 
+    axins = inset_axes(ax, 1.5, 1.5, loc=4, bbox_to_anchor=(0.9,0.25),
+            bbox_transform=ax.figure.transFigure)
+    axins.errorbar(x[2:], y[2:], ey[2:],fmt='%s-' %marker, c=col, 
+            label=None, ms=msize)
+    xfit = np.linspace(230,380)
+    yfit = fitfunc(xfit, *popt)
+    axins.plot(xfit,yfit, c='k', ls='--', zorder=5, label='Maxwellian')
+    mark_inset(ax, axins, loc1=2, loc2=4)
+
     ax.set_xscale('log')
     ax.set_yscale('log')
 
-    #ax.set_xticks([10,30,50,100,200])
-    #ax.set_xticklabels([10,30,50,100,200])
-    #ax.set_yticks([0.2, 1, 3, 5, 10, 50])
-    #ax.set_yticklabels([0.2, 1, 3, 5, 10, 50])
+    ax.set_xticks([10,20,30,50,100,200,300])
+    ax.set_xticklabels([10,20,30,50,100,200,300])
+    ax.set_yticks([0.2,0.4, 1, 3, 10, 30, 50])
+    ax.set_yticklabels([0.2,0.4, 1, 3, 10, 30, 50])
     plt.minorticks_off()
 
     ax.set_xlabel("Rest Frequency [GHz]", fontsize=14)
@@ -229,11 +300,12 @@ def at2018cow():
     ax.tick_params(axis='both', labelsize=12)
 
     ax.set_xlim(7, 400)
-    ax.set_ylim(0.18, 50)
+    ax.set_ylim(0.18, 80)
 
     plt.tight_layout()
     plt.show()
     #plt.savefig("cow_sed_maxwellian.png", dpi=300)
+    #plt.close()
 
 
 def ultralong():
@@ -253,65 +325,104 @@ def ultralong():
             fmt='%s-' %marker, c=col, label=None, ms=msize)
 
     # Fit for a Maxwellian w/o physical parameters
-    p0 = [5E-1, 1000, 1E-1]
+    #p0 = [5E-1, 1000, 1E-1]
 
-    nsim = 100
-    ysamples = np.zeros((nsim, len(x)))
-    nums = np.zeros(nsim)
-    taums = np.zeros(nsim)
-    fms = np.zeros(nsim)
-    for jj,val in enumerate(y):
-        ysamples[:,jj] = np.random.normal(loc=val, scale=ey[jj], size=nsim)
-    for jj in np.arange(nsim):
-        popt, pcov = curve_fit(fitfunc, x, y, p0=p0, maxfev=1000000)
-        fms[jj] = popt[0]
-        taums[jj] = popt[1]
-        nums[jj] = popt[2]
+    # just the exponential
+    p0 = [5E-1, 1]
+
+    #nsim = 100
+    #ysamples = np.zeros((nsim, len(x)))
+    #nums = np.zeros(nsim)
+    #taums = np.zeros(nsim)
+    #fms = np.zeros(nsim)
+    #for jj,val in enumerate(y):
+    #    ysamples[:,jj] = np.random.normal(loc=val, scale=ey[jj], size=nsim)
+    #for jj in np.arange(nsim):
+    #    #popt, pcov = curve_fit(fitfunc, x, y, p0=p0, maxfev=1000000)
+    #    popt, pcov = curve_fit(fitfunc, x, y, p0=p0, maxfev=1000000)
+    #    fms[jj] = popt[0]
+    #    taums[jj] = popt[1]
+    #    nums[jj] = popt[2]
+
+    popt, pcov = curve_fit(
+            fitfunc_exponential, x[2:5], y[2:5], sigma=ey[2:5], absolute_sigma=True, 
+            p0=p0, maxfev=100000)
     xfit = np.linspace(1,30)
-    yfit = fitfunc(xfit, *popt)
+    yfit = fitfunc_exponential(xfit, *popt)
     print("Maxwellian fit:")
     for i,param in enumerate(popt):
         print("%s +/- %s" %(param,np.sqrt(pcov[i,i])))
     ax.plot(xfit,yfit, c='k', ls='--', zorder=5, label='Maxwellian')
 
+    xplot = np.linspace(1,20)
+    yplot = (y[1]-10)*(xplot/x[1])**(1/3)
+    ax.plot(xplot, yplot,c='k',ls='-',label=r'$f_{\nu} \propto \nu^{1/3}$')
+
+    ax.legend()
+    ax.set_xscale('log')
+    ax.set_yscale('log')
+    ax.set_ylim(45,250)
+    ax.set_xlim(5,34)
+    ax.set_yticks([50,70,100,150,200])
+    ax.set_yticklabels([50,70,100,150,200])
+    ax.set_xticks([5,7,10,15,20,30])
+    ax.set_xticklabels([5,7,10,15,20,30])
+    ax.set_ylabel("Rest Flux Density (mJy)", fontsize=14)
+    ax.tick_params(axis='both', labelsize=12)
+    ax.set_xlabel("Rest Frequency [GHz]", fontsize=14)
+    plt.minorticks_off()
     plt.tight_layout()
-    plt.show()
-    #plt.savefig("cow_sed_maxwellian.png", dpi=300)
+    #plt.show()
+    plt.savefig("ultralong_maxwellian.png", dpi=300)
+    plt.close()
 
 
-if __name__=="__main__":
-    # Initialize figure
-    fig,axarr = plt.subplots(2,1,figsize=(4,6), sharey=True)
+def make_camel_plots():
+    """ Generate plots of the Camel """
+
+    # two-panel
+    #fig,axarr = plt.subplots(2,1,figsize=(4,6), sharey=True)
+
+    # one-panel
+    fig,ax = plt.subplots(1,1,figsize=(4,3), sharey=True)
 
     # Top panel
-    at2020xnd_high_freq(axarr[0])
+    #ax = axarr[0]
+    #at2020xnd_high_freq(ax)
 
     # Bottom panel
-    at2020xnd(axarr[1])
+    #ax = axarr[1]
+    at2020xnd_low_freq_late(ax)
 
     # Formatting
-    for ax in axarr:
-        ax.set_ylabel("Rest Flux Density (mJy)", fontsize=14)
-        ax.tick_params(axis='both', labelsize=12)
-        ax.set_ylim(7E-2, 1)
-        ax.set_yticks([0.1,0.2,0.3,0.6,1])
-        ax.set_yticklabels([0.1,0.2,0.3,0.6,1])
-    axarr[1].set_xlabel("Rest Frequency [GHz]", fontsize=14)
-    ax = axarr[0]
-    ax.set_yscale('log')
-    ax.set_xscale('log')
-    ax.legend(loc='upper right', fontsize=9)
-    ax.set_xlim(90, 300)
-    ax.set_xticks([100,150,200,300])
-    ax.set_xticklabels([100,150,200,300])
-    ax = axarr[1]
-    ax.scatter(10*1.2442, 0.124/1.2442)
-    ax.set_xlim(7, 400)
-    ax.set_xticks([10, 30, 100, 300])
-    ax.set_xticklabels([10, 30, 100, 300])
-
-    plt.minorticks_off()
+    #for ax in axarr:
+    ax.set_ylabel("Rest Flux Density (mJy)", fontsize=14)
+    ax.tick_params(axis='both', labelsize=12)
+    #ax.set_ylim(7E-2, 1)
+    #ax = axarr[1]
+    ax.set_xlabel("Rest Frequency [GHz]", fontsize=14)
+    #ax = axarr[0]
+    #ax.set_yscale('log')
+    #ax.set_xscale('log')
+    #ax.set_yticks([0.1,0.2,0.3,0.6,1])
+    #ax.set_yticklabels([0.1,0.2,0.3,0.6,1])
+    #ax.legend(loc='upper right', fontsize=9)
+    #ax.set_xlim(90, 300)
+    #ax.set_xticks([100,150,200,300])
+    #ax.set_xticklabels([100,150,200,300])
+    #ax = axarr[1]
+    #ax.scatter(10*1.2442, 0.124/1.2442)
+    #ax.set_xlim(7, 400)
+    #ax.set_xticks([10, 30, 100, 300])
+    #ax.set_xticklabels([10, 30, 100, 300])
+    #plt.minorticks_off()
     
     # Display or save
     plt.tight_layout()
-    plt.show()
+    #plt.show()
+    plt.savefig("camel_sed_maxwellian_late.png", dpi=300)
+    plt.close()
+
+
+if __name__=="__main__":
+    ultralong()
