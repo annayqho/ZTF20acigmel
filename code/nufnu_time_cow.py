@@ -293,7 +293,7 @@ if __name__=="__main__":
 
     # Third category: Cow-like
     #at2018cow(ax, cow_col, 'Cow-like')
-    at2020xnd(ax, cow_col, 'Cow-like')
+    at2020xnd(ax, cow_col, 'AT2020xnd')
 
     # Final category: 'ordinary' CC SNe
     sn1993J(ax, sn_col, 'CC SN')

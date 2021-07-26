@@ -30,15 +30,15 @@ def vele(ax):
     # just use one epoch
     # epoch 3: day 18
 
-    # Dillon's MAXI source
+    # Dillon's MAXI source...I think not published yet
     v = 0.025
     E = 2E49
-    ax.scatter(
-            v, E, marker='D', edgecolor='k', facecolor='k', s=50, label=None)
-    ax.text(
-            v/1.5, E/1.1, "VT1210+4956", fontsize=12,
-            horizontalalignment='center',
-            verticalalignment='top')
+    #ax.scatter(
+    #        v, E, marker='D', edgecolor='k', facecolor='k', s=50, label=None)
+    #ax.text(
+    #        v/1.5, E/1.1, "VT1210+4956", fontsize=12,
+    #        horizontalalignment='center',
+    #        verticalalignment='top')
 
     # ASASSN14li
     # Using Day 143, the first day the peak is resolved
