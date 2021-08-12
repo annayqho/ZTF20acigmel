@@ -69,7 +69,7 @@ def fitfunc_exponential(nu, const, nuM):
     return const*nu*Inu
 
 
-def at2020xnd(ax):
+def at2020xnd(ax,col='#ef5675'):
     islim, tel, freq, days, flux, eflux = get_data_all()
     z = 0.2442
 
@@ -90,11 +90,11 @@ def at2020xnd(ax):
     # to account for the differing dates
 
     # Plot the data
-    col = '#a05195'
     marker = '*'
     msize = 14
     ax.errorbar(x, y, ey, 
-            fmt='%s-' %marker, c=col, label=None, ms=msize)
+            fmt='%s' %marker, c=col, ms=msize, label=None)
+    ax.errorbar(-100,-100,0,fmt='%s' %marker,c=col,ms=msize,label='AT2020xnd,40d')
 
     # Fit for a Maxwellian w/o physical parameters
     p0 = [0.0003, 5.5E4, 0.7]
@@ -103,7 +103,7 @@ def at2020xnd(ax):
     popt, pcov = curve_fit(fitfunc, x[1:], y[1:], p0=p0, #maxfev=1000000,
             sigma=ey[1:], absolute_sigma=True, 
             bounds=((0.0001,1E4,0.1),(0.0005,7E4,1.2)))
-    xfit = np.linspace(1,300)
+    xfit = np.logspace(0,2.5,200)
     yfit = fitfunc(xfit, *popt)
     print("Maxwellian fit:")
     for i,param in enumerate(popt):
@@ -112,8 +112,13 @@ def at2020xnd(ax):
     #yfit = fitfunc(xfit, *p0)
     yfit = fitfunc(xfit, *popt)
     ax.plot(
-            xfit,yfit, c='k', ls='--', zorder=5, 
-            label=r'Maxwellian ($\nu_m\approx4$)')
+            xfit,yfit, ls='-', zorder=5, color=col,
+            label=r'Maxwellian ($\nu_m\approx1$ GHz)')
+
+    # Plot a power law
+    xplot = np.linspace(100,500)
+    yplot = y[4]*(xplot/x[4])**(-1.5)
+    ax.plot(xplot, yplot, c=col, ls='--', lw=1, label=None)
 
     ax.set_xticks([50,100,150,200,250])
     ax.set_xticklabels([50,100,150,200,250])
@@ -251,43 +256,46 @@ def at2020xnd_high_freq(ax):
 
     # Plot a power law with p=3
     yfit = y[0]*(xfit/x[0])**(-1.5)
-    ax.plot(xfit,yfit, c='k', ls='-', zorder=5, label='Power law ($p=3$)')
+    ax.plot(xfit,yfit, c='k', ls='-', zorder=5, label=None)
 
 
 
-def at2018cow():
-    fig,ax = plt.subplots(1,1,figsize=(3.5,3))
-
+def at2018cow_panel(ax,factor,col='#7a5195'):
+    """ factor: amount to scale the LC by """
     x = np.array([9.0, 34.0, 243.3, 259.3, 341.5, 357.5])
-    y = np.array([0.27, 5.6, 36.6, 31.21, 19.49, 17.42])
-    ey = np.array([0.06, 0.16, 0.81, 0.92, 1.47, 2.8])
+    y = np.array([0.27, 5.6, 36.6, 31.21, 19.49, 17.42])/factor
+    ey = np.array([0.06, 0.16, 0.81, 0.92, 1.47, 2.8])/factor
     td = 10.5
-
     # Plot the data
-    col = '#a05195'
     marker = 'o'
-    msize = 5
+    msize = 8
     ax.errorbar(x, y, ey, 
-            fmt='%s-' %marker, c=col, label=None, ms=msize)
+            fmt='%s' %marker, c=col, label=None, ms=msize)
+    ax.errorbar(-100, -100, 0, 
+            fmt='%s' %marker, c=col, label='AT2018cow,10d', ms=msize)
 
     # Fit for a Maxwellian w/o physical parameters
     p0 = [5E-2, 3E4, 1]
     popt, pcov = curve_fit(fitfunc, x, y, sigma=ey, absolute_sigma=True, p0=p0, maxfev=1000000)
-    xfit = np.linspace(1,400)
+    xfit = np.logspace(0,3,3000)
     yfit = fitfunc(xfit, *popt)
-    print("Maxwellian fit:")
+    print("Cow Maxwellian fit:")
     for i,param in enumerate(popt):
         print("%s +/- %s" %(param,np.sqrt(pcov[i,i])))
-    ax.plot(xfit,yfit, c='k', ls='--', zorder=5, label='Maxwellian')
+    ax.plot(
+            xfit,yfit, ls='-', zorder=5, 
+            label=r'Maxwellian ($\nu_m\approx2$ GHz)', color=col)
 
-    axins = inset_axes(ax, 1, 1, loc=4, bbox_to_anchor=(0.9,0.25),
-            bbox_transform=ax.figure.transFigure)
-    axins.errorbar(x[2:], y[2:], ey[2:],fmt='%s-' %marker, c=col, 
-            label=None, ms=msize)
-    xfit = np.linspace(230,380)
-    yfit = fitfunc(xfit, *popt)
-    axins.plot(xfit,yfit, c='k', ls='--', zorder=5, label='Maxwellian')
-    mark_inset(ax, axins, loc1=2, loc2=4)
+    # Plot a power law
+    xplot = np.linspace(250,1000)
+    yplot = y[2]*(xplot/x[2])**(-1.5)
+    ax.plot(xplot, yplot, c=col, ls='--', lw=1, label=None)
+
+
+def at2018cow_plot():
+    fig,ax = plt.subplots(1,1,figsize=(3.5,3))
+
+    at2018cow_panel(ax,50)
 
     ax.set_xscale('log')
     ax.set_yscale('log')
@@ -311,61 +319,49 @@ def at2018cow():
     plt.close()
 
 
-def ultralong():
-    fig,ax = plt.subplots(1,1,figsize=(3.5,2.5))
-
+def ultralong_panel(ax, col='#ffa600'):
     z = 0.347
     x = np.array([4.8, 7.4, 9.5, 13.5, 16.0, 22.0]) * (1+z)
-    y = np.array([237, 298, 293, 146, 89, 104]) / (1+z)
-    ey = np.array([17, 12, 14, 20, 22, 13]) / (1+z)
+    y = np.array([237, 298, 293, 146, 89, 104]) / (1+z) / 1000
+    ey = np.array([17, 12, 14, 20, 22, 13]) / (1+z) / 1000
     td = 2
 
     # Plot the data
-    col = '#a05195'
-    marker = 'o'
-    msize = 5
+    marker = 'D'
+    msize = 8
     ax.errorbar(x, y, ey, 
-            fmt='%s-' %marker, c=col, label=None, ms=msize)
+            fmt='%s' %marker, c=col, label=None, ms=msize)
+    ax.errorbar(-100, -100, 0, 
+            fmt='%s' %marker, c=col, label='GRB130925A,2d', ms=msize)
 
     # Fit for a Maxwellian w/o physical parameters
-    #p0 = [5E-1, 1000, 1E-1]
-
-    # just the exponential
-    p0 = [5E-1, 1]
-
-    #nsim = 100
-    #ysamples = np.zeros((nsim, len(x)))
-    #nums = np.zeros(nsim)
-    #taums = np.zeros(nsim)
-    #fms = np.zeros(nsim)
-    #for jj,val in enumerate(y):
-    #    ysamples[:,jj] = np.random.normal(loc=val, scale=ey[jj], size=nsim)
-    #for jj in np.arange(nsim):
-    #    #popt, pcov = curve_fit(fitfunc, x, y, p0=p0, maxfev=1000000)
-    #    popt, pcov = curve_fit(fitfunc, x, y, p0=p0, maxfev=1000000)
-    #    fms[jj] = popt[0]
-    #    taums[jj] = popt[1]
-    #    nums[jj] = popt[2]
+    p0 = [5E-1, 1000, 1E-1]
 
     popt, pcov = curve_fit(
-            fitfunc_exponential, x[2:5], y[2:5], sigma=ey[2:5], absolute_sigma=True, 
+            fitfunc, x[:-1], y[:-1], sigma=ey[:-1], absolute_sigma=True, 
             p0=p0, maxfev=100000)
     xfit = np.linspace(1,30)
-    yfit = fitfunc_exponential(xfit, *popt)
+    yfit = fitfunc(xfit, *popt)
     print("Maxwellian fit:")
     for i,param in enumerate(popt):
         print("%s +/- %s" %(param,np.sqrt(pcov[i,i])))
-    ax.plot(xfit,yfit, c='k', ls='--', zorder=5, label='Maxwellian')
+    ax.plot(
+            xfit,yfit, ls='-', zorder=5, 
+            label=r'Maxwellian ($\nu_m\approx0.1$ GHz)', c=col)
 
-    xplot = np.linspace(1,20)
-    yplot = (y[1]-10)*(xplot/x[1])**(1/3)
-    ax.plot(xplot, yplot,c='k',ls='-',label=r'$f_{\nu} \propto \nu^{1/3}$')
+    xplot = np.linspace(12.5,40)
+    yplot = y[2]*(xplot/x[2])**(-1.5)
+    ax.plot(xplot, yplot, c=col, lw=1, ls='--', label=None)
 
+
+def ultralong():
+    fig,ax = plt.subplots(1,1,figsize=(3.5,3))
+    ultralong_panel(ax)
     ax.legend(fontsize=d['font_small'])
     ax.set_xscale('log')
     ax.set_yscale('log')
-    ax.set_ylim(45,250)
-    ax.set_xlim(5,34)
+    ax.set_ylim(10,250)
+    ax.set_xlim(1,34)
     ax.set_yticks([50,70,100,150,200])
     ax.set_yticklabels([50,70,100,150,200])
     ax.set_xticks([5,7,10,15,20,30])
@@ -375,10 +371,10 @@ def ultralong():
     ax.set_xlabel(r"$\nu_\mathrm{rest}$ (GHz)", fontsize=d['font_med'])
     plt.minorticks_off()
     plt.tight_layout()
-    #plt.show()
-    plt.savefig("ultralong_maxwellian.png", dpi=300, bbox_inches='tight',
-            pad_inches=0.1)
-    plt.close()
+    plt.show()
+    #plt.savefig("ultralong_maxwellian.png", dpi=300, bbox_inches='tight',
+    #        pad_inches=0.1)
+    #plt.close()
 
 
 def camel_late():
@@ -458,5 +454,45 @@ def camel_early():
     #plt.show()
     plt.close()
 
+
+def combined():
+    """ combine panels into one big figure """
+    fig,ax = plt.subplots(1,1,figsize=(5,4.5))
+
+    # First, plot the AT2020xnd part
+    at2020xnd(ax)
+
+    # Then, plot the AT2018cow part
+    at2018cow_panel(ax,50)
+
+    # Then, plot the ultra-long GRB part
+    ultralong_panel(ax)
+
+    # Power law for legend
+    ax.plot([0,1],[0,1], c='grey', ls='--', label=r'Power law ($\nu^{-1.5}$)', lw=1)
+
+    # Formatting
+    plt.legend(
+        bbox_to_anchor=(0,1.02,1,1.02),loc='lower left',mode='expand',
+        borderaxespad=0., ncol=2, fontsize=d['font_small'])
+    ax.set_xscale('log')
+    ax.set_yscale('log')
+    ax.set_ylim(4E-2, 1.5)
+    ax.set_xticks([6,10,20,40,100,200,400])
+    ax.set_xticklabels([6,10,20,40,100,200,400])
+    ax.set_yticks([0.05,0.1,0.2,0.4,1])
+    ax.set_yticklabels([0.05,0.1,0.2,0.4,1])
+    ax.set_xlim(5, 600)
+    ax.tick_params(axis='both', labelsize=d['font_med'])
+    ax.set_xlabel(r"$\nu_{\mathrm{rest}}$ (GHz)", fontsize=d['font_large'])
+    ax.set_ylabel(r"$f_\nu$ (mJy)", fontsize=d['font_large'])
+    plt.tight_layout()
+
+    # Save
+    #plt.show()
+    plt.savefig("maxwellian_combined.png", dpi=200, bbox_inches='tight', pad_inches=0.1)
+    plt.close()
+
 if __name__=="__main__":
-    camel_early()
+    combined()
+
