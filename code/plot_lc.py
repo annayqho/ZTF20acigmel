@@ -40,6 +40,10 @@ def plot_all(ax):
     # Plot a cross marking the peak of the 79 GHz light curve
     ax.scatter(31.8, 1.076, marker='+', c=form['colors']['3'][1], zorder=10)
 
+    # Plot vertical lines indicating epochs for SEDs
+    for b in [18, 24, 30.3, 38, 46, 51.9, 71, 95, 132]:
+        ax.axvline(x=b, lw=0.5, ls=':')
+
 
 def plot_panel(ax, choose):
     """ Plot a single panel """

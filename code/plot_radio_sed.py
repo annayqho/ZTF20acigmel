@@ -23,20 +23,27 @@ if __name__=="__main__":
     for b,bin in enumerate(bins):
         col = cols[b]
 
-        # choose all points within a 10d window
+        # choose all points within a dt/10d window
         choose = np.logical_and.reduce((
-            days>bin-bin/20, days<bin+bin/20, eflux>0))
+            days>bin-bin/20, days<bin+bin/20))#, eflux>0))
 
         # sort in order of frequency
         order = np.argsort(freq[choose])
 
-        # plot
+        # plot the detections
+        det = eflux[choose][order]>0
         ax.errorbar(
-                freq[choose][order], flux[choose][order], eflux[choose][order], 
-                fmt='%s-' %markers[b], c=col, label=None, ms=msize[b], lw=2,
+                freq[choose][order][det], flux[choose][order][det], 
+                eflux[choose][order][det], 
+                fmt='%s' %markers[b], c=col, label=None, ms=msize[b], lw=2,
+                elinewidth=0.5)
+        # plot the non-detections
+        ax.errorbar(
+                freq[choose][order][~det], flux[choose][order][~det], 
+                eflux[choose][order][~det], fmt='%s' %markers[b], 
+                mec=col, mfc='white', label=None, ms=msize[b], lw=2,
                 elinewidth=0.5)
         ax.scatter(0, 0, marker='%s' %markers[b], c=col, label='%s d' %bin)
-        nondet = np.logical_and(choose, eflux==0)
 
     # Formatting
     ax.set_ylabel("Flux Density [mJy]", fontsize=d['font_med'])
@@ -54,9 +61,9 @@ if __name__=="__main__":
 
     # Final formatting
     plt.tight_layout()
-    #plt.show()
-    plt.savefig("radio_sed.png", dpi=300)
-    plt.close()
+    plt.show()
+    #plt.savefig("radio_sed.png", dpi=300)
+    #plt.close()
 
 
 
