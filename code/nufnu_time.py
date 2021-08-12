@@ -135,7 +135,10 @@ def sn1993J(ax, col, legend):
     nu, dt, f, ef, islim = read_1993J_high_freq()
     l = f*1E-3*1E-23*4*np.pi*d**2
     choose = np.logical_and(~islim, nu==freq)
-    ax.plot(dt[choose], l[choose], c=col, label=legend, ls='--')
+    ax.plot(dt[choose], l[choose], c=col, label=None, ls='--')
+    ax.scatter(dt[choose], l[choose], c=col, label=legend, marker='s')
+    ax.text(dt[choose][5], l[choose][5]*1.4, 'SN1993J', 
+            color=col, va='bottom', ha='center')
 
 
 def sn2011dh(ax, col, legend):
@@ -152,6 +155,46 @@ def sn2011dh(ax, col, legend):
     choose = np.logical_and(~islim, np.logical_or(nu==107E9, nu==93E9))
     l = f*1E-3*1E-23*4*np.pi*d**2
     ax.plot(dt[choose], l[choose], c=col, ls='--')
+    ax.scatter(dt[choose], l[choose], c=col, marker='s')
+    ax.text(dt[choose][0]/1.1, l[choose][0], 'SN2011dh', c=col, ha='right')
+
+
+def ptf11qcj(ax, col, legend):
+    """ PTF 11qcj
+    Corsi et al. 2014
+    """
+    d = 124 * 3.086E24
+
+    # HIGH FREQUENCY (Carma)
+    t0 = 55857.543-15
+    dt = [55884.803-t0, 55891.640-t0]
+    f = np.array([3.96, 3.62])
+    ef = [0.88, 0.75]
+    nu = 93E9
+
+    l = f*1E-3*1E-23*4*np.pi*d**2
+    ax.plot(dt, l/1.2, c=col, ls='--')
+    ax.scatter(dt, l/1.2, c=col, marker='s')
+    ax.text(dt[0]/1.2, l[0]/1.5, 'PTF11qcj', color=col, va='top', ha='center')
+
+
+def sn2008d(ax, col, legend):
+    """ SN 2008D
+    Soderberg et al. 
+    """
+    d = 29.9 * 3.086E24
+
+    # HIGH FREQUENCY (Carma)
+    dt = [4.94, 6.84]
+    f = np.array([3.2, 0.6])
+    ef = [0.7, 0.3]
+    nu = 95E9
+
+    l = f*1E-3*1E-23*4*np.pi*d**2
+    ax.scatter(dt, l/1.2, c=col, marker='s')
+    ax.plot(dt, l/1.2, c=col, ls='--')
+    ax.text(dt[0]/1.1, l[0]/1.2, 'SN2008D', color=col, ha='right')
+
 
 
 def sn2020oi(ax, col, legend):
@@ -160,6 +203,8 @@ def sn2020oi(ax, col, legend):
     dt = np.array([5.4, 8.4, 18.3, 51.3])
     fnu = np.array([1.3, 1.22, 0.196, 0.115])
     l = fnu*1E-3*1E-23*4*np.pi*d**2
+    ax.scatter(dt, l, color=col, marker='s')
+    ax.text(dt[-1]*1.1, l[-1], 'SN2020oi', color=col, ha='left')
     ax.plot(dt, l, c=col, ls='--')
 
 
@@ -248,7 +293,23 @@ def sn1998bw(ax, col, legend):
     f = np.array([39])
     lum = f*1E-3*1E-23*4*np.pi*d**2
     ax.scatter(t, lum, c=col, label=legend)
+    ax.text(t, lum*1.2, 'SN1998bw', color=col, va='bottom', ha='center')
 
+
+def sn2006aj(ax, col, legend):
+    """ SN 2006aj
+    From Soderberg supplementary information
+    """
+    d = Planck15.luminosity_distance(z=0.033).cgs.value
+    nu = 95E9
+    t = np.array([4.94,6.84])
+    f = np.array([3.2,0.6])
+    lum = f*1E-3*1E-23*4*np.pi*d**2
+    ax.scatter(t, lum, c=col, label=legend)
+    ax.text(t[0]/1.1, lum[0], 'SN2006aj', ha='right', color=llgrb_col)
+    ax.plot(t, lum, c=col, label=legend)
+    ax.arrow(t[1], lum[1], 0, -7E27, color=llgrb_col, 
+            length_includes_head=True, head_width=1, head_length=3E27)
 
 
 def sn2017iuk(ax, col, legend):
@@ -260,6 +321,22 @@ def sn2017iuk(ax, col, legend):
     f = np.array([28])
     l = f*1E-3*1E-23*4*np.pi*d**2
     ax.scatter(t,l,c=col)
+    ax.text(t/1.1, l, 'SN2017iuk', color=llgrb_col, ha='right')
+
+
+def sn2020bvc(ax, col, legend):
+    """ SN 2020bvc
+    """
+    d = Planck15.luminosity_distance(z=0.0252).cgs.value
+    nu = 230E9 # Band 3
+    t = 5.8
+    f = 0.25
+    l = f*1E-3*1E-23*4*np.pi*d**2
+    ax.scatter(t,3*l,c=col)
+    ax.arrow(t,3*l,0,-(3*l)/2,
+            length_includes_head=True,head_length=(3*l)/6,
+            head_width=t/7,color=col)
+    ax.text(t*1.1, l, 'SN2020bvc (230 GHz)', color=llgrb_col, ha='left')
 
 
 def at2020xnd(ax, col, legend):
@@ -269,7 +346,9 @@ def at2020xnd(ax, col, legend):
     efnu = np.array([57,44,44,46,38,48])
     nu = np.array([94,94,94,94,94,79])
     lum = fnu * 1E-6 * 1E-23 * 4 * np.pi * dcm**2 
-    ax.plot(dt, lum, c=col, ls=':', lw=4, label=legend)
+    ax.scatter(dt, lum, c=col, marker='D', label=legend)
+    ax.plot(dt, lum, c=col, ls=':', lw=2, label=None)
+    ax.text(dt[-1]*1.1, lum[-1], 'AT2020xnd', ha='left', color=col)
 
 
 if __name__=="__main__":
@@ -290,20 +369,65 @@ if __name__=="__main__":
     # Second category: low-luminosity GRBs
     sn1998bw(ax, llgrb_col, legend='LLGRB')
     sn2017iuk(ax, llgrb_col, None)
+    sn2006aj(ax, llgrb_col, None)
+    sn2020bvc(ax, llgrb_col, None)
 
     # Third category: Cow-like
     #at2018cow(ax, cow_col, 'Cow-like')
-    at2020xnd(ax, cow_col, 'AT2020xnd')
+    at2020xnd(ax, cow_col, 'Cow-like')
 
     # Final category: 'ordinary' CC SNe
     sn1993J(ax, sn_col, 'CC SN')
     sn2011dh(ax, sn_col, None)
     sn2020oi(ax, sn_col, None)
+    ptf11qcj(ax, sn_col, None)
+    sn2008d(ax, sn_col, None)
+
+    # NOEMA limits
+    sensitivity = 0.25E-3*1E-23 # cgs
+    dcm = Planck15.luminosity_distance(z=0.05).cgs.value
+    y = sensitivity*4*np.pi*dcm**2
+    ax.axhline(y=y, c='k', lw=0.5, ls='--')
+    ax.text(10,y*1.1,'NOEMA 5-$\sigma$, z=0.05')
+    dcm = Planck15.luminosity_distance(z=0.01).cgs.value
+    y = sensitivity*4*np.pi*dcm**2
+    ax.axhline(y=y, c='k', lw=0.5, ls='--')
+    ax.text(10,y*1.1,'NOEMA 5-$\sigma$, z=0.01')
+    dcm = Planck15.luminosity_distance(z=0.2).cgs.value
+    y = sensitivity*4*np.pi*dcm**2
+    ax.axhline(y=y, c='k', lw=0.5, ls='--')
+    ax.text(40,y/1.1,'NOEMA 5-$\sigma$, z=0.2',va='top')
+
+    d_mpc = 20
+    dcm = 3E24 * d_mpc
+    y = sensitivity*4*np.pi*dcm**2
+    ax.axhline(y=y, c='k', lw=0.5, ls='--')
+    ax.text(40,y/1.1,'NOEMA 5-$\sigma$, %s Mpc' %d_mpc,va='top')
+
+    # SMA limits
+    sensitivity = 1.5E-3*1E-23 # cgs
+    dcm = Planck15.luminosity_distance(z=0.05).cgs.value
+    y = sensitivity*4*np.pi*dcm**2
+    ax.axhline(y=y, c='k', lw=0.5, ls=':')
+    ax.text(40,y*1.1,'SMA 5-$\sigma$, z=0.05')
+    dcm = Planck15.luminosity_distance(z=0.01).cgs.value
+    y = sensitivity*4*np.pi*dcm**2
+    ax.axhline(y=y, c='k', lw=0.5, ls=':')
+    ax.text(40,y/1.1,'SMA 5-$\sigma$, z=0.01',va='top')
+    dcm = Planck15.luminosity_distance(z=0.1).cgs.value
+    y = sensitivity*4*np.pi*dcm**2
+    ax.axhline(y=y, c='k', lw=0.5, ls=':')
+    ax.text(1,y*1.1,'SMA 5-$\sigma$, z=0.1',va='bottom')
+    d_mpc = 20
+    dcm = 3E24 * d_mpc
+    y = sensitivity*4*np.pi*dcm**2
+    ax.axhline(y=y, c='k', lw=0.5, ls=':')
+    ax.text(1,y*1.1,'SMA 5-$\sigma$, %s Mpc' %d_mpc,va='bottom')
 
     ax.set_ylabel(
             r"Luminosity $L_{\nu}$ [erg$\,$s$^{-1}$Hz$^{-1}$]", 
             fontsize=16)
-    ax.set_title(r"$\nu \approx 90\,\mathrm{GHz}$", fontsize=16)
+    ax.set_title(r"$\nu \approx 100\,\mathrm{GHz}$", fontsize=16)
     ax.tick_params(axis='both', labelsize=14)
     ax.set_xlim(0.7, 300) 
     ax.set_ylim(1E25, 2E32)
@@ -313,8 +437,8 @@ if __name__=="__main__":
     ax.legend(fontsize=12, loc='upper right')
 
     plt.tight_layout()
-    #plt.show()
-    plt.savefig(
-            "lum_evolution.png", dpi=300, 
-            bbox_inches='tight', pad_inches=0.1)
-    plt.close()
+    plt.show()
+    #plt.savefig(
+    #        "mm_lc_100ghz.png", dpi=300, 
+    #        bbox_inches='tight', pad_inches=0.1)
+    #plt.close()
