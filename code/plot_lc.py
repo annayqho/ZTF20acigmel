@@ -41,8 +41,8 @@ def plot_all(ax):
     ax.scatter(31.8, 1.076, marker='+', c=form['colors']['3'][1], zorder=10)
 
     # Plot vertical lines indicating epochs for SEDs
-    for b in [18, 24, 30.3, 38, 46, 51.9, 71, 95, 132]:
-        ax.axvline(x=b, lw=0.5, ls=':')
+    #for b in [18, 24, 30.3, 38, 46, 51.9, 71, 95, 132]:
+        #ax.axvline(x=b, lw=0.5, ls=':')
 
 
 def plot_panel(ax, choose):
@@ -115,8 +115,6 @@ if __name__=="__main__":
             plot_tpow(ax, choose, 2)
         if f==10:
             plot_tpow(ax, choose, 1, ind=2)
-        if f==130.872:
-            plot_tpow(ax, choose, -4, 2, 'left')
         if f==94.244:
             plot_tpow(ax, choose, 2, 1, 'right')
             plot_tpow(ax, choose, -4, 5, 'left')
