@@ -4,10 +4,6 @@ Plot of luminosity over time
 
 
 import matplotlib
-from matplotlib import rc
-rc("font", family="serif")
-#rc("text", usetex=True)
-#matplotlib.rcParams['text.latex.preamble']=[r"\usepackage{amsmath}"]
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
@@ -17,7 +13,9 @@ from astropy.cosmology import Planck15
 from get_radio import *
 from scale_fluxes import sma_lc
 from read_table import *
+from format import *
 
+form = get_format()
 
 def at2018cow(ax, col, legend):
     """ Close to 100 GHz values """
@@ -28,98 +26,6 @@ def at2018cow(ax, col, legend):
     ax.scatter(t, l, c=col, label=legend)
 
     
-
-
-def tde(ax, col, legend):
-    """  Plot the 225/230 GHz light curve from the SMA
-    
-    Plot the 4.9 GHz light curve from the VLA
-    """
-    z = 0.354
-    d = Planck15.luminosity_distance(z=z).cgs.value
-
-    # In the Eftekhari paper, it says that although the event was first
-    # trigge by Swift/BAT on 2011 March 28.55 UT, subsequent
-    # analysis of the BAT data revealed discernible emission as early as
-    # 2011 March 25. All times should therefore be shifted relative to Mar 25.5
-
-    # Need to add 3.04 to the Zauderer points
-    nu, dt, f, ef, islim = zauderer()
-    t = (dt+3.04)/(1+z)
-
-    nu_plt = 225E9
-    choose = np.logical_and(~islim, nu == nu_plt/1E9)
-    dt_all = t[choose]
-    nufnu_all = f[choose]*nu_plt
-
-    # Berger2012
-    nu_plt = 230E9
-    t_plt = (np.array([10.30, 11.13, 17.23, 18.25, 20.24, 21.25, 125.05]))/(1+z)
-    f_plt = np.array([14.90, 11.70, 13.30, 9.90, 8.20, 8.30, 6.10])
-    dt_all = np.append(dt_all, t_plt)
-    nufnu_all = np.append(nufnu_all, f_plt*nu_plt)
-
-    order = np.argsort(dt_all)
-    lum = plot_line(
-            ax, d, dt_all[order], nufnu_all[order], 
-            'SwiftJ1644+57', 'TDE', col, legend)
-    ax.text(dt_all[order][-1]*1.1, lum[-1], 'Swift J1644+57', fontsize=10,
-            verticalalignment='center',
-            horizontalalignment='left')
-
-    # Low frequency
-    nu_plt = 4.9E9
-    choose = np.logical_and(~islim, nu == nu_plt/1E9)
-    dt_all = t[choose]
-    nufnu_all = nu_plt*f[choose]
-
-    # adding the set from Berger2012
-    # and making the same correction as above
-    t = (np.array([3.87, 4.76, 5.00, 5.79, 6.78, 7.77, 9.79, 14.98, 22.78,
-        35.86, 50.65, 67.61, 94.64, 111.62, 126.51, 143.62, 164.38, 174.47,
-        197.41, 213.32])) / (1+z)
-    f = np.array([0.25, 0.34, 0.34, 0.61, 0.82, 1.48, 1.47, 1.80, 2.10, 4.62,
-        4.84, 5.86, 9.06, 9.10, 9.10, 11.71, 12.93, 12.83, 13.29, 12.43])
-    dt_all = np.append(dt_all, t)
-    nufnu_all = np.append(nufnu_all, f*nu_plt)
-
-    # adding the set from Zauderer2013
-    # they also say it's relative to March 25.5...
-    # so I think I need to subtract 3.04 days from here too
-    t = (np.array([245.23, 302.95, 383.92, 453.66, 582.31]))/(1+z)
-    f = np.array([12.17, 12.05, 12.24, 11.12, 8.90])
-    dt_all = np.append(dt_all, t)
-    nufnu_all = np.append(nufnu_all, f*nu_plt)
-
-    # adding the set from Eftekhari 2018
-    t = np.array([645, 651.1, 787.6, 1032, 1105, 1373, 1894])
-    f = np.array([8.24, 8.63, 6.23, 4.21, 3.52, 2.34, 1.47])
-    dt_all = np.append(dt_all, t)
-    nufnu_all = np.append(nufnu_all, f*nu_plt)
-
-    order = np.argsort(dt_all)
-    lum = plot_line(
-            ax, d, dt_all[order], nufnu_all[order], 
-            'SwiftJ1644+57', 'TDE', col, legend)
-    ax.text(dt_all[order][0], lum[0]/2, 'Swift J1644+57', fontsize=10,
-            verticalalignment='top',
-            horizontalalignment='center')
-
-
-def asassn14li(ax, col, legend):
-    """ Alexander et al. 2016 """
-    nu = 5.0E9
-    d = Planck15.luminosity_distance(z=0.0206).cgs.value
-    t = np.array([80, 141.38, 207.33, 246.25, 303.01, 375.94, 389.96])
-    flux = np.array([2, 1.91, 1.74, 1.56, 1.26, 0.81, 0.89])
-    lum = plot_line(
-            ax, d, t, nu*flux, 'ASASSN14li', 'TDE', col, legend,
-            zorder=10)
-    ax.text(t[-1]/2, lum[-1]/1.5, 'ASASSN14li', fontsize=10,
-            verticalalignment='top',
-            horizontalalignment='left')
-
-
 
 def sn1993J(ax, col, legend):
     """ SN 1993J from Weiler et al. 
@@ -138,7 +44,7 @@ def sn1993J(ax, col, legend):
     ax.plot(dt[choose], l[choose], c=col, label=None, ls='--')
     ax.scatter(dt[choose], l[choose], c=col, label=legend, marker='s')
     ax.text(dt[choose][5], l[choose][5]*1.4, 'SN1993J', 
-            color=col, va='bottom', ha='center')
+            color=col, va='bottom', ha='center', fontsize=form['font_small'])
 
 
 def sn2011dh(ax, col, legend):
@@ -156,7 +62,8 @@ def sn2011dh(ax, col, legend):
     l = f*1E-3*1E-23*4*np.pi*d**2
     ax.plot(dt[choose], l[choose], c=col, ls='--')
     ax.scatter(dt[choose], l[choose], c=col, marker='s')
-    ax.text(dt[choose][0]/1.1, l[choose][0], 'SN2011dh', c=col, ha='right')
+    ax.text(dt[choose][0]/1.1, l[choose][0], 'SN2011dh', c=col, ha='right',
+            fontsize=form['font_small'])
 
 
 def ptf11qcj(ax, col, legend):
@@ -173,9 +80,10 @@ def ptf11qcj(ax, col, legend):
     nu = 93E9
 
     l = f*1E-3*1E-23*4*np.pi*d**2
-    ax.plot(dt, l/1.2, c=col, ls='--')
-    ax.scatter(dt, l/1.2, c=col, marker='s')
-    ax.text(dt[0]/1.2, l[0]/1.5, 'PTF11qcj', color=col, va='top', ha='center')
+    ax.plot(dt, l/1.2, c=col, ls='--', zorder=10)
+    ax.scatter(dt, l/1.2, c=col, marker='s', zorder=10)
+    ax.text(dt[0]/1.2, l[0]/1.5, 'PTF11qcj', color=col, va='top', ha='center',
+            fontsize=form['font_small'])
 
 
 def sn2008d(ax, col, legend):
@@ -193,7 +101,8 @@ def sn2008d(ax, col, legend):
     l = f*1E-3*1E-23*4*np.pi*d**2
     ax.scatter(dt, l/1.2, c=col, marker='s')
     ax.plot(dt, l/1.2, c=col, ls='--')
-    ax.text(dt[0]/1.1, l[0]/1.2, 'SN2008D', color=col, ha='right')
+    ax.text(dt[0]/1.1, l[0]/1.2, 'SN2008D', color=col, ha='right',
+            fontsize=form['font_small'])
 
 
 
@@ -204,7 +113,8 @@ def sn2020oi(ax, col, legend):
     fnu = np.array([1.3, 1.22, 0.196, 0.115])
     l = fnu*1E-3*1E-23*4*np.pi*d**2
     ax.scatter(dt, l, color=col, marker='s')
-    ax.text(dt[-1]*1.1, l[-1], 'SN2020oi', color=col, ha='left')
+    ax.text(dt[-1]*1.1, l[-1], 'SN2020oi', color=col, ha='left',
+            fontsize=form['font_small'])
     ax.plot(dt, l, c=col, ls='--')
 
 
@@ -293,7 +203,8 @@ def sn1998bw(ax, col, legend):
     f = np.array([39])
     lum = f*1E-3*1E-23*4*np.pi*d**2
     ax.scatter(t, lum, c=col, label=legend)
-    ax.text(t, lum*1.2, 'SN1998bw', color=col, va='bottom', ha='center')
+    ax.text(t, lum*1.2, 'SN1998bw', color=col, va='bottom', ha='center',
+            fontsize=form['font_small'])
 
 
 def sn2006aj(ax, col, legend):
@@ -306,7 +217,8 @@ def sn2006aj(ax, col, legend):
     f = np.array([3.2,0.6])
     lum = f*1E-3*1E-23*4*np.pi*d**2
     ax.scatter(t, lum, c=col, label=legend)
-    ax.text(t[0]/1.1, lum[0], 'SN2006aj', ha='right', color=llgrb_col)
+    ax.text(t[0]/1.1, lum[0], 'SN2006aj', ha='right', color=llgrb_col,
+            fontsize=form['font_small'])
     ax.plot(t, lum, c=col, label=legend)
     ax.arrow(t[1], lum[1], 0, -7E27, color=llgrb_col, 
             length_includes_head=True, head_width=1, head_length=3E27)
@@ -321,7 +233,8 @@ def sn2017iuk(ax, col, legend):
     f = np.array([28])
     l = f*1E-3*1E-23*4*np.pi*d**2
     ax.scatter(t,l,c=col)
-    ax.text(t/1.1, l, 'SN2017iuk', color=llgrb_col, ha='right')
+    ax.text(t/1.1, l, 'SN2017iuk', color=llgrb_col, ha='right',
+            fontsize = form['font_small'])
 
 
 def sn2020bvc(ax, col, legend):
@@ -346,19 +259,22 @@ def at2020xnd(ax, col, legend):
     efnu = np.array([57,44,44,46,38,48])
     nu = np.array([94,94,94,94,94,79])
     lum = fnu * 1E-6 * 1E-23 * 4 * np.pi * dcm**2 
-    ax.scatter(dt, lum, c=col, marker='D', label=legend)
-    ax.plot(dt, lum, c=col, ls=':', lw=2, label=None)
-    ax.text(dt[-1]*1.1, lum[-1], 'AT2020xnd', ha='left', color=col)
+    ax.scatter(dt, lum, c=col, marker='D', label=legend, zorder=10)
+    ax.plot(dt, lum, c=col, ls=':', lw=2, label=None, zorder=10)
+    ax.text(
+            dt[2]*1.1, lum[2], 'AT2020xnd', ha='left', va='bottom',
+            color=col, fontsize=form['font_med'])
 
 
 if __name__=="__main__":
-    fig, ax = plt.subplots(1, 1, figsize=(5,7), dpi=100)
+    fig, ax = plt.subplots(1, 1, figsize=(3.5,5), dpi=100)
+
     props = dict(boxstyle='round', facecolor='white')
 
-    sn_col = '#7a5195'
-    llgrb_col = '#ef5675'
-    cow_col = '#ffa600'
-    lgrb_col = '#003f5c'
+    sn_col = form['colors']['4'][0]
+    llgrb_col = form['colors']['4'][1]
+    cow_col = form['colors']['4'][2]
+    lgrb_col = form['colors']['4'][3]
 
     # First category: long-duration GRBs
     grb130427A(ax, lgrb_col, legend='LGRB')
@@ -370,11 +286,10 @@ if __name__=="__main__":
     sn1998bw(ax, llgrb_col, legend='LLGRB')
     sn2017iuk(ax, llgrb_col, None)
     sn2006aj(ax, llgrb_col, None)
-    sn2020bvc(ax, llgrb_col, None)
 
     # Third category: Cow-like
     #at2018cow(ax, cow_col, 'Cow-like')
-    at2020xnd(ax, cow_col, 'Cow-like')
+    at2020xnd(ax, cow_col, None)
 
     # Final category: 'ordinary' CC SNe
     sn1993J(ax, sn_col, 'CC SN')
@@ -383,62 +298,23 @@ if __name__=="__main__":
     ptf11qcj(ax, sn_col, None)
     sn2008d(ax, sn_col, None)
 
-    # NOEMA limits
-    sensitivity = 0.25E-3*1E-23 # cgs
-    dcm = Planck15.luminosity_distance(z=0.05).cgs.value
-    y = sensitivity*4*np.pi*dcm**2
-    ax.axhline(y=y, c='k', lw=0.5, ls='--')
-    ax.text(10,y*1.1,'NOEMA 5-$\sigma$, z=0.05')
-    dcm = Planck15.luminosity_distance(z=0.01).cgs.value
-    y = sensitivity*4*np.pi*dcm**2
-    ax.axhline(y=y, c='k', lw=0.5, ls='--')
-    ax.text(10,y*1.1,'NOEMA 5-$\sigma$, z=0.01')
-    dcm = Planck15.luminosity_distance(z=0.2).cgs.value
-    y = sensitivity*4*np.pi*dcm**2
-    ax.axhline(y=y, c='k', lw=0.5, ls='--')
-    ax.text(40,y/1.1,'NOEMA 5-$\sigma$, z=0.2',va='top')
-
-    d_mpc = 20
-    dcm = 3E24 * d_mpc
-    y = sensitivity*4*np.pi*dcm**2
-    ax.axhline(y=y, c='k', lw=0.5, ls='--')
-    ax.text(40,y/1.1,'NOEMA 5-$\sigma$, %s Mpc' %d_mpc,va='top')
-
-    # SMA limits
-    sensitivity = 1.5E-3*1E-23 # cgs
-    dcm = Planck15.luminosity_distance(z=0.05).cgs.value
-    y = sensitivity*4*np.pi*dcm**2
-    ax.axhline(y=y, c='k', lw=0.5, ls=':')
-    ax.text(40,y*1.1,'SMA 5-$\sigma$, z=0.05')
-    dcm = Planck15.luminosity_distance(z=0.01).cgs.value
-    y = sensitivity*4*np.pi*dcm**2
-    ax.axhline(y=y, c='k', lw=0.5, ls=':')
-    ax.text(40,y/1.1,'SMA 5-$\sigma$, z=0.01',va='top')
-    dcm = Planck15.luminosity_distance(z=0.1).cgs.value
-    y = sensitivity*4*np.pi*dcm**2
-    ax.axhline(y=y, c='k', lw=0.5, ls=':')
-    ax.text(1,y*1.1,'SMA 5-$\sigma$, z=0.1',va='bottom')
-    d_mpc = 20
-    dcm = 3E24 * d_mpc
-    y = sensitivity*4*np.pi*dcm**2
-    ax.axhline(y=y, c='k', lw=0.5, ls=':')
-    ax.text(1,y*1.1,'SMA 5-$\sigma$, %s Mpc' %d_mpc,va='bottom')
-
     ax.set_ylabel(
             r"Luminosity $L_{\nu}$ [erg$\,$s$^{-1}$Hz$^{-1}$]", 
-            fontsize=16)
-    ax.set_title(r"$\nu \approx 100\,\mathrm{GHz}$", fontsize=16)
-    ax.tick_params(axis='both', labelsize=14)
+            fontsize=form['font_med'])
+    ax.set_title(
+            r"$\nu \approx 100\,\mathrm{GHz}$", 
+            fontsize=form['font_med'])
+    ax.tick_params(axis='both', labelsize=form['font_small'])
     ax.set_xlim(0.7, 300) 
     ax.set_ylim(1E25, 2E32)
     ax.set_xscale('log')
     ax.set_yscale('log')
-    ax.set_xlabel(r"Time [days; observer frame]", fontsize=16)
-    ax.legend(fontsize=12, loc='upper right')
+    ax.set_xlabel(r"Time [days; observer frame]", fontsize=form['font_med'])
+    ax.legend(fontsize=form['font_small'], loc='upper right')
 
     plt.tight_layout()
-    plt.show()
-    #plt.savefig(
-    #        "mm_lc_100ghz.png", dpi=300, 
-    #        bbox_inches='tight', pad_inches=0.1)
-    #plt.close()
+    #plt.show()
+    plt.savefig(
+            "mm_lc_100ghz.png", dpi=300, 
+            bbox_inches='tight', pad_inches=0.1)
+    plt.close()

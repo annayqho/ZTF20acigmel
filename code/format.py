@@ -11,5 +11,7 @@ def get_format():
     # Colors
     dict['colors'] = {}
     dict['colors']['3'] = ['#003f5c', '#bc5090', '#ffa600']
+    dict['colors']['4'] = ['#003f5c', '#7a5195', '#ef5675', '#ffa600']
+    dict['colors']['9'] = ['k', '#003f5c', '#2f4b7c', '#665191', '#a05195', '#d45087', '#f95d6a', '#ff7c43', '#ffa600']
 
     return dict
