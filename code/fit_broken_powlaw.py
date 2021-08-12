@@ -94,7 +94,7 @@ y = [] # flux
 ey = []
 for ii in use_ind:
     bin = bins[ii]
-    choose = np.abs(days-bin) < bin/10
+    choose = np.abs(days-bin) < bin/20
     [t.append(bin) for i in np.arange(sum(choose))]
     [x.append(val) for val in freq[choose]]
     [y.append(val) for val in flux[choose]]
@@ -103,17 +103,6 @@ t = np.array(t)
 x = np.array(x)
 y = np.array(y)
 ey = np.array(ey)
-
-#ignore = np.logical_and(t>100, x<10)
-#ignore = np.logical_and(t>100, x<10)
-#ignore 
-ignore = x<0
-t = t[~ignore]
-x = x[~ignore]
-y = y[~ignore]
-ey = ey[~ignore]
-
-print(t,x)
 
 # Plot the data
 #fig,ax = plt.subplots(1,1,figsize=(6,4))

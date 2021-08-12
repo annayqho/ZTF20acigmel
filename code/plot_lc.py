@@ -41,8 +41,8 @@ def plot_all(ax):
     ax.scatter(31.8, 1.076, marker='+', c=form['colors']['3'][1], zorder=10)
 
     # Plot vertical lines indicating epochs for SEDs
-    for b in [18, 24, 30.3, 38, 46, 51.9, 71, 95, 132]:
-        ax.axvline(x=b, lw=0.5, ls=':')
+    #for b in [18, 24, 30.3, 38, 46, 51.9, 71, 95, 132]:
+    #    ax.axvline(x=b, lw=0.5, ls=':')
 
 
 def plot_panel(ax, choose):
@@ -136,10 +136,10 @@ if __name__=="__main__":
     axarr[0,0].set_xscale('log')
     axarr[0,0].set_xlim(9,170)
     for ax in axarr[:,0]:
-        ax.set_ylabel("$f_{\\nu}$ [mJy]", fontsize=large)
+        ax.set_ylabel("$f_{\\nu,\mathrm{obs}}$ (mJy)", fontsize=large)
         ax.tick_params(axis='both', labelsize=large)
     for ax in axarr[-1,:]:
-        ax.set_xlabel("$\Delta t$ [d]", fontsize=large)
+        ax.set_xlabel("$\Delta t$ (d)", fontsize=large)
         ax.tick_params(axis='both', labelsize=large)
     #axarr[1,2].set_xlabel("$\Delta t$ [d]", fontsize=large)
     #axarr[1,2].tick_params(axis='both', labelsize=large)
@@ -150,5 +150,5 @@ if __name__=="__main__":
     #plt.tight_layout()
     plt.subplots_adjust(hspace=0.05, wspace=0.1)
     #plt.show()
-    plt.savefig("radio_lc_with_epochs.png", dpi=300, bbox_inches='tight')
+    plt.savefig("radio_lc.png", dpi=300, bbox_inches='tight')
     plt.close()

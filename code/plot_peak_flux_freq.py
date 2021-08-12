@@ -4,15 +4,19 @@ import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 import numpy as np
 from get_radio import *
+from format import *
+
+d = get_format()
 
 
 def fitfunc(x,f0,v0,alpha):
     return f0*(x/v0)**(alpha)
 
 
-fig,ax = plt.subplots(1,1,figsize=(5.5,4))
+fig,ax = plt.subplots(1,1,figsize=(3.5,3))
 islim, tel, freq_obs, days_obs, flux_obs, eflux_obs = get_data_all()
 freq_obs[freq_obs==34] = 33
+freq_obs[freq_obs==226.744] = 230
 freq_unique = np.unique(freq_obs)
 
 x_all = []
@@ -52,18 +56,18 @@ popt, pcov = curve_fit(fitfunc, x_all[choose], y_all[choose], sigma=ey_all[choos
 
 xplot = np.linspace(7,200)
 yplot = fitfunc(xplot,*popt)
-plt.plot(xplot, yplot, lw=0.5, ls=':', c='k')
+#plt.plot(xplot, yplot, lw=0.5, ls=':', c='k')
 
-ax.scatter(100,100,marker='o', c='lightgrey', label="Sparse light curve")
+ax.scatter(100,100,marker='o', c='lightgrey', label="Sparse LC")
 plt.xscale('log')
 plt.yscale('log')
-plt.xlabel("Rest Frequency [GHz]", fontsize=16)
-plt.ylabel(r"Max Observed $f_\nu$ (mJy)", fontsize=16)
-plt.tick_params(axis='both', labelsize=12)
+plt.xlabel(r"$\nu_{\mathrm{rest}}$ (GHz)", fontsize=d['font_med'])
+plt.ylabel(r"$f_{\nu,\mathrm{obs. peak}}$ (mJy)", fontsize=d['font_med'])
+plt.tick_params(axis='both', labelsize=d['font_small'])
 plt.xlim(6, 300)
 plt.ylim(0.07, 1)
 plt.tight_layout()
-plt.legend()
-plt.show()
-#plt.savefig("peak_flux_with_freq.png", dpi=200)
-#plt.close()
+plt.legend(fontsize=d['font_small'], loc='upper left')
+#plt.show()
+plt.savefig("peak_flux_with_freq.png", dpi=200)
+plt.close()

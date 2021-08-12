@@ -6,6 +6,9 @@ from mpl_toolkits.axes_grid1.inset_locator import mark_inset,inset_axes
 from get_radio import *
 from scipy.optimize import curve_fit
 from astropy.cosmology import Planck15
+from format import *
+
+d = get_format()
 
 
 def fitfunc(nu_ghz, f_m, tau_m, nu_m):
@@ -177,7 +180,7 @@ def at2020xnd_low_freq_late(ax):
         plt.minorticks_off()
         ax.set_xlim(7, 60)
         ax.set_ylim(0, 0.45)
-        ax.legend()
+        ax.legend(fontsize=d['font_small'])
 
 
 def at2020xnd_high_freq(ax):
@@ -194,9 +197,9 @@ def at2020xnd_high_freq(ax):
     ey = eflux[choose] / (1+z)
     # Sort
     order = np.argsort(x)
-    x = x[order][1:]
-    y = y[order][1:]
-    ey = ey[order][1:]
+    x = x[order][4:]
+    y = y[order][4:]
+    ey = ey[order][4:]
     td = np.average(days[choose]) / (1+z)
 
     # Plot the data
@@ -253,7 +256,7 @@ def at2020xnd_high_freq(ax):
 
 
 def at2018cow():
-    fig,ax = plt.subplots(1,1,figsize=(5,4))
+    fig,ax = plt.subplots(1,1,figsize=(3.5,3))
 
     x = np.array([9.0, 34.0, 243.3, 259.3, 341.5, 357.5])
     y = np.array([0.27, 5.6, 36.6, 31.21, 19.49, 17.42])
@@ -277,7 +280,7 @@ def at2018cow():
         print("%s +/- %s" %(param,np.sqrt(pcov[i,i])))
     ax.plot(xfit,yfit, c='k', ls='--', zorder=5, label='Maxwellian')
 
-    axins = inset_axes(ax, 1.5, 1.5, loc=4, bbox_to_anchor=(0.9,0.25),
+    axins = inset_axes(ax, 1, 1, loc=4, bbox_to_anchor=(0.9,0.25),
             bbox_transform=ax.figure.transFigure)
     axins.errorbar(x[2:], y[2:], ey[2:],fmt='%s-' %marker, c=col, 
             label=None, ms=msize)
@@ -295,21 +298,21 @@ def at2018cow():
     ax.set_yticklabels([0.2,0.4, 1, 3, 10, 30, 50])
     plt.minorticks_off()
 
-    ax.set_xlabel("Rest Frequency [GHz]", fontsize=14)
-    ax.set_ylabel("Rest Flux Density (mJy)", fontsize=14)
-    ax.tick_params(axis='both', labelsize=12)
+    ax.set_xlabel(r"$\nu_\mathrm{rest}$ (GHz)", fontsize=d['font_med'])
+    ax.set_ylabel(r"$f_\nu$ (mJy)", fontsize=d['font_med'])
+    ax.tick_params(axis='both', labelsize=d['font_small'])
 
     ax.set_xlim(7, 400)
     ax.set_ylim(0.18, 80)
 
     plt.tight_layout()
-    plt.show()
-    #plt.savefig("cow_sed_maxwellian.png", dpi=300)
-    #plt.close()
+    #plt.show()
+    plt.savefig("cow_sed_maxwellian.png", dpi=300, bbox_inches='tight', pad_inches=0.1)
+    plt.close()
 
 
 def ultralong():
-    fig,ax = plt.subplots(1,1,figsize=(5.5,4))
+    fig,ax = plt.subplots(1,1,figsize=(3.5,2.5))
 
     z = 0.347
     x = np.array([4.8, 7.4, 9.5, 13.5, 16.0, 22.0]) * (1+z)
@@ -358,7 +361,7 @@ def ultralong():
     yplot = (y[1]-10)*(xplot/x[1])**(1/3)
     ax.plot(xplot, yplot,c='k',ls='-',label=r'$f_{\nu} \propto \nu^{1/3}$')
 
-    ax.legend()
+    ax.legend(fontsize=d['font_small'])
     ax.set_xscale('log')
     ax.set_yscale('log')
     ax.set_ylim(45,250)
@@ -367,62 +370,93 @@ def ultralong():
     ax.set_yticklabels([50,70,100,150,200])
     ax.set_xticks([5,7,10,15,20,30])
     ax.set_xticklabels([5,7,10,15,20,30])
-    ax.set_ylabel("Rest Flux Density (mJy)", fontsize=14)
-    ax.tick_params(axis='both', labelsize=12)
-    ax.set_xlabel("Rest Frequency [GHz]", fontsize=14)
+    ax.set_ylabel(r"$f_\nu$ (mJy)", fontsize=d['font_med'])
+    ax.tick_params(axis='both', labelsize=d['font_small'])
+    ax.set_xlabel(r"$\nu_\mathrm{rest}$ (GHz)", fontsize=d['font_med'])
     plt.minorticks_off()
     plt.tight_layout()
     #plt.show()
-    plt.savefig("ultralong_maxwellian.png", dpi=300)
+    plt.savefig("ultralong_maxwellian.png", dpi=300, bbox_inches='tight',
+            pad_inches=0.1)
     plt.close()
 
 
-def make_camel_plots():
+def camel_late():
     """ Generate plots of the Camel """
 
-    # two-panel
-    #fig,axarr = plt.subplots(2,1,figsize=(4,6), sharey=True)
-
     # one-panel
-    fig,ax = plt.subplots(1,1,figsize=(4,3), sharey=True)
+    fig,ax = plt.subplots(1,1,figsize=(3.5,2.5), sharey=True)
 
-    # Top panel
-    #ax = axarr[0]
-    #at2020xnd_high_freq(ax)
-
-    # Bottom panel
-    #ax = axarr[1]
     at2020xnd_low_freq_late(ax)
 
     # Formatting
-    #for ax in axarr:
-    ax.set_ylabel("Rest Flux Density (mJy)", fontsize=14)
-    ax.tick_params(axis='both', labelsize=12)
+    ax.set_ylabel(r"$f_\nu$ (mJy)", fontsize=d['font_med'])
+    ax.tick_params(axis='both', labelsize=d['font_small'])
+    ax.set_xlabel(r"$\nu_{\mathrm{rest}}$ (GHz)", fontsize=d['font_med'])
+    ax.set_yticks([0.1,0.2,0.3,0.4])
+    ax.set_yticklabels([0.1,0.2,0.3,0.4])
+
+    # Display or save
+    plt.tight_layout()
+    plt.show()
+    #plt.savefig("camel_sed_maxwellian_late.png", dpi=300, bbox_inches='tight',
+    #        pad_inches=0.1)
+    #plt.close()
+
+
+def camel_early_full():
+    """ Generate plots of the Camel """
+
+    # one-panel
+    fig,ax = plt.subplots(1,1,figsize=(3.5,2.5), sharey=True)
+
+    at2020xnd(ax)
+
+    # Formatting
+    ax.set_ylabel(r"$f_\nu$ (mJy)", fontsize=d['font_med'])
+    ax.tick_params(axis='both', labelsize=d['font_small'])
     #ax.set_ylim(7E-2, 1)
     #ax = axarr[1]
-    ax.set_xlabel("Rest Frequency [GHz]", fontsize=14)
-    #ax = axarr[0]
-    #ax.set_yscale('log')
-    #ax.set_xscale('log')
-    #ax.set_yticks([0.1,0.2,0.3,0.6,1])
-    #ax.set_yticklabels([0.1,0.2,0.3,0.6,1])
-    #ax.legend(loc='upper right', fontsize=9)
-    #ax.set_xlim(90, 300)
-    #ax.set_xticks([100,150,200,300])
-    #ax.set_xticklabels([100,150,200,300])
-    #ax = axarr[1]
-    #ax.scatter(10*1.2442, 0.124/1.2442)
-    #ax.set_xlim(7, 400)
-    #ax.set_xticks([10, 30, 100, 300])
-    #ax.set_xticklabels([10, 30, 100, 300])
-    #plt.minorticks_off()
+    ax.set_xlabel(r"$\nu_{\mathrm{rest}}$ (GHz)", fontsize=d['font_med'])
+    ax.set_yticks([0.2,0.4,0.6,0.8])
+    ax.set_yticklabels([0.2,0.4,0.6,0.8])
     
     # Display or save
     plt.tight_layout()
     #plt.show()
-    plt.savefig("camel_sed_maxwellian_late.png", dpi=300)
+    plt.savefig("camel_sed_maxwellian_full.png", dpi=300, bbox_inches='tight',
+            pad_inches=0.1)
     plt.close()
 
 
+def camel_early():
+    """ Generate plots of the Camel """
+
+    # one-panel
+    fig,ax = plt.subplots(1,1,figsize=(3.5,3), sharey=True)
+
+    at2020xnd_high_freq(ax)
+
+    # Formatting
+    ax.set_ylabel(r"$f_\nu$ (mJy)", fontsize=d['font_med'])
+    ax.tick_params(axis='both', labelsize=d['font_small'])
+    ax.set_ylim(7E-2, 1.2)
+    ax.set_xlabel(r"$\nu_{\mathrm{rest}}$ (GHz)", fontsize=d['font_med'])
+    ax.set_yscale('log')
+    ax.set_xscale('log')
+    ax.set_yticks([0.1,0.2,0.4,0.6,1.0])
+    ax.set_yticklabels([0.1,0.2,0.4,0.6,1.0])
+    ax.set_xticks([100,150,200,300])
+    ax.set_xticklabels([100,150,200,300])
+    ax.set_xlim(80,300)
+    ax.legend(loc='upper right', fontsize=d['font_small'])
+    
+    # Display or save
+    plt.tight_layout()
+    plt.savefig("camel_sed_maxwellian_high_freq.png", dpi=200, bbox_inches='tight',
+            pad_inches=0.1)
+    #plt.show()
+    plt.close()
+
 if __name__=="__main__":
-    ultralong()
+    camel_early()
