@@ -4,6 +4,9 @@ If you plot frequencies with >=3 detections then you have
 
 If you plot frequencies with >=2 detections then you add
 4, 14.5, 27.3, 131 (4 bands; total 11)
+
+I think you should plot frequencies with >=3 OBSERVATIONS,
+because those are important too.
 """
 
 import matplotlib
@@ -80,11 +83,10 @@ if __name__=="__main__":
 
     plot_freq = []
 
-    # Plot all frequencies with >=2 points
+    # Plot all frequencies with >=2 observations
     for f in np.unique(freq):
         print(f)
-        print(sum(~islim[freq==f])>=2)
-        if np.logical_and(sum(~islim[freq==f])>=2, f!=34):
+        if np.logical_and(sum(freq==f)>=2, f!=34):
             plot_freq.append(f)
     plot_freq = np.array(plot_freq)[::-1]
     print(plot_freq)
@@ -131,7 +133,7 @@ if __name__=="__main__":
     axarr[0,0].set_yscale('log')
     axarr[0,0].set_ylim(0.015,1.3)
     axarr[0,0].set_xscale('log')
-    axarr[0,0].set_xlim(9,130)
+    axarr[0,0].set_xlim(7,130)
     for ax in axarr[:,0]:
         ax.set_ylabel("$f_{\\nu}$ [mJy]", fontsize=large)
         ax.tick_params(axis='both', labelsize=large)
@@ -143,12 +145,9 @@ if __name__=="__main__":
     #axarr[1,3].set_xlabel("$\Delta t$ [d]", fontsize=large)
     #axarr[1,3].tick_params(axis='both', labelsize=large)
 
-    axarr[-1,-1].axis('off')
-    axarr.flatten()[-2].axis('off')
-
     # Display
     #plt.tight_layout()
     plt.subplots_adjust(hspace=0.05, wspace=0.1)
-    #plt.show()
-    plt.savefig("radio_lc.png", dpi=300, bbox_inches='tight')
-    plt.close()
+    plt.show()
+    #plt.savefig("radio_lc.png", dpi=300, bbox_inches='tight')
+    #plt.close()

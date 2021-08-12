@@ -26,7 +26,8 @@ if __name__=="__main__":
         col = cols[b]
         choose = np.logical_and.reduce((
             days>bin-bin/20, days<bin+bin/20, eflux>0))
-        if bin!=71:
+        #if bin!=71:
+        if bin!=100:
             order = np.argsort(freq[choose])
             ax.errorbar(
                     freq[choose][order], flux[choose][order], eflux[choose][order], 
@@ -72,9 +73,9 @@ if __name__=="__main__":
 
     # Final formatting
     plt.tight_layout()
-    plt.show()
-    #plt.savefig("radio_sed.png", dpi=300)
-    #plt.close()
+    #plt.show()
+    plt.savefig("radio_sed.png", dpi=300)
+    plt.close()
 
 
 
