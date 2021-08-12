@@ -13,31 +13,32 @@ import matplotlib
 from astropy.time import Time
 from get_radio import *
 from ssa_lc_fixalpha import *
+from format import *
 
-# Font sizes
-large = 14
-medium = 11
-small = 9
+form = get_format()
+large = form['font_large']
+medium = form['font_med']
+small = form['font_small']
 
 # Marker sizes
 ms=10
 
-# Redshift for transforming to the rest-frame
-z = 0.2442
-
 # Initializing plot
-fig,axarr = plt.subplots(3,4,figsize=(9,6), sharex=True, sharey=True)
+fig,axarr = plt.subplots(4,3,figsize=(7.5,8), sharex=True, sharey=True)
 
 
 def plot_all(ax):
     """ Plot all of the frequencies as grey in the background """
     islim, tel, freq, days, flux, eflux = get_data_all()
     plot_freqs = np.unique(freq)
-    plot_freqs = plot_freqs[plot_freqs < 140]
+    plot_freqs = plot_freqs[plot_freqs < 240]
 
     for plot_freq in plot_freqs:
         choose = np.logical_and(freq==plot_freq, islim==False)
-        ax.plot(days[choose]/(1+z), flux[choose], c='grey', alpha=0.3)
+        ax.plot(days[choose], flux[choose], c='grey', alpha=0.3)
+
+    # Plot a cross marking the peak of the 79 GHz light curve
+    ax.scatter(31.8, 1.076, marker='+', c=form['colors']['3'][1], zorder=10)
 
 
 def plot_panel(ax, choose):
@@ -47,16 +48,16 @@ def plot_panel(ax, choose):
     # Plot LC at a single frequency
     det = np.logical_and(islim==False, choose)
     ax.errorbar(
-            days[det]/(1+z), flux[det], yerr=eflux[det],
+            days[det], flux[det], yerr=eflux[det],
             fmt='o', c='k', ms=5)
     nondet = np.logical_and(islim==True, choose)
     ax.errorbar(
-            days[nondet]/(1+z), flux[nondet], yerr=eflux[nondet],
+            days[nondet], flux[nondet], yerr=eflux[nondet],
             fmt='o', c='k', mfc='white', mec='k', ms=5)
 
-    ax.plot(days[choose]/(1+z), flux[choose], c='k')
+    ax.plot(days[choose], flux[choose], c='k')
 
-    for ii,x in enumerate(days[nondet]/(1+z)):
+    for ii,x in enumerate(days[nondet]):
         y = flux[nondet][ii]
         ax.arrow(x, y, 0, -y/3, head_width=x/10,
             length_includes_head=True, head_length=y/10, color='k')
@@ -68,8 +69,8 @@ def plot_tpow(ax, choose, pow, ind=1, tjust='right'):
 
     xvals = np.linspace(10,200)
     yvals = flux[choose][ind]*(xvals/days[choose][ind])**pow
-    ax.plot(xvals/(1+z),yvals,c='k',lw=0.5,ls='--')
-    ax.text(days[choose][ind]/(1+z), flux[choose][ind], 
+    ax.plot(xvals,yvals,c='k',lw=0.5,ls='--')
+    ax.text(days[choose][ind], flux[choose][ind], 
             '$\propto t^{%s}$' %pow, 
             fontsize=small, ha=tjust, va='bottom')
 
@@ -78,7 +79,7 @@ def plot_tpow(ax, choose, pow, ind=1, tjust='right'):
 if __name__=="__main__":
     islim, tel, freq, days, flux, eflux = get_data_all()
 
-    for ax in axarr.flatten()[0:-2]:
+    for ax in axarr.flatten():
         plot_all(ax)
 
     plot_freq = []
@@ -98,6 +99,9 @@ if __name__=="__main__":
         if f==33:
             choose = np.logical_and(freq>32, freq<35)
             fstr = "33/34"
+        if f==230:
+            choose = np.logical_and(freq>225, freq<235)
+            fstr = "227/230"
         plot_panel(ax, choose)
         ax.text(
                 0.95,0.15,'%s GHz' %fstr,fontsize=medium,
@@ -124,16 +128,11 @@ if __name__=="__main__":
         if f==18:
             plot_tpow(ax, choose, 1, 1, 'right')
 
-        # Maybe plot a model
-        #tplot = np.logspace(1,3,1000)
-        #model_fnu = (1+z)*Fnu(f/(1+z), tplot, 2.9, 4.4, 0.95, 0.91, 30.8)[0]
-        #ax.plot(tplot*(1+z), model_fnu, c='Crimson', ls='-', lw=0.5)
-
     # Formatting
     axarr[0,0].set_yscale('log')
     axarr[0,0].set_ylim(0.015,1.3)
     axarr[0,0].set_xscale('log')
-    axarr[0,0].set_xlim(7,130)
+    axarr[0,0].set_xlim(9,170)
     for ax in axarr[:,0]:
         ax.set_ylabel("$f_{\\nu}$ [mJy]", fontsize=large)
         ax.tick_params(axis='both', labelsize=large)
@@ -148,6 +147,6 @@ if __name__=="__main__":
     # Display
     #plt.tight_layout()
     plt.subplots_adjust(hspace=0.05, wspace=0.1)
-    plt.show()
-    #plt.savefig("radio_lc.png", dpi=300, bbox_inches='tight')
-    #plt.close()
+    #plt.show()
+    plt.savefig("radio_lc.png", dpi=300, bbox_inches='tight')
+    plt.close()
