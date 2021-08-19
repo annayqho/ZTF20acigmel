@@ -274,9 +274,9 @@ def plot_sep_panels():
 
     # Final formatting
     plt.tight_layout()
-    #plt.show()
-    plt.savefig("radio_sed_evolution.png", dpi=300)
-    plt.close()
+    plt.show()
+    #plt.savefig("radio_sed_evolution.png", dpi=300)
+    #plt.close()
 
 
 
