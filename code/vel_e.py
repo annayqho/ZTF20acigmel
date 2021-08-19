@@ -10,35 +10,32 @@ import matplotlib.pyplot as plt
 import numpy as np
 from astropy.table import Table
 from astropy.cosmology import Planck15
+from format import *
+
+d = get_format()
 
 squaresize = 50
 
 def vele(ax):
-    # only use this to plot the GRBs
-    # direc = "/Users/annaho/Dropbox/Projects/Research/AT2018cow/data"
-    # inputf = direc + "/Soderberg2009Fig4.1.txt"
-
-    # dat = Table.read(inputf, format='ascii')
-    # x = dat['col1']
-    # y = dat['col2']
-
-    # choose = np.logical_and(x > 1, y > 3E49)
-    #ax.scatter(
-    #        x[choose], y[choose], marker='x', c='k', s=50, label="GRBs")
-
-    # Swift TDE
-    # just use one epoch
-    # epoch 3: day 18
-
     # Dillon's MAXI source...I think not published yet
     v = 0.025
     E = 2E49
-    #ax.scatter(
-    #        v, E, marker='D', edgecolor='k', facecolor='k', s=50, label=None)
-    #ax.text(
-    #        v/1.5, E/1.1, "VT1210+4956", fontsize=12,
-    #        horizontalalignment='center',
-    #        verticalalignment='top')
+    ax.scatter(
+            v, E, marker='D', edgecolor='k', facecolor='k', s=50, label=None)
+    ax.text(
+            v/1.5, E/1.1, "VT1210+4956", fontsize=d['font_small'],
+            horizontalalignment='center',
+            verticalalignment='top')
+
+    # FIRST transient
+    v = 0.02
+    E = 3E49
+    ax.scatter(
+            v, E, marker='D', edgecolor='k', facecolor='k', s=50, label=None)
+    ax.text(
+            v/1.5, E/1.1, "FIRST J1419", fontsize=d['font_small'],
+            horizontalalignment='center',
+            verticalalignment='top')
 
     # ASASSN14li
     # Using Day 143, the first day the peak is resolved
@@ -47,7 +44,7 @@ def vele(ax):
     ax.scatter(
             v, E, marker='o', edgecolor='k', facecolor='k', s=50, label=None)
     ax.text(
-            v/1.5, E/1.1, "ASASSN14li", fontsize=12,
+            v/1.5, E/1.1, "ASASSN14li", fontsize=d['font_small'],
             horizontalalignment='center',
             verticalalignment='top')
 
@@ -57,7 +54,7 @@ def vele(ax):
     ax.scatter(
             v, E, marker='+', edgecolor='k', facecolor='k', s=100, label=None)
     ax.text(
-            v/1.5, E/1.1, "PTF11qcj", fontsize=12,
+            v/1.5, E/1.1, "PTF11qcj", fontsize=d['font_small'],
             horizontalalignment='center',
             verticalalignment='top')
  
@@ -67,7 +64,7 @@ def vele(ax):
     ax.scatter(
             v, E, marker='+', c='k', s=100, label="SNe Ibc")
     ax.text(
-            v*1.1, E, "2003L", fontsize=12,
+            v*1.1, E, "2003L", fontsize=d['font_small'],
             horizontalalignment='left',
             verticalalignment='center')
 
@@ -77,7 +74,7 @@ def vele(ax):
     ax.scatter(
             v, E, marker='+', c='k', s=100, label=None)
     ax.text(
-            v*1.3, E, "2007bg", fontsize=12,
+            v*1.3, E, "2007bg", fontsize=d['font_small'],
             verticalalignment='center',
             horizontalalignment='left')
 
@@ -87,7 +84,7 @@ def vele(ax):
     ax.scatter(
             v, E, marker='+', c='k', s=100, label=None)
     ax.text(
-            v, E*1.1, "2003bg", fontsize=12,
+            v, E*1.1, "2003bg", fontsize=d['font_small'],
             verticalalignment='bottom',
             horizontalalignment='center')
 
@@ -98,7 +95,7 @@ def vele(ax):
             v, E, marker='s', edgecolor='k', s=squaresize,
             facecolor='k', label="LLGRB-SNe")
     ax.text(
-            v*1.2, E, "1998bw", fontsize=12,
+            v*1.2, E, "1998bw", fontsize=d['font_small'],
             verticalalignment='center',
             horizontalalignment='left')
 
@@ -108,7 +105,7 @@ def vele(ax):
     ax.scatter(
             v, E, marker='+', c='k', s=100)
     ax.text(
-            v*1.2, E, "2009bb", fontsize=12,
+            v*1.2, E, "2009bb", fontsize=d['font_small'],
             verticalalignment='center',
             horizontalalignment='left')
 
@@ -119,7 +116,7 @@ def vele(ax):
             v, E, marker='s', edgecolor='k', s=squaresize,
             facecolor='k', label=None)
     ax.text(
-            v, E*1.1, "2006aj", fontsize=12,
+            v, E*1.1, "2006aj", fontsize=d['font_small'],
             verticalalignment='bottom',
             horizontalalignment='center')
 
@@ -130,7 +127,7 @@ def vele(ax):
             v, E, marker='s', edgecolor='k', s=squaresize,
             facecolor='k', label=None)
     ax.text(
-            v*1.2, E, "2010bh", fontsize=12,
+            v*1.2, E, "2010bh", fontsize=d['font_small'],
             verticalalignment='center',
             horizontalalignment='left')
 
@@ -142,7 +139,7 @@ def vele(ax):
             v, E, marker='o', edgecolor='k', s=100,
             facecolor='white', label="SNe II")
     ax.text(
-            v, E*1.1, "88Z", fontsize=12,
+            v, E*1.1, "88Z", fontsize=d['font_small'],
             verticalalignment='bottom',
             horizontalalignment='center')
 
@@ -153,7 +150,7 @@ def vele(ax):
             v, E, marker='o', edgecolor='k', s=100,
             facecolor='white', label=None)
     ax.text(
-            v, E*1.1, "79C", fontsize=12,
+            v, E*1.1, "79C", fontsize=d['font_small'],
             verticalalignment='bottom',
             horizontalalignment='center')
 
@@ -161,42 +158,44 @@ def vele(ax):
     # AT2018cow
     v = 0.126807067696
     E = 3.68387786116342e+48
+    col = d['colors']['4'][1]
     ax.scatter(
             v, E, 
-            marker='*', s=300, c='#7a5195')
+            marker='o', s=100, c=col)
     ax.text(
-            v, E*1.1, "AT2018cow", color='#7a5195',
-            fontsize=14, 
+            v, E*1.1, "AT2018cow", color=col,
+            fontsize=d['font_small'], 
             verticalalignment='bottom', horizontalalignment='center')
 
-    v = 0.25
-    E = 1E49
+    v = 0.22849036502452907
+    E = 6.2E48
+    col = d['colors']['4'][2]
     ax.scatter(
-            v, E, 
-            marker='*', s=300, c='#ef5675')
+            v, E, marker='*', s=300, c=col)
     ax.text(
             v, E*1.1, "AT2020xnd", 
-            fontsize=14, color='#ef5675',
+            fontsize=d['font_small'], color=col,
             verticalalignment='bottom', horizontalalignment='center')
 
+    # Koala
     v = 0.4
     E = 3E49
+    col = d['colors']['4'][0]
     ax.scatter(
-            v, E, 
-            marker='*', s=300, c='#003f5c')
+            v, E, marker='D', s=100, c=col)
     ax.text(
             v, E*1.1, "Koala", 
-            fontsize=14, color='#003f5c',
+            fontsize=d['font_small'], color=col,
             verticalalignment='bottom', horizontalalignment='center')
 
     v = 0.55
     E = 5.6E49
+    col = d['colors']['4'][3]
     ax.scatter(
-            v, E, 
-            marker='*', s=300, c='#ffa600')
+            v, E, marker='h', s=100, c=col)
     ax.text(
             v, E*1.1, "CSS161010", 
-            fontsize=14, color='#ffa600',
+            fontsize=d['font_small'], color=col,
             verticalalignment='bottom', horizontalalignment='center')
 
 
@@ -205,30 +204,30 @@ def vele(ax):
 
     ax.set_xlabel(
         "Blastwave Velocity $(\\Gamma \\beta)$",
-        fontsize=14)
+        fontsize=d['font_med'])
     ax.set_ylabel(
             "Energy (erg) $= U_B/\epsilon_B$, $\qquad \epsilon_e=\epsilon_B=0.33$", 
-            fontsize=14)
+            fontsize=d['font_med'])
     ax.set_ylim(5E47, 9E49)
-    ax.tick_params(axis='both', labelsize=14)
-    ax.legend(loc='upper left', fontsize=10)
+    ax.tick_params(axis='both', labelsize=d['font_med'])
+    ax.legend(loc='upper left', fontsize=d['font_small'])
 
 
     # make a twin axis
     ax2 = ax.twinx()
     ax2.set_ylabel(
             r"Energy (erg) $= U_B/\epsilon_B$, $\qquad \epsilon_e=0.1;\epsilon_B=0.01$", 
-            fontsize=14, rotation=270, labelpad=15.0)
+            fontsize=d['font_med'], rotation=270, labelpad=15.0)
     y_f = lambda y_i: y_i*9
     ymin, ymax = ax.get_ylim()
     ax2.set_ylim((y_f(ymin), y_f(ymax)))
     ax2.plot([],[])
     ax2.set_yscale('log')
-    ax2.tick_params(axis='both', labelsize=14)
+    ax2.tick_params(axis='both', labelsize=d['font_med'])
     ax2.set_xlim(4E-3, 8)
     ax.set_xlim(4E-3, 8)
 
-fig,ax = plt.subplots(1,1, figsize=(6,6), dpi=100)
+fig,ax = plt.subplots(1,1, figsize=(5,5), dpi=100)
 vele(ax)
 
 plt.tight_layout()

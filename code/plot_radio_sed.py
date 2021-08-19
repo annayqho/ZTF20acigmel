@@ -86,8 +86,8 @@ if __name__=="__main__":
             ha='right',color='grey', va='center')
 
     # Formatting
-    ax.set_ylabel("Flux Density [mJy]", fontsize=d['font_med'])
-    ax.set_xlabel("Observed Frequency [GHz]", fontsize=d['font_med'])
+    ax.set_ylabel(r"$f_\nu$ (mJy)", fontsize=d['font_med'])
+    ax.set_xlabel(r"$\nu_\mathrm{obs}$ (GHz)", fontsize=d['font_med'])
     ax.set_xscale('log')
     ax.set_yscale('log')
     ax.set_ylim(0.02, 1.3)

@@ -53,10 +53,12 @@ choose = x_all<90
 
 p0 = [1, 60, 1]
 popt, pcov = curve_fit(fitfunc, x_all[choose], y_all[choose], sigma=ey_all[choose], absolute_sigma=True, p0=p0)
+print(popt, np.sqrt(pcov[2,2]))
 
 xplot = np.linspace(7,200)
 yplot = fitfunc(xplot,*popt)
-#plt.plot(xplot, yplot, lw=0.5, ls=':', c='k')
+plt.plot(xplot, yplot, lw=0.5, ls=':', c='k')
+ax.text(15, 0.2, r'$f_p \propto \nu_p^{%s}$' %np.round(popt[2],1), ha='right')
 
 ax.scatter(100,100,marker='o', c='lightgrey', label="Sparse LC")
 plt.xscale('log')

@@ -94,7 +94,9 @@ def at2020xnd(ax,col='#ef5675'):
     msize = 14
     ax.errorbar(x, y, ey, 
             fmt='%s' %marker, c=col, ms=msize, label=None)
-    ax.errorbar(-100,-100,0,fmt='%s' %marker,c=col,ms=msize,label='AT2020xnd,40d')
+    ax.errorbar(
+            -100,-100,0,fmt='%s' %marker,c=col,
+            ms=msize,label='AT2020xnd (40d)')
 
     # Fit for a Maxwellian w/o physical parameters
     p0 = [0.0003, 5.5E4, 0.7]
@@ -105,7 +107,7 @@ def at2020xnd(ax,col='#ef5675'):
             bounds=((0.0001,1E4,0.1),(0.0005,7E4,1.2)))
     xfit = np.logspace(0,2.5,200)
     yfit = fitfunc(xfit, *popt)
-    print("Maxwellian fit:")
+    print("AT2020xnd Maxwellian fit:")
     for i,param in enumerate(popt):
         print("%s +/- %s" %(param,np.sqrt(pcov[i,i])))
 
@@ -116,7 +118,7 @@ def at2020xnd(ax,col='#ef5675'):
             label=r'Maxwellian ($\nu_m\approx1$ GHz)')
 
     # Plot a power law
-    xplot = np.linspace(100,500)
+    xplot = np.linspace(100,700)
     yplot = y[4]*(xplot/x[4])**(-1.5)
     ax.plot(xplot, yplot, c=col, ls='--', lw=1, label=None)
 
@@ -138,7 +140,7 @@ def at2020xnd_low_freq_late(ax):
     col = ['#003f5c', '#bc5090', '#ffa600']
 
     for i,b in enumerate(bins):
-        choose = np.logical_and.reduce((days>b-3, days<b+3, islim==False))
+        choose = np.logical_and.reduce((days>b-b/20, days<b+b/20, islim==False))
         # Get values in rest-frame
         x = freq[choose] * (1+z)
         y = flux[choose] / (1+z)
@@ -150,10 +152,11 @@ def at2020xnd_low_freq_late(ax):
         ey = ey[order]
         td = np.average(days[choose]) / (1+z)
 
-        if b==132:
-            x = x[1:]
-            y = y[1:]
-            ey = ey[1:]
+        # Exclude points below 9 GHz
+        keep = x >= 9
+        x = x[keep]
+        y = y[keep]
+        ey = ey[keep]
 
         # Plot the data
         marker = 'o'
@@ -170,7 +173,7 @@ def at2020xnd_low_freq_late(ax):
                 bounds=((0.00001,0.01E4,0.1),(0.0006,6E4,1.0)))
         xfit = np.linspace(1,100)
         yfit = fitfunc(xfit, *popt)
-        print("Maxwellian fit:")
+        print("Maxwellian fit, Day %s:" %b)
         for i,param in enumerate(popt):
             print("%s +/- %s" %(param,np.sqrt(pcov[i,i])))
 
@@ -178,13 +181,15 @@ def at2020xnd_low_freq_late(ax):
         ax.plot(
                 xfit,yfit, c='k', ls='--', zorder=5)
 
-        ax.set_xticks([10,20,30,40,50])
-        ax.set_xticklabels([10,20,30,40,50])
-        ax.set_yticks([0.2, 0.4, 0.6, 0.8])
-        ax.set_yticklabels([0.2, 0.4, 0.6, 0.8])
+        ax.set_xscale('log')
+        ax.set_yscale('log')
+        ax.set_xticks([10,20,30,50,100])
+        ax.set_xticklabels([10,20,30,50,100])
+        ax.set_yticks([0.05,0.2, 0.4, 0.6, 0.8])
+        ax.set_yticklabels([0.05,0.2, 0.4, 0.6, 0.8])
         plt.minorticks_off()
-        ax.set_xlim(7, 60)
-        ax.set_ylim(0, 0.45)
+        ax.set_xlim(10, 110)
+        ax.set_ylim(0.05, 0.45)
         ax.legend(fontsize=d['font_small'])
 
 
@@ -272,7 +277,7 @@ def at2018cow_panel(ax,factor,col='#7a5195'):
     ax.errorbar(x, y, ey, 
             fmt='%s' %marker, c=col, label=None, ms=msize)
     ax.errorbar(-100, -100, 0, 
-            fmt='%s' %marker, c=col, label='AT2018cow,10d', ms=msize)
+            fmt='%s' %marker, c=col, label='0.02xAT2018cow (10d)', ms=msize)
 
     # Fit for a Maxwellian w/o physical parameters
     p0 = [5E-2, 3E4, 1]
@@ -332,7 +337,7 @@ def ultralong_panel(ax, col='#ffa600'):
     ax.errorbar(x, y, ey, 
             fmt='%s' %marker, c=col, label=None, ms=msize)
     ax.errorbar(-100, -100, 0, 
-            fmt='%s' %marker, c=col, label='GRB130925A,2d', ms=msize)
+            fmt='%s' %marker, c=col, label='GRB130925A (2d)', ms=msize)
 
     # Fit for a Maxwellian w/o physical parameters
     p0 = [5E-1, 1000, 1E-1]
@@ -342,7 +347,7 @@ def ultralong_panel(ax, col='#ffa600'):
             p0=p0, maxfev=100000)
     xfit = np.linspace(1,30)
     yfit = fitfunc(xfit, *popt)
-    print("Maxwellian fit:")
+    print("GRB Maxwellian fit:")
     for i,param in enumerate(popt):
         print("%s +/- %s" %(param,np.sqrt(pcov[i,i])))
     ax.plot(
@@ -352,6 +357,39 @@ def ultralong_panel(ax, col='#ffa600'):
     xplot = np.linspace(12.5,40)
     yplot = y[2]*(xplot/x[2])**(-1.5)
     ax.plot(xplot, yplot, c=col, lw=1, ls='--', label=None)
+
+
+def css161010_panel(ax, col='#ffa600'):
+    factor = 6
+    z = 0.034
+    dat = np.loadtxt("css161010_radio_sed.txt",dtype=float,delimiter=',')
+    x = dat[:,0]/1E9
+    y = dat[:,1]*1E3
+    print(x,y)
+
+    # Plot the data
+    marker = 'h'
+    ax.scatter(x, y/factor, marker=marker , c=col, 
+            label='0.2xCSS161010 (99d)', s=50)
+
+    # Maxwellian fit
+    p0 = [0.0003, 5.5E4, 0.7]
+    popt, pcov = curve_fit(fitfunc, x, y, p0=p0)
+
+    xfit = np.linspace(0.1,100,2000)
+    yfit = fitfunc(xfit, *popt)
+    print("CSS Maxwellian fit:")
+    for i,param in enumerate(popt):
+        print("%s +/- %s" %(param,np.sqrt(pcov[i,i])))
+    ax.plot(
+            xfit,yfit/factor, ls='-', zorder=5, 
+            label=r'Maxwellian ($\nu_m\approx%s$ GHz)' %np.round(popt[2],1), 
+            c=col)
+
+    # Plot a power law as well
+    xplot = np.linspace(10,100)
+    yplot = y[20]*(xplot/x[20])**(-1.5)
+    ax.plot(xplot, yplot/factor, c=col, lw=1, ls='--', label=None)
 
 
 def ultralong():
@@ -381,7 +419,7 @@ def camel_late():
     """ Generate plots of the Camel """
 
     # one-panel
-    fig,ax = plt.subplots(1,1,figsize=(3.5,2.5), sharey=True)
+    fig,ax = plt.subplots(1,1,figsize=(3.5,3), sharey=True)
 
     at2020xnd_low_freq_late(ax)
 
@@ -394,10 +432,10 @@ def camel_late():
 
     # Display or save
     plt.tight_layout()
-    plt.show()
-    #plt.savefig("camel_sed_maxwellian_late.png", dpi=300, bbox_inches='tight',
-    #        pad_inches=0.1)
-    #plt.close()
+    #plt.show()
+    plt.savefig("camel_sed_maxwellian_late.png", dpi=300, bbox_inches='tight',
+            pad_inches=0.1)
+    plt.close()
 
 
 def camel_early_full():
@@ -457,7 +495,7 @@ def camel_early():
 
 def combined():
     """ combine panels into one big figure """
-    fig,ax = plt.subplots(1,1,figsize=(5,4.5))
+    fig,ax = plt.subplots(1,1,figsize=(6,5))
 
     # First, plot the AT2020xnd part
     at2020xnd(ax)
@@ -466,7 +504,10 @@ def combined():
     at2018cow_panel(ax,50)
 
     # Then, plot the ultra-long GRB part
-    ultralong_panel(ax)
+    ultralong_panel(ax,col='k')
+
+    # Now CSS161010
+    css161010_panel(ax)
 
     # Power law for legend
     ax.plot([0,1],[0,1], c='grey', ls='--', label=r'Power law ($\nu^{-1.5}$)', lw=1)
@@ -478,11 +519,11 @@ def combined():
     ax.set_xscale('log')
     ax.set_yscale('log')
     ax.set_ylim(4E-2, 1.5)
-    ax.set_xticks([6,10,20,40,100,200,400])
-    ax.set_xticklabels([6,10,20,40,100,200,400])
+    ax.set_xticks([1,2,4,6,10,20,40,100,200,400])
+    ax.set_xticklabels([1,2,4,6,10,20,40,100,200,400])
     ax.set_yticks([0.05,0.1,0.2,0.4,1])
     ax.set_yticklabels([0.05,0.1,0.2,0.4,1])
-    ax.set_xlim(5, 600)
+    ax.set_xlim(0.9, 600)
     ax.tick_params(axis='both', labelsize=d['font_med'])
     ax.set_xlabel(r"$\nu_{\mathrm{rest}}$ (GHz)", fontsize=d['font_large'])
     ax.set_ylabel(r"$f_\nu$ (mJy)", fontsize=d['font_large'])
@@ -494,5 +535,4 @@ def combined():
     plt.close()
 
 if __name__=="__main__":
-    combined()
-
+    camel_late()

@@ -105,7 +105,6 @@ def sn2008d(ax, col, legend):
             fontsize=form['font_small'])
 
 
-
 def sn2020oi(ax, col, legend):
     """ Maeda et al. 2021 """
     d = 15.5 * 3.086E24
@@ -163,7 +162,6 @@ def grb161219B(ax, col, legend):
     ax.plot(t, lum, c=col)
 
 
-
 def grb130427A(ax, col, legend):
     """ Perley et al
     They have data from CARMA/PdBI at 90 GHz (3mm)
@@ -188,6 +186,58 @@ def grb130427A(ax, col, legend):
     order =np.argsort(t)
 
     ax.plot(obs_t_2, obs_lum_2, c=col, label=legend)
+
+
+def j1644(ax, col, legend):
+    """ Zauderer
+    They have data from CARMA at 94 GHz (3mm)
+    and also CARMA at 87.00 GHz, which is close enough
+    But by the time they caught it, it was fading
+    """
+    z = 0.354
+    d = Planck15.luminosity_distance(z=z).cgs.value
+
+    freq = 94E9
+    obs_t_1 = np.array([1.85, 19.06])
+    obs_flux_1 = np.array([15.7, 10.7]) * 1E-3
+    obs_lum_1 = obs_flux_1 * 1E-23 * 4 * np.pi * d**2
+
+    freq = 87E9 
+    obs_t_2 = np.array([5.14, 6.09, 7.18, 9.09, 14.61, 19.06, 22.07])
+    obs_flux_2 = np.array([18.6, 21.7, 14.6, 15.1, 10.4, 9.36, 5.49])*1E-3
+    obs_lum_2 = obs_flux_2 * 1E-23 * 4 * np.pi * d**2
+
+    t = np.hstack((obs_t_1, obs_t_2))
+    lum = np.hstack((obs_lum_1, obs_lum_2))
+    order =np.argsort(t)
+
+    ax.scatter(t[order], lum[order], marker='o',
+            facecolor='white', edgecolor=col, label=legend)
+    ax.plot(t[order], lum[order], c=col, label=None, lw=1)
+    ax.text(t[order][0], lum[order][0], 'J1644', ha='right', va='bottom',
+            fontsize=form['font_small'], color=col)
+
+
+def igr(ax, col, legend):
+    """ IGR J12580+0134
+    They have data from Planck at 100 GHz
+    Discovered by INTEGRAL (https://www.astronomerstelegram.org/?read=3108)
+
+    First detection: 2011 Jan 2-11
+    Last non-detection: 2010 Dec 30 to 2011 Jan 2
+
+    So... the dt is something like 1 day to 12 days?
+    """
+    d = 17*3.086E24 # Mpc to cm
+
+    t = 10 # estimate
+    freq = 100E9
+    lum = 640*1E-3*1E-23*4*np.pi*d**2
+
+    ax.scatter(t, lum, marker='o',
+            facecolor='white', edgecolor=col, label=legend)
+    ax.text(t/1.2, lum, 'IGR J12580', ha='right', va='center',
+            fontsize=form['font_small'], color=col)
 
 
 def sn1998bw(ax, col, legend):
@@ -271,10 +321,15 @@ if __name__=="__main__":
 
     props = dict(boxstyle='round', facecolor='white')
 
-    sn_col = form['colors']['4'][0]
-    llgrb_col = form['colors']['4'][1]
-    cow_col = form['colors']['4'][2]
-    lgrb_col = form['colors']['4'][3]
+    sn_col = form['colors']['5'][0]
+    llgrb_col = form['colors']['5'][1]
+    cow_col = form['colors']['5'][2]
+    lgrb_col = form['colors']['5'][3]
+    tde_col = form['colors']['5'][4]
+
+    # Category: TDEs
+    j1644(ax, tde_col, legend='TDE')
+    igr(ax, tde_col, legend=None)
 
     # First category: long-duration GRBs
     grb130427A(ax, lgrb_col, legend='LGRB')
@@ -299,7 +354,7 @@ if __name__=="__main__":
     sn2008d(ax, sn_col, None)
 
     ax.set_ylabel(
-            r"Luminosity $L_{\nu}$ [erg$\,$s$^{-1}$Hz$^{-1}$]", 
+            r"$L_{\nu}$ (erg$\,$s$^{-1}$Hz$^{-1}$)", 
             fontsize=form['font_med'])
     ax.set_title(
             r"$\nu \approx 100\,\mathrm{GHz}$", 
@@ -309,12 +364,12 @@ if __name__=="__main__":
     ax.set_ylim(1E25, 2E32)
     ax.set_xscale('log')
     ax.set_yscale('log')
-    ax.set_xlabel(r"Time [days; observer frame]", fontsize=form['font_med'])
+    ax.set_xlabel(r"$\Delta t_\mathrm{obs}$ (d)", fontsize=form['font_med'])
     ax.legend(fontsize=form['font_small'], loc='upper right')
 
     plt.tight_layout()
-    #plt.show()
-    plt.savefig(
-            "mm_lc_100ghz.png", dpi=300, 
-            bbox_inches='tight', pad_inches=0.1)
-    plt.close()
+    plt.show()
+    #plt.savefig(
+    #        "mm_lc_100ghz.png", dpi=300, 
+    #        bbox_inches='tight', pad_inches=0.1)
+    #plt.close()

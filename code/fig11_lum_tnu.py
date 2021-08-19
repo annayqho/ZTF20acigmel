@@ -5,10 +5,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 from astropy.table import Table
 from astropy.cosmology import Planck15
+from format import *
 
-smallsize=10
-medsize=12
-bigsize=14
+d = get_format()
+smallsize=d['font_small']
+medsize=d['font_med']
+bigsize=d['font_large']
 
 squaresize = 50
 
@@ -87,6 +89,15 @@ def density_curves(ax, x, ne):
 
 
 def lumtnu(ax):
+    # FIRST transient
+    tnu = 26*365*(0.3/5)
+    dcm = Planck15.luminosity_distance(z=0.01957).cgs.value
+    lpeak = 2.25*1E-3*1E-23*4*np.pi*dcm**2
+    ax.scatter(tnu, lpeak, marker='P', c='k', s=50)
+    ax.text(tnu, lpeak*1.2, 'FIRST J1419', fontsize=smallsize,
+            verticalalignment='bottom',
+            horizontalalignment='center')
+
     # 88Z
     tnu = (1253)*(5/5)
     lpeak = 2.2E28
@@ -94,7 +105,7 @@ def lumtnu(ax):
             tnu, lpeak, marker='o', edgecolor='k', facecolor='white', s=100,
             label='SN II')
     ax.text(
-            tnu, lpeak/1.2, "88Z", fontsize=medsize,
+            tnu, lpeak/1.2, "88Z", fontsize=smallsize,
             verticalalignment='top',
             horizontalalignment='right')
 
@@ -105,7 +116,7 @@ def lumtnu(ax):
             tnu, lpeak, marker='o', edgecolor='k', facecolor='white', s=100,
             label=None)
     ax.text(
-            tnu, lpeak/1.2, "79C", fontsize=medsize,
+            tnu, lpeak/1.2, "79C", fontsize=smallsize,
             verticalalignment='top',
             horizontalalignment='right')
 
@@ -116,7 +127,7 @@ def lumtnu(ax):
             tnu, lpeak, marker='+', c='k', s=100,
             label="SNe Ibc")
     ax.text(
-            tnu, lpeak/1.2, "2003L", fontsize=medsize,
+            tnu, lpeak/1.2, "2003L", fontsize=smallsize,
             verticalalignment='top',
             horizontalalignment='center')
 
@@ -129,14 +140,14 @@ def lumtnu(ax):
     ax.scatter(tnu, lpeak, marker='D', c=col, s=100)
     ax.plot(tnu, lpeak, color=col, ls='-')
     ax.text(
-            tnu[0]/1.2, lpeak[0], "$\Delta t$=64d", fontsize=10,
+            tnu[0]/1.2, lpeak[0], "$\Delta t$=64d", fontsize=smallsize,
             verticalalignment='center',
             horizontalalignment='right', c=col)
     ax.text(
-            tnu[1]*1.2, lpeak[1], "$\Delta t$=343d", fontsize=10,
+            tnu[1]*1.2, lpeak[1], "$\Delta t$=343d", fontsize=smallsize,
             verticalalignment='center',
             horizontalalignment='left', c=col)
-    ax.text(tnu[0], lpeak[0]*1.2, "Koala", fontsize=medsize,
+    ax.text(tnu[0], lpeak[0]*1.2, "Koala", fontsize=smallsize,
             horizontalalignment='center', c=col)
 
     # CSS 161010
@@ -148,16 +159,16 @@ def lumtnu(ax):
     ax.scatter(
             tnu, lpeak, marker='h', c=col, s=100, 
             label="_none")
-    ax.text(tnu[0], lpeak[0]*1.2, "CSS161010", fontsize=medsize,
+    ax.text(tnu[0], lpeak[0]*1.2, "CSS161010", fontsize=smallsize,
             horizontalalignment='right', color=col,
             verticalalignment='bottom')
     ax.plot(tnu, lpeak, color=col, ls='-')
     ax.text(
-            tnu[0]/1.2, lpeak[0], "$\Delta t$=69d", fontsize=10,
+            tnu[0]/1.2, lpeak[0], "$\Delta t$=69d", fontsize=smallsize,
             verticalalignment='center',
             horizontalalignment='right', c=col)
     ax.text(
-            tnu[-1], lpeak[-1]/1.2, "$\Delta t$=357d", fontsize=10,
+            tnu[-1], lpeak[-1]/1.2, "$\Delta t$=357d", fontsize=smallsize,
             verticalalignment='top',
             horizontalalignment='center', c=col)
 
@@ -168,7 +179,7 @@ def lumtnu(ax):
             tnu, lpeak, marker='+', c='k', s=100,
             label=None)
     ax.text(
-            tnu/1.2, lpeak, "11qcj", fontsize=medsize,
+            tnu/1.2, lpeak, "11qcj", fontsize=smallsize,
             verticalalignment='center',
             horizontalalignment='right')
 
@@ -179,7 +190,7 @@ def lumtnu(ax):
     ax.scatter(
             tnu, lpeak, marker='+', c='k', s=100, label=None)
     #ax.text(
-    #        tnu, lpeak*1.2, "2007bg", fontsize=medsize,
+    #        tnu, lpeak*1.2, "2007bg", fontsize=smallsize,
     #        verticalalignment='bottom',
     #        horizontalalignment='center')
 
@@ -189,7 +200,7 @@ def lumtnu(ax):
     ax.scatter(
             tnu, lpeak, marker='+', c='k', s=100, label=None)
     #ax.text(
-    #        tnu, lpeak/1.1, "2003bg", fontsize=medsize,
+    #        tnu, lpeak/1.1, "2003bg", fontsize=smallsize,
     #        verticalalignment='top',
     #        horizontalalignment='left')
 
@@ -200,7 +211,7 @@ def lumtnu(ax):
             tnu, lpeak, marker='s', edgecolor='k', s=squaresize,
             facecolor='k', label="LLGRB-SN")
     ax.text(
-            tnu, lpeak*1.2, "1998bw", fontsize=medsize,
+            tnu, lpeak*1.2, "1998bw", fontsize=smallsize,
             verticalalignment='bottom',
             horizontalalignment='center')
 
@@ -213,7 +224,7 @@ def lumtnu(ax):
             tnu, lpeak, marker='s', edgecolor='k', s=squaresize,
             facecolor='k', label=None)
     ax.text(
-            tnu, lpeak*1.2, "2017iuk", fontsize=medsize,
+            tnu, lpeak*1.2, "2017iuk", fontsize=smallsize,
             verticalalignment='bottom',
             horizontalalignment='center')
 
@@ -224,7 +235,7 @@ def lumtnu(ax):
             tnu, lpeak, marker='o', edgecolor='k', facecolor='black', s=100,
             label='TDE')
     ax.text(
-            tnu, lpeak/1.3, "ASASSN14li", fontsize=medsize,
+            tnu, lpeak/1.3, "ASASSN14li", fontsize=smallsize,
             verticalalignment='top',
             horizontalalignment='center')
     
@@ -235,7 +246,7 @@ def lumtnu(ax):
     #         tnu, lpeak, marker='o', edgecolor='k', facecolor='black', s=100,
     #         label='TDE')
     # ax.text(
-    #         tnu, lpeak/1.3, "J1644+57 (22d)", fontsize=medsize,
+    #         tnu, lpeak/1.3, "J1644+57 (22d)", fontsize=smallsize,
     #         verticalalignment='top',
     #         horizontalalignment='center')
 
@@ -245,7 +256,7 @@ def lumtnu(ax):
     ax.scatter(
             tnu, lpeak, marker='+', c='k', s=100)
     #ax.text(
-    #        tnu/1.2, lpeak, "2009bb", fontsize=medsize,
+    #        tnu/1.2, lpeak, "2009bb", fontsize=smallsize,
     #        verticalalignment='center',
     #        horizontalalignment='right')
 
@@ -256,7 +267,7 @@ def lumtnu(ax):
             tnu, lpeak, marker='s', edgecolor='k', s=squaresize,
             facecolor='k', label=None)
     ax.text(
-            tnu, lpeak/1.3, "2006aj", fontsize=medsize,
+            tnu, lpeak/1.3, "2006aj", fontsize=smallsize,
             verticalalignment='top',
             horizontalalignment='center')
 
@@ -267,7 +278,7 @@ def lumtnu(ax):
             tnu, lpeak, marker='s', edgecolor='k', s=squaresize,
             facecolor='k', label=None)
     ax.text(
-            tnu, lpeak/1.3, "2010bh", fontsize=medsize,
+            tnu, lpeak/1.3, "2010bh", fontsize=smallsize,
             verticalalignment='top',
             horizontalalignment='center')
 
@@ -277,9 +288,9 @@ def lumtnu(ax):
     y = vel_lines(ax, 550, 0.01)
 
     # AT2020xnd
-    x1 = 24*80/5
+    x1 = 58*21.6/5
     dcm = Planck15.luminosity_distance(z=0.2442).cgs.value
-    y1 = (0.7*1E-3*1E-23*4*np.pi*dcm**2)
+    y1 = (0.68*1E-3*1E-23*4*np.pi*dcm**2)
     col = '#ef5675'
     #ax.scatter(
     #        x1, y1, marker='*', s=300, 
@@ -295,11 +306,11 @@ def lumtnu(ax):
             x2, y2, marker='*', s=300, 
             facecolors=col, edgecolors=col)
     ax.text(
-            x2/1.1, y2/1.2, "$\Delta t$=71d", fontsize=10,
+            x2/1.1, y2/1.2, "$\Delta t$=58d", fontsize=smallsize,
             verticalalignment='top',
             horizontalalignment='center', c=col)
     ax.text(
-            x2*1.2, y2, "AT2020xnd", fontsize=medsize, 
+            x2*1.2, y2, "AT2020xnd", fontsize=smallsize, 
             verticalalignment='center',
             horizontalalignment='left', color=col)
     #plt.arrow(x1,y1,x2-x1,y2-y1, color=col, lw=2)
@@ -312,11 +323,11 @@ def lumtnu(ax):
             x1, y1, marker='o', s=200, 
             facecolors=col, edgecolors=col)
     ax.text(
-            22*100/7*1.2, 5.5E29, "AT2018cow", fontsize=medsize, 
+            22*100/7*1.2, 5.5E29, "AT2018cow", fontsize=smallsize, 
             verticalalignment='bottom',
             horizontalalignment='left', color=col)
     ax.text(
-            x1, y1/1.2, "$\Delta t$=22d", fontsize=10, 
+            x1, y1/1.2, "$\Delta t$=22d", fontsize=smallsize, 
             verticalalignment='top',
             horizontalalignment='left', c=col)
     x2 = 91*10/5
@@ -325,7 +336,7 @@ def lumtnu(ax):
             x2, y2, marker='o', s=50, 
             facecolors=col, edgecolors=col)
     ax.text(
-            x2*1.1, y2*1, "$\Delta t$=91d", fontsize=10,
+            x2*1.1, y2*1, "$\Delta t$=91d", fontsize=smallsize,
             verticalalignment='bottom',
             horizontalalignment='left', c=col)
     plt.arrow(x1,y1,x2-x1,y2-y1, color=col)
@@ -335,13 +346,13 @@ def lumtnu(ax):
     ax.set_ylim(9E26, 3E30)
     ax.set_xscale('log')
     ax.set_yscale('log')
-    ax.tick_params(axis='both', labelsize=bigsize)
+    ax.tick_params(axis='both', labelsize=medsize)
     ax.set_xlabel(
         "$(\Delta t/1\,\mathrm{day})(\\nu_p/5\,\mathrm{GHz})$",
-        fontsize=bigsize)
+        fontsize=medsize)
 
     
-fig,ax = plt.subplots(1,1, figsize=(6,6))
+fig,ax = plt.subplots(1,1, figsize=(5,5))
 lumtnu(ax)
 y = mdot_curves(ax, 550, 2.5E29, 100, label=True)
 y = mdot_curves(ax, 58, 4E29, 1, label=False)
@@ -349,9 +360,9 @@ y = mdot_curves(ax, 5.9, 6.4E29, 0.01)
 #y = mdot_curves(ax, 1800, 1E-4)
 ax.set_ylabel(
     "Peak Radio Luminosity Density ($\mathrm{erg\,s^{-1}\,Hz^{-1}}$)",
-    fontsize=bigsize)
+    fontsize=medsize)
 #ax.get_yaxis().set_visible(False)
-ax.legend(bbox_to_anchor=(0, 1.1), loc='upper left',
+ax.legend(bbox_to_anchor=(-0.1, 1.1), loc='upper left',
         ncol=4, fontsize=medsize, 
         columnspacing=0.01, borderpad=0.3)#, columnspacing=0.1)
 #y = mdot_curves(ax, 700, 1E1)
@@ -360,13 +371,13 @@ ax.legend(bbox_to_anchor=(0, 1.1), loc='upper left',
 ax2 = ax.twinx()
 ax2.set_ylabel(
         r"$U/R$ (erg/cm) $\qquad \epsilon_e=\epsilon_B=1/3$", 
-        fontsize=bigsize, rotation=270, labelpad=15.0)
+        fontsize=medsize, rotation=270, labelpad=15.0)
 y_f = lambda y_i: 10**((14/19)*(np.log10(y_i)+14.65))
 ymin, ymax = ax.get_ylim()
 ax2.set_ylim((y_f(ymin), y_f(ymax)))
 ax2.plot([],[])
 ax2.set_yscale('log')
-ax2.tick_params(axis='both', labelsize=bigsize)
+ax2.tick_params(axis='both', labelsize=medsize)
 ax2.set_xlim(2,3000)
 
 
@@ -374,6 +385,6 @@ plt.tight_layout()
 
 
      
-plt.show()
-#plt.savefig("lum_tnu.png", dpi=300)
-#plt.close()
+#plt.show()
+plt.savefig("lum_tnu.png", dpi=300)
+plt.close()

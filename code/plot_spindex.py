@@ -152,7 +152,7 @@ ax.axhline(y=-1.5, lw=1, c='grey', ls=':')
 
 ax.set_xscale('log')
 ax.set_ylim(-3,3)
-ax.set_xlabel("Days since 2020 Oct 10.0", fontsize=d['font_med'])
+ax.set_xlabel(r"$\Delta t_\mathrm{obs}$ (d)", fontsize=d['font_med'])
 ax.set_ylabel(r"Spectral index $\beta$ ($f_\nu \propto \nu^{\beta}$)", 
         fontsize=d['font_med'])
 plt.legend(
@@ -165,7 +165,7 @@ ax.tick_params(axis='both', labelsize=d['font_med'])
 ax.set_xticks([20,30,40,60,100])
 ax.set_xticklabels([20,30,40,60,100])
 plt.tight_layout()
-plt.show()
-#plt.savefig("spindex_time.png", dpi=200, bbox_inches='tight')
-#plt.close()
+#plt.show()
+plt.savefig("spindex_time.png", dpi=200, bbox_inches='tight')
+plt.close()
 
