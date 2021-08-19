@@ -3,10 +3,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from astropy.cosmology import Planck15
+from format import *
 
+d = get_format()
 
-bigsize=16
-smallsize=10
+bigsize=d['font_med']
+smallsize=d['font_small']
 
 def plot_xray(flux, c):
     """ Take the integrated flux across 0.3-10 keV,
@@ -33,7 +35,7 @@ def plot_xray(flux, c):
     plt.plot(xplot, xplot*yplot, c=c, ls='-', label='Chandra')
 
 
-fig,ax = plt.subplots(1,1,figsize=(5,3.5), dpi=200)
+fig,ax = plt.subplots(1,1,figsize=(3.3,2.5), dpi=200)
 dcm = Planck15.luminosity_distance(z=0.2442).cgs.value
 
 # from Perley+2021
@@ -42,7 +44,7 @@ opt_nu = 3E18 / np.array([3904, 5055, 6193]) # in Hz
 mAB = np.array([23.56, 23.44, 23.52])
 fnu = 10**((mAB+48.6)/(-2.5))
 opt_Lnu = 4*np.pi*dcm**2 * fnu
-plt.scatter(opt_nu, opt_nu*opt_Lnu, c='k', marker='s', label='VLT+FORS2')
+plt.scatter(opt_nu, opt_nu*opt_Lnu, c='k', marker='s', label='VLT+FORS2', s=10)
 
 # this is 0.3-10 keV (from Yuhan's analysis)
 # on MJD 59158
@@ -50,9 +52,9 @@ xray_L = 3.46E-14*4*np.pi*dcm**2
 plot_xray(xray_L, 'k')
 
 # In the rest-frame
-radio_nu = np.array([79,94,12,8,4])*1E9
-radio_L = np.array([0.679,0.648,0.095,0.057,0.046])*1E-3*1E-23*4*np.pi*dcm**2
-plt.scatter(radio_nu, radio_nu*radio_L, c='k', marker='D', label='VLA/NOEMA')
+radio_nu = np.array([79,94,15,10,6])*1E9
+radio_L = np.array([0.675,0.634,0.095,0.057,0.046])*1E-3*1E-23*4*np.pi*dcm**2
+plt.scatter(radio_nu, radio_nu*radio_L, c='k', marker='D', label='VLA/NOEMA', s=10)
 
 # Plot the radio to X-ray spectral index
 xplot = np.linspace(1E11, 1E17)
@@ -60,7 +62,7 @@ yplot = (1.1E41)*(xplot/1E11)**0.18
 plt.plot(xplot, yplot, lw=0.5, ls='--', c='k')
 plt.text(1E14, 2E41, r'$f_\nu\propto \nu^{0.18}$', fontsize=smallsize)
 
-plt.text(0.05, 0.95, '20d after explosion (rest-frame)', fontsize=smallsize,
+plt.text(0.02, 0.9, '$\Delta t=20$d (rest-frame)', fontsize=smallsize,
         transform=ax.transAxes)
 
 plt.xlim(1E9, 5E18)
@@ -74,7 +76,7 @@ plt.yticks(fontsize=bigsize)
 plt.legend(fontsize=smallsize, loc='lower right')
 
 plt.tight_layout()
-#plt.savefig("sed.png")
-#plt.close()
+plt.savefig("sed.png", dpi=200, bbox_inches='tight', pad_inches=0.05)
+plt.close()
 
-plt.show()
+#plt.show()
