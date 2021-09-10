@@ -4,12 +4,14 @@ and determine the evolution of that SED with time
 """
 
 from scipy.optimize import curve_fit
+import sys
+sys.path.append("/Users/annaho/Dropbox/astronomy/papers_active/ZTF20acigmel/code")
 from get_radio import *
 from format import *
 
 d = get_format()
 
-z = 0.2442
+z = 0.2433
 
 t0 = 72 / (1+z) # reference time
 
@@ -36,8 +38,8 @@ def func_no_s(x_in, Fa0, nua0, alpha1, alpha2, beta1, beta2):
 
 
 def func_no_spindex(x_in, Fa0, nua0, alpha1, alpha2, s):
-    beta1 = 5/2
-    beta2 = -1
+    beta1 = 2
+    beta2 = -2
     nu,t = x_in
 
     pref = Fa0 * (t/t0)**(alpha1)
@@ -52,8 +54,8 @@ def func_no_spindex_const_shock(x_in, Fa0, nua0, alpha1, s):
     # for a decelerating shock, target_value = 0.8
     target_value = 0.8
     alpha2 = 9*alpha1/19-target_value
-    beta1 = 5/2
-    beta2 = -1
+    beta1 = 2
+    beta2 = -4
     nu,t = x_in
 
     pref = Fa0 * (t/t0)**(alpha1)
@@ -309,7 +311,7 @@ def run_one_epoch():
 
 
 
-if __name__=="__main__":
+def run_early_time():
     """ Run the full process for the early-time SEDs, with
     power-law evolution """
     islim, tel, freq_obs, days_obs, flux_obs, eflux_obs = get_data_all()
@@ -384,9 +386,13 @@ if __name__=="__main__":
     ax.set_xlabel(r"$\nu_{\mathrm{rest}}$ (GHz)", fontsize=d['font_small'])
     ax.set_ylabel(r"$f_\nu$ (mJy)", fontsize=d['font_small'])
     ax.tick_params(axis='both', labelsize=d['font_small'])
-    #plt.tight_layout()
-    #plt.show()
-    plt.savefig(
-            "powlaw_fits_early.png", dpi=200, 
-            bbox_inches='tight', pad_inches=0.1)
-    plt.close()
+    plt.tight_layout()
+    plt.show()
+    #plt.savefig(
+    #        "powlaw_fits_early.png", dpi=200, 
+    #        bbox_inches='tight', pad_inches=0.1)
+    #plt.close()
+
+
+if __name__=="__main__":
+    run_late_time()

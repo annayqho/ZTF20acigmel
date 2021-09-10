@@ -9,6 +9,7 @@ import numpy as np
 import sys
 sys.path.append("/Users/annaho/Dropbox/astronomy/papers_complete/AT2018cow/code")
 sys.path.append("/Users/annaho/Dropbox/astronomy/projects_proto/IcBL/old/data/radio_compilations/Zauderer2011/")
+sys.path.append("/Users/annaho/Dropbox/astronomy/papers_active/ZTF20acigmel/code")
 from astropy.cosmology import Planck15
 from get_radio import *
 from scale_fluxes import sma_lc
@@ -130,7 +131,7 @@ def grb030329(ax, col, legend):
     # HIGH FREQUENCY
 
     # Sheth
-    dat = np.loadtxt("030329_dat.txt", delimiter=',', dtype=str)
+    dat = np.loadtxt("../../data/030329_dat.txt", delimiter=',', dtype=str)
     freq = 100E9
     t = dat[:,0].astype(float)
     lum = dat[:,1].astype(float) * 1E-3 * 1E-23 * 4 * np.pi * d**2
@@ -262,6 +263,8 @@ def sn2006aj(ax, col, legend):
     From Soderberg supplementary information
     """
     d = Planck15.luminosity_distance(z=0.033).cgs.value
+    
+    # I think I'm wrong!!! I think this is SN2008AD
     nu = 95E9
     t = np.array([4.94,6.84])
     f = np.array([3.2,0.6])
@@ -272,6 +275,7 @@ def sn2006aj(ax, col, legend):
     ax.plot(t, lum, c=col, label=legend)
     ax.arrow(t[1], lum[1], 0, -7E27, color=llgrb_col, 
             length_includes_head=True, head_width=1, head_length=3E27)
+
 
 
 def sn2017iuk(ax, col, legend):
@@ -340,7 +344,7 @@ if __name__=="__main__":
     # Second category: low-luminosity GRBs
     sn1998bw(ax, llgrb_col, legend='LLGRB')
     sn2017iuk(ax, llgrb_col, None)
-    sn2006aj(ax, llgrb_col, None)
+    #sn2006aj(ax, llgrb_col, None)
 
     # Third category: Cow-like
     #at2018cow(ax, cow_col, 'Cow-like')

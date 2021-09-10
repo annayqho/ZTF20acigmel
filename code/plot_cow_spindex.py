@@ -72,22 +72,31 @@ def plot(d,alpha,ealpha,nu1,nu2):
     if np.logical_and(nu1==217, nu2==232):
         ax.errorbar(
                 d, alpha, yerr=ealpha, fmt='o', c='grey', 
-                mfc='white', mec='grey', label='217/232')
+                mfc='white', mec='grey', label='217 GHz/232 GHz')
     elif np.logical_and(nu1==232, nu2==250.6):
-        ax.errorbar(d, alpha, yerr=ealpha, fmt='s', c='orange', label='330.8/346.8')
+        ax.errorbar(
+                d, alpha, yerr=ealpha, fmt='s', c='orange', 
+                label='330.8 GHz/346.8 GHz')
     elif np.logical_and(nu1==232, nu2==246.6):
         ax.errorbar(
                 d, alpha, yerr=ealpha, fmt='s', 
-                c='orange', label='330.8/346.8', mec='orange', mfc='white')
+                c='orange', label='330.8 GHz/346.8 GHz', 
+                mec='orange', mfc='white')
     elif np.logical_and(nu1==344.8, nu2==360.8):
-        ax.errorbar(d, alpha, yerr=ealpha, fmt='D', c='purple', label='344.8/360.8')
+        ax.errorbar(
+                d, alpha, yerr=ealpha, fmt='D', c='purple', 
+                label='344.8 GHz/360.8 GHz')
     elif np.logical_and(nu1==341.5, nu2==357.5):
-        ax.errorbar(d, alpha, yerr=ealpha, fmt='o', mec='k', c='k', mfc='white', label='341.5/357.5')
+        ax.errorbar(
+                d, alpha, yerr=ealpha, fmt='o', mec='k', c='k', mfc='white', 
+                label='341.5 GHz/357.5 GHz')
     elif np.logical_and(nu1==243.3, nu2==259.3):
-        ax.errorbar(d, alpha, yerr=ealpha, fmt='D', c='purple', label='243.3/259.3')
+        ax.errorbar(d, alpha, yerr=ealpha, fmt='D', c='purple', 
+                label='243.3 GHz/259.3 GHz')
     else:
         print(nu1,nu2)
-    #    ax.errorbar(d, alpha, yerr=ealpha, fmt='o', c='lightgrey', label='217/232')
+    #    ax.errorbar(d, alpha, yerr=ealpha, fmt='o', c='lightgrey', 
+            #label='217/232')
 
 
 # At every epoch, plot the spectral indices
@@ -107,11 +116,12 @@ for d in udays:
             popt,pcov = curve_fit(fitfunc, x, y, sigma=ey, absolute_sigma=False)
             alpha = popt[1]
             ealpha = np.sqrt(pcov[1,1])
-            ax.errorbar(d, alpha, yerr=ealpha, fmt='o', c='k', label='217 to 345')
+            ax.errorbar(d, alpha, yerr=ealpha, fmt='o', c='k', 
+                    label='217 GHz to 345 GHz')
             
 legend_without_duplicate_labels(ax)
 ax.set_xlabel("Epoch [d]", fontsize=14)
-ax.set_ylabel("Spectral index", fontsize=14)
+ax.set_ylabel(r"$\beta$ ($F_\nu \propto \nu^{\beta}$)", fontsize=14)
 ax.tick_params(axis='both', labelsize=14)
 ax.axhline(y=-1.5, ls='--', c='k')
 ax.set_xscale('log')

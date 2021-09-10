@@ -3,7 +3,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from astropy.table import Table
-from synchrotron_fit import fit_self_abs, self_abs
+#from synchrotron_fit import fit_self_abs, self_abs
 
 
 def get_data_all():
@@ -18,7 +18,7 @@ def get_data_all():
     flux: flux of the data point
     eflux: estimate of uncertainty in flux of the data point
     """
-    data_dir = "../data"
+    data_dir = "/Users/annaho/Dropbox/astronomy/papers_active/ZTF20acigmel/data"
     dat = Table.read(
         "%s/radio_lc.dat" %data_dir, delimiter="&", format='ascii.no_header')
     days = np.array(dat['col1'])

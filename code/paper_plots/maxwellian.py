@@ -3,10 +3,12 @@
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes
 from mpl_toolkits.axes_grid1.inset_locator import mark_inset,inset_axes
-from get_radio import *
 from scipy.optimize import curve_fit
 from astropy.cosmology import Planck15
+import sys
+sys.path.append("/Users/annaho/Dropbox/astronomy/papers_active/ZTF20acigmel/code")
 from format import *
+from get_radio import *
 
 d = get_format()
 
@@ -362,7 +364,7 @@ def ultralong_panel(ax, col='#ffa600'):
 def css161010_panel(ax, col='#ffa600'):
     factor = 6
     z = 0.034
-    dat = np.loadtxt("css161010_radio_sed.txt",dtype=float,delimiter=',')
+    dat = np.loadtxt("../../data/css161010_radio_sed.txt",dtype=float,delimiter=',')
     x = dat[:,0]/1E9
     y = dat[:,1]*1E3
     print(x,y)
@@ -371,6 +373,9 @@ def css161010_panel(ax, col='#ffa600'):
     marker = 'h'
     ax.scatter(x, y/factor, marker=marker , c=col, 
             label='0.2xCSS161010 (99d)', s=50)
+    ax.text(
+            x[5], 1.2*y[5]/factor, r'$f_\nu \propto \nu^{2}$', 
+            ha='right', va='bottom', fontsize=d['font_med'], color=col)
 
     # Maxwellian fit
     p0 = [0.0003, 5.5E4, 0.7]
@@ -504,13 +509,13 @@ def combined():
     at2018cow_panel(ax,50)
 
     # Then, plot the ultra-long GRB part
-    ultralong_panel(ax,col='k')
+    #ultralong_panel(ax,col='k')
 
     # Now CSS161010
     css161010_panel(ax)
 
     # Power law for legend
-    ax.plot([0,1],[0,1], c='grey', ls='--', label=r'Power law ($\nu^{-1.5}$)', lw=1)
+    ax.plot([0,0.1],[0,0.1], c='grey', ls='--', label=r'Power law ($\nu^{-1.5}$)', lw=1)
 
     # Formatting
     plt.legend(
@@ -535,4 +540,4 @@ def combined():
     plt.close()
 
 if __name__=="__main__":
-    camel_late()
+    combined()
