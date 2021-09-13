@@ -51,7 +51,18 @@ def get_cm_peak():
     print(peak_lum/1E29, peak_elum/1E29)
 
 
+def get_scintillation():
+    """ This number is used in Section 3 """
+    R = 3E16 # radius at late times, 70-132 days
+    # s = d*theta
+    dcm = get_dcm()
+    theta = R/dcm # radians
+    print(theta*(180/np.pi)*3600*1E6)
+
+
+
 if __name__=="__main__":
     #get_dL()
     #get_mm_peak()
-    get_cm_peak()
+    #get_cm_peak()
+    get_scintillation()

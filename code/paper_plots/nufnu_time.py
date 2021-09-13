@@ -258,26 +258,6 @@ def sn1998bw(ax, col, legend):
             fontsize=form['font_small'])
 
 
-def sn2006aj(ax, col, legend):
-    """ SN 2006aj
-    From Soderberg supplementary information
-    """
-    d = Planck15.luminosity_distance(z=0.033).cgs.value
-    
-    # I think I'm wrong!!! I think this is SN2008AD
-    nu = 95E9
-    t = np.array([4.94,6.84])
-    f = np.array([3.2,0.6])
-    lum = f*1E-3*1E-23*4*np.pi*d**2
-    ax.scatter(t, lum, c=col, label=legend)
-    ax.text(t[0]/1.1, lum[0], 'SN2006aj', ha='right', color=llgrb_col,
-            fontsize=form['font_small'])
-    ax.plot(t, lum, c=col, label=legend)
-    ax.arrow(t[1], lum[1], 0, -7E27, color=llgrb_col, 
-            length_includes_head=True, head_width=1, head_length=3E27)
-
-
-
 def sn2017iuk(ax, col, legend):
     """ SN 2017iuk
     """
@@ -372,8 +352,8 @@ if __name__=="__main__":
     ax.legend(fontsize=form['font_small'], loc='upper right')
 
     plt.tight_layout()
-    plt.show()
-    #plt.savefig(
-    #        "mm_lc_100ghz.png", dpi=300, 
-    #        bbox_inches='tight', pad_inches=0.1)
-    #plt.close()
+    #plt.show()
+    plt.savefig(
+            "mm_lc_100ghz.png", dpi=300, 
+            bbox_inches='tight', pad_inches=0.1)
+    plt.close()
