@@ -17,7 +17,7 @@ d = get_format()
 squaresize = 50
 
 def vele(ax):
-    # Dillon's MAXI source...I think not published yet
+    # Dillon's MAXI source...Dong et al. 2021
     v = 0.025
     E = 2E49
     ax.scatter(
@@ -28,6 +28,7 @@ def vele(ax):
             verticalalignment='top')
 
     # FIRST transient
+    # Mooley+18, Law+2021
     v = 0.02
     E = 3E49
     ax.scatter(
