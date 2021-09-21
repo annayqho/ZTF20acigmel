@@ -1,5 +1,7 @@
 """ Peak lum phase space for Ic-BL SNe """
 
+import sys
+sys.path.append("/Users/annaho/Dropbox/astronomy/papers_active/ZTF20acigmel/code")
 from matplotlib import rc
 import matplotlib.pyplot as plt
 import numpy as np
@@ -93,7 +95,7 @@ def lumtnu(ax):
     tnu = 26*365*(0.3/5)
     dcm = Planck15.luminosity_distance(z=0.01957).cgs.value
     lpeak = 2.25*1E-3*1E-23*4*np.pi*dcm**2
-    ax.scatter(tnu, lpeak, marker='P', c='k', s=50)
+    ax.scatter(tnu, lpeak, marker='X', c='k', s=50)
     ax.text(tnu, lpeak*1.2, 'FIRST J1419', fontsize=smallsize,
             verticalalignment='bottom',
             horizontalalignment='center')

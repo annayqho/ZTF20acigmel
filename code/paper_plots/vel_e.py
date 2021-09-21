@@ -7,6 +7,8 @@ These are two classic figures
 """
 
 import matplotlib.pyplot as plt
+import sys
+sys.path.append("/Users/annaho/Dropbox/astronomy/papers_active/ZTF20acigmel/code")
 import numpy as np
 from astropy.table import Table
 from astropy.cosmology import Planck15
@@ -21,7 +23,7 @@ def vele(ax):
     v = 0.025
     E = 2E49
     ax.scatter(
-            v, E, marker='D', edgecolor='k', facecolor='k', s=50, label=None)
+            v, E, marker='X', edgecolor='k', facecolor='k', s=50, label=None)
     ax.text(
             v/1.5, E/1.1, "VT1210+4956", fontsize=d['font_small'],
             horizontalalignment='center',
@@ -32,7 +34,7 @@ def vele(ax):
     v = 0.02
     E = 3E49
     ax.scatter(
-            v, E, marker='D', edgecolor='k', facecolor='k', s=50, label=None)
+            v, E, marker='X', edgecolor='k', facecolor='k', s=50, label=None)
     ax.text(
             v/1.5, E/1.1, "FIRST J1419", fontsize=d['font_small'],
             horizontalalignment='center',

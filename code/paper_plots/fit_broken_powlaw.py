@@ -113,14 +113,21 @@ def run_late_time():
     ey = np.array(ey)
 
     # Plot the data
-    fig,axarr = plt.subplots(1,2,figsize=(6,3),sharex=True, sharey=True)
-    col = d['colors']['3']
+    fig,axarr = plt.subplots(1,2,figsize=(6,2.5),sharex=True, sharey=True)
+    col = d['colors']['9']
+    col = col[::-1][6:]
+    markers = ['o', 's', 'D']
+    msize = [6, 6, 6]
+
     for ax in axarr:
         j = 0
         for ii in use_ind:
+            lab = int(bins_obs[ii])
             choose = np.logical_and(t==bins[ii], x>6*(1+z))
             ax.errorbar(
-                    x[choose], y[choose], yerr=ey[choose], fmt='o', c=col[j])
+                    x[choose], y[choose], yerr=ey[choose], 
+                    fmt=markers[j], c=col[j], ms=msize[j],
+                    label='%s d' %lab)
             choose = np.logical_and(t==bins[ii], x==6*(1+z))
             ax.errorbar(
                     x[choose], y[choose], yerr=ey[choose], 
@@ -149,10 +156,11 @@ def run_late_time():
     nuplot = np.logspace(0.5,2.4)
     j = 0
     for ii in use_ind:
+        lab = int(bins_obs[ii]/(1+z))
         tplot = np.array([bins[ii]]*len(nuplot))
         fplot = func_no_spindex((nuplot,tplot), *popt)
         print(bins_obs[ii]/(1+z))
-        ax.plot(nuplot, fplot, c=col[j], label=int(bins_obs[ii]/(1+z)))
+        ax.plot(nuplot, fplot, c=col[j])
         j += 1
 
     # Calculate the chi squared
@@ -161,8 +169,10 @@ def run_late_time():
         choose = t==bins[ii]
         f_model = func_no_spindex((x[choose],t[choose]), *popt)
         chisq += sum(((f_model - y[choose])/ey[choose])**2)
+    print("number of DOF:")
+    print(len(t)-len(p0))
     red_chisq = np.round(chisq / (len(t)-len(p0)),1)
-    ax.text(0.05,0.7,r'$\chi^2_r\approx%s$' %red_chisq, 
+    ax.text(0.05,0.9,r'$\chi^2_r\approx%s$' %red_chisq, 
             fontsize=d['font_small'], transform=ax.transAxes)
 
 
@@ -182,9 +192,10 @@ def run_late_time():
     nuplot = np.logspace(0.5,2.4)
     j = 0
     for ii in use_ind:
+        lab = int(bins_obs[ii]/(1+z))
         tplot = np.array([bins[ii]]*len(nuplot))
         fplot = func_no_spindex_const_shock((nuplot,tplot), *popt)
-        ax.plot(nuplot, fplot, c=col[j], label=int(bins_obs[ii]/(1+z)))
+        ax.plot(nuplot, fplot, c=col[j])
         j += 1
 
     # Calculate the chi squared
@@ -193,25 +204,29 @@ def run_late_time():
         choose = t==bins[ii]
         f_model = func_no_spindex_const_shock((x[choose],t[choose]), *popt)
         chisq += sum(((f_model - y[choose])/ey[choose])**2)
+    print("number of DOF:")
+    print(len(t)-len(p0))
     red_chisq = np.round(chisq / (len(t)-len(p0)),1)
-    ax.text(0.05,0.76,r'Constant shock' %red_chisq, 
+    ax.text(0.05,0.9,r'Constant shock' %red_chisq, 
             fontsize=d['font_small'], transform=ax.transAxes)
-    ax.text(0.05,0.68,r'$\chi^2_r\approx%s$' %red_chisq, 
+    ax.text(0.05,0.8,r'$\chi^2_r\approx%s$' %red_chisq, 
             fontsize=d['font_small'], transform=ax.transAxes)
 
     for ax in axarr:
         ax.set_yscale('log')
         ax.set_xscale('log')
-        ax.legend(loc='upper left', ncol=3, fontsize=d['font_small'])
         ax.set_xlim(6.2, 124)
-        ax.set_ylim(5E-2, 1.0)
+        ax.set_ylim(5E-2, 0.6)
         ax.set_xlabel(r"$\nu_{\mathrm{rest}}$ (GHz)", fontsize=d['font_med'])
+    handles, labels = axarr[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc='upper center', ncol=3)
+    plt.subplots_adjust(wspace=0.1)
     axarr[0].set_ylabel(r"$f_\nu$ (mJy)", fontsize=d['font_med'])
-    plt.tight_layout()
-    plt.show()
-    #plt.savefig("broken_powlaw_fits.png", dpi=200, bbox_inches='tight',
-    #        pad_inches=0.1)
-    #plt.close()
+    #plt.tight_layout()
+    #plt.show()
+    plt.savefig("broken_powlaw_fits.png", dpi=200, bbox_inches='tight',
+            pad_inches=0.1)
+    plt.close()
 
 
 def run_one_epoch():
@@ -281,10 +296,11 @@ def run_one_epoch():
     nuplot = np.logspace(0.5,2.4)
     j = 0
     for ii in use_ind:
+        lab = int(bins_obs[ii]/(1+z))
         tplot = np.array([bins[ii]]*len(nuplot))
         fplot = func_spec_no_spindex(nuplot, *popt)
         print(bins_obs[ii]/(1+z))
-        ax.plot(nuplot, fplot, c=col[j], label=int(bins_obs[ii]/(1+z)))
+        ax.plot(nuplot, fplot, c=col[j], label="%s d" %lab)
         j += 1
 
     # Calculate the chi squared
@@ -302,7 +318,7 @@ def run_one_epoch():
     ax.set_xscale('log')
     ax.legend(loc='upper left', ncol=3, fontsize=d['font_small'])
     ax.set_xlim(6.2, 124)
-    ax.set_ylim(0.02, 1.0)
+    ax.set_ylim(0.02, 0.6)
     ax.set_xlabel(r"$\nu_{\mathrm{rest}}$ (GHz)", fontsize=d['font_med'])
     ax.set_ylabel(r"$f_\nu$ (mJy)", fontsize=d['font_med'])
     plt.tight_layout()
@@ -381,7 +397,7 @@ def run_early_time():
     ax.set_xscale('log')
     ax.legend(loc='lower right', ncol=2, fontsize=d['font_small'])
     ax.set_xlim(6.2, 300)
-    ax.set_ylim(1E-2, 1.0)
+    ax.set_ylim(1E-2, 0.6)
     ax.set_xlabel(r"$\nu_{\mathrm{rest}}$ (GHz)", fontsize=d['font_small'])
     ax.set_ylabel(r"$f_\nu$ (mJy)", fontsize=d['font_small'])
     ax.tick_params(axis='both', labelsize=d['font_small'])

@@ -9,6 +9,7 @@ import sys
 sys.path.append("/Users/annaho/Dropbox/astronomy/papers_active/ZTF20acigmel/code")
 from format import *
 from get_radio import *
+from basics import get_z, get_dL, get_dcm
 
 d = get_format()
 
@@ -40,7 +41,7 @@ def fitfunc_physical(nu_ghz, B, ne):
     # Scale factor in mJy
     v_cgs = beta*3E10
     L = 4.59E22 * B**2 * (beta/0.1)**12 * (td/50)**2
-    dcm = Planck15.luminosity_distance(z=0.2442).cgs.value
+    dcm = get_dcm()
     fmjy = (L / (4*np.pi*dcm**2)) / 1E-23 / 1E-3
 
     # Synchrotron frequency in GHz
@@ -73,7 +74,7 @@ def fitfunc_exponential(nu, const, nuM):
 
 def at2020xnd(ax,col='#ef5675'):
     islim, tel, freq, days, flux, eflux = get_data_all()
-    z = 0.2442
+    z = get_z()
 
     # Choose two epochs of observations to fit together
     choose = np.logical_and.reduce((days>41, days<52, islim==False))
@@ -136,7 +137,7 @@ def at2020xnd(ax,col='#ef5675'):
 
 def at2020xnd_low_freq_late(ax):
     islim, tel, freq, days, flux, eflux = get_data_all()
-    z = 0.2442
+    z = get_z()
 
     bins = [71,95,132]
     col = ['#003f5c', '#bc5090', '#ffa600']
@@ -199,7 +200,7 @@ def at2020xnd_high_freq(ax):
     """ Fit only to the NOEMA data, and include the power law """
 
     islim, tel, freq, days, flux, eflux = get_data_all()
-    z = 0.2442
+    z = get_z()
 
     # Choose two epochs of observations to fit together
     choose = np.logical_and.reduce((days>41, days<52, islim==False))
@@ -540,4 +541,7 @@ def combined():
     plt.close()
 
 if __name__=="__main__":
-    combined()
+    #combined()
+    fig,ax = plt.subplots(1,1,figsize=(6,5))
+    at2020xnd_low_freq_late(ax)
+    plt.show()
