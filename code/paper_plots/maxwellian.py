@@ -140,7 +140,11 @@ def at2020xnd_low_freq_late(ax):
     z = get_z()
 
     bins = [71,95,132]
-    col = ['#003f5c', '#bc5090', '#ffa600']
+
+    col = d['colors']['9']
+    col = col[::-1][6:]
+    markers = ['o', 's', 'D']
+    msize = [6, 6, 6]
 
     for i,b in enumerate(bins):
         choose = np.logical_and.reduce((days>b-b/20, days<b+b/20, islim==False))
@@ -162,38 +166,36 @@ def at2020xnd_low_freq_late(ax):
         ey = ey[keep]
 
         # Plot the data
-        marker = 'o'
-        msize = 5
         ax.errorbar(x, y, ey, 
-                fmt='%s-' %marker, c=col[i], ms=msize, label=str(b))
+                fmt='%s' %markers[i], c=col[i], 
+                ms=msize[i], label="%s d" %str(b))
 
         # Fit for a Maxwellian w/o physical parameters
-        p0 = [0.0003, 5.5E4, 0.7]
+        p0 = [0.0003, 5.5E3, 0.7]
 
         # Fit for the Maxwellian in terms of physical quantities
         popt, pcov = curve_fit(fitfunc, x, y, p0=p0, #maxfev=1000000,
                 sigma=ey, absolute_sigma=True, 
-                bounds=((0.00001,0.01E4,0.1),(0.0006,6E4,1.0)))
-        xfit = np.linspace(1,100)
+                bounds=((0.00001,0.01E4,0.1),(0.001,5.6E4,1.0)))
+        xfit = np.linspace(1,100, 1000)
         yfit = fitfunc(xfit, *popt)
         print("Maxwellian fit, Day %s:" %b)
         for i,param in enumerate(popt):
             print("%s +/- %s" %(param,np.sqrt(pcov[i,i])))
 
         yfit = fitfunc(xfit, *popt)
-        ax.plot(
-                xfit,yfit, c='k', ls='--', zorder=5)
+        ax.plot(xfit,yfit, color=col[i], ls='-', zorder=0)
 
-        ax.set_xscale('log')
-        ax.set_yscale('log')
-        ax.set_xticks([10,20,30,50,100])
-        ax.set_xticklabels([10,20,30,50,100])
-        ax.set_yticks([0.05,0.2, 0.4, 0.6, 0.8])
-        ax.set_yticklabels([0.05,0.2, 0.4, 0.6, 0.8])
-        plt.minorticks_off()
-        ax.set_xlim(10, 110)
-        ax.set_ylim(0.05, 0.45)
-        ax.legend(fontsize=d['font_small'])
+    ax.set_xscale('log')
+    ax.set_yscale('log')
+    ax.set_xticks([10,20,30,50,100])
+    ax.set_xticklabels([10,20,30,50,100])
+    ax.set_yticks([0.05,0.2, 0.4, 0.6, 0.8])
+    ax.set_yticklabels([0.05,0.2, 0.4, 0.6, 0.8])
+    plt.minorticks_off()
+    ax.set_xlim(10, 110)
+    ax.set_ylim(0.05, 0.45)
+    ax.legend(fontsize=d['font_small'], loc='lower right')
 
 
 def at2020xnd_high_freq(ax):
@@ -268,36 +270,44 @@ def at2020xnd_high_freq(ax):
 
 
 
-def at2018cow_panel(ax,factor,col='#7a5195'):
+def at2018cow_panel(ax,factor,col='#7a5195',txt=True):
     """ factor: amount to scale the LC by """
     x = np.array([9.0, 34.0, 243.3, 259.3, 341.5, 357.5])
-    y = np.array([0.27, 5.6, 36.6, 31.21, 19.49, 17.42])/factor
-    ey = np.array([0.06, 0.16, 0.81, 0.92, 1.47, 2.8])/factor
+    y = np.array([0.27, 5.6, 36.6, 31.21, 19.49, 17.42])
+    ey = np.array([0.06, 0.16, 0.81, 0.92, 1.47, 2.8])
+
     td = 10.5
     # Plot the data
     marker = 'o'
     msize = 8
-    ax.errorbar(x, y, ey, 
+    ax.errorbar(x, y/factor, ey/factor, 
             fmt='%s' %marker, c=col, label=None, ms=msize)
     ax.errorbar(-100, -100, 0, 
             fmt='%s' %marker, c=col, label='0.02xAT2018cow (10d)', ms=msize)
 
     # Fit for a Maxwellian w/o physical parameters
     p0 = [5E-2, 3E4, 1]
-    popt, pcov = curve_fit(fitfunc, x, y, sigma=ey, absolute_sigma=True, p0=p0, maxfev=1000000)
+    popt, pcov = curve_fit(
+            fitfunc, x, y, sigma=ey, absolute_sigma=True, p0=p0, maxfev=1000000)
     xfit = np.logspace(0,3,3000)
     yfit = fitfunc(xfit, *popt)
     print("Cow Maxwellian fit:")
     for i,param in enumerate(popt):
         print("%s +/- %s" %(param,np.sqrt(pcov[i,i])))
     ax.plot(
-            xfit,yfit, ls='-', zorder=5, 
+            xfit,yfit/factor, ls='-', zorder=5, 
             label=r'Maxwellian ($\nu_m\approx2$ GHz)', color=col)
 
     # Plot a power law
     xplot = np.linspace(250,1000)
     yplot = y[2]*(xplot/x[2])**(-1.5)
-    ax.plot(xplot, yplot, c=col, ls='--', lw=1, label=None)
+    ax.plot(xplot, yplot/factor, c=col, ls='--', lw=1, label=None)
+
+    if txt:
+        print("plotting the text")
+        ax.text(
+                x[0], y[0]*1.2/factor, r'$f_\nu \propto \nu^{2}$', 
+                ha='left', va='bottom', fontsize=d['font_med'], color=col)
 
 
 def at2018cow_plot():
@@ -328,16 +338,17 @@ def at2018cow_plot():
 
 
 def ultralong_panel(ax, col='#ffa600'):
+    factor = (1/1000)
     z = 0.347
     x = np.array([4.8, 7.4, 9.5, 13.5, 16.0, 22.0]) * (1+z)
-    y = np.array([237, 298, 293, 146, 89, 104]) / (1+z) / 1000
-    ey = np.array([17, 12, 14, 20, 22, 13]) / (1+z) / 1000
+    y = np.array([237, 298, 293, 146, 89, 104]) / (1+z)
+    ey = np.array([17, 12, 14, 20, 22, 13]) / (1+z) 
     td = 2
 
     # Plot the data
     marker = 'D'
     msize = 8
-    ax.errorbar(x, y, ey, 
+    ax.errorbar(x, y*factor, ey*factor, 
             fmt='%s' %marker, c=col, label=None, ms=msize)
     ax.errorbar(-100, -100, 0, 
             fmt='%s' %marker, c=col, label='GRB130925A (2d)', ms=msize)
@@ -354,15 +365,15 @@ def ultralong_panel(ax, col='#ffa600'):
     for i,param in enumerate(popt):
         print("%s +/- %s" %(param,np.sqrt(pcov[i,i])))
     ax.plot(
-            xfit,yfit, ls='-', zorder=5, 
+            xfit,yfit*factor, ls='-', zorder=5, 
             label=r'Maxwellian ($\nu_m\approx0.1$ GHz)', c=col)
 
     xplot = np.linspace(12.5,40)
     yplot = y[2]*(xplot/x[2])**(-1.5)
-    ax.plot(xplot, yplot, c=col, lw=1, ls='--', label=None)
+    ax.plot(xplot, yplot*factor, c=col, lw=1, ls='--', label=None)
 
 
-def css161010_panel(ax, col='#ffa600'):
+def css161010_panel(ax, col='#ffa600', txt=True):
     factor = 6
     z = 0.034
     dat = np.loadtxt("../../data/css161010_radio_sed.txt",dtype=float,delimiter=',')
@@ -374,9 +385,10 @@ def css161010_panel(ax, col='#ffa600'):
     marker = 'h'
     ax.scatter(x, y/factor, marker=marker , c=col, 
             label='0.2xCSS161010 (99d)', s=50)
-    ax.text(
-            x[5], 1.2*y[5]/factor, r'$f_\nu \propto \nu^{2}$', 
-            ha='right', va='bottom', fontsize=d['font_med'], color=col)
+    if txt:
+        ax.text(
+                x[5], 1.2*y[5]/factor, r'$f_\nu \propto \nu^{2}$', 
+                ha='right', va='bottom', fontsize=d['font_med'], color=col)
 
     # Maxwellian fit
     p0 = [0.0003, 5.5E4, 0.7]
@@ -501,47 +513,92 @@ def camel_early():
 
 def combined():
     """ combine panels into one big figure """
-    fig,ax = plt.subplots(1,1,figsize=(6,5))
 
-    # First, plot the AT2020xnd part
-    at2020xnd(ax)
+    # We want to break the y-axis into two portions,
+    # and use the bottom for outliers
+    # (following
+    #        https://matplotlib.org/3.1.0/gallery/
+    #        subplots_axes_and_figures/broken_axis.html)
 
-    # Then, plot the AT2018cow part
-    at2018cow_panel(ax,50)
+    fig,axarr = plt.subplots(2,1,figsize=(6,5),sharex=True,
+            gridspec_kw={'height_ratios': [3,0.8]})
 
-    # Then, plot the ultra-long GRB part
-    #ultralong_panel(ax,col='k')
+    for i,ax in enumerate(axarr):
+        # First, plot the AT2020xnd part
+        at2020xnd(ax)
 
-    # Now CSS161010
-    css161010_panel(ax)
+        # Then, plot the AT2018cow part
+        if i==0:
+            at2018cow_panel(ax,50,txt=False)
+        elif i==1:
+            at2018cow_panel(ax,50)
 
-    # Power law for legend
-    ax.plot([0,0.1],[0,0.1], c='grey', ls='--', label=r'Power law ($\nu^{-1.5}$)', lw=1)
+        # Then, plot the ultra-long GRB part
+        ultralong_panel(ax,col='k')
 
-    # Formatting
-    plt.legend(
-        bbox_to_anchor=(0,1.02,1,1.02),loc='lower left',mode='expand',
-        borderaxespad=0., ncol=2, fontsize=d['font_small'])
-    ax.set_xscale('log')
-    ax.set_yscale('log')
-    ax.set_ylim(4E-2, 1.5)
+        # Now CSS161010
+        if i==0:
+            css161010_panel(ax)
+        elif i==1:
+            css161010_panel(ax,txt=False)
+
+        # Power law for legend
+        ax.plot(
+                [0,0.1],[0,0.1], c='grey', ls='--', 
+                label=r'Power law ($\nu^{-1.5}$)', lw=1)
+
+        # Formatting
+        ax.set_xscale('log')
+        ax.set_yscale('log')
+        ax.set_yticks([0.05,0.1,0.2,0.4,1])
+        ax.set_yticklabels([0.05,0.1,0.2,0.4,1])
+        ax.set_xlim(0.9, 600)
+        ax.tick_params(axis='both', labelsize=d['font_med'])
+
+    # Zoom-in / limit the view to different portions of the data
+    axarr[0].set_ylim(0.06, 1.5) # most of the data
+    axarr[1].set_ylim(0.004, 0.01) # outliers
+
+    # Put the diagonal cuts
+    diag = 0.015
+    kwargs = dict(transform=axarr[0].transAxes, color='k', clip_on=False)
+    axarr[0].plot(
+            (-diag, +diag), (-diag, +diag), **kwargs)   # top-left diagonal
+    axarr[0].plot(
+            (1-diag, 1+diag), (-diag, +diag), **kwargs)  # top-right diagonal
+    kwargs.update(transform=axarr[1].transAxes)  # switch to the bottom axes
+    axarr[1].plot(
+            (-diag, +diag), 
+            (1-diag, 1+diag), **kwargs)  # bottom-left diagonal
+    axarr[1].plot(
+            (1-diag, 1+diag), 
+            (1-diag, 1+diag), **kwargs)  # bottom-right diagonal 
+
+    # For one panel only
+    axarr[1].set_xlabel(
+            r"$\nu_{\mathrm{rest}}$ (GHz)", fontsize=d['font_large'])
     ax.set_xticks([1,2,4,6,10,20,40,100,200,400])
     ax.set_xticklabels([1,2,4,6,10,20,40,100,200,400])
-    ax.set_yticks([0.05,0.1,0.2,0.4,1])
-    ax.set_yticklabels([0.05,0.1,0.2,0.4,1])
-    ax.set_xlim(0.9, 600)
-    ax.tick_params(axis='both', labelsize=d['font_med'])
-    ax.set_xlabel(r"$\nu_{\mathrm{rest}}$ (GHz)", fontsize=d['font_large'])
-    ax.set_ylabel(r"$f_\nu$ (mJy)", fontsize=d['font_large'])
-    plt.tight_layout()
+    ax.set_yticks([5E-3, 8E-3])
+    ax.set_yticklabels([5E-3, 8E-3])
+    plt.minorticks_off()
+    #axarr[1].yaxis.grid(False, which='minor')
+    axarr[0].set_ylabel(r"$f_\nu$ (mJy)", fontsize=d['font_large'])
+
+    # Formatting
+    axarr[0].legend(
+        bbox_to_anchor=(0,1.02,1,1.02),loc='lower left',mode='expand',
+        borderaxespad=0., ncol=2, fontsize=d['font_small'])
+
+    fig.subplots_adjust(hspace=0.05)
 
     # Save
-    #plt.show()
-    plt.savefig("maxwellian_combined.png", dpi=200, bbox_inches='tight', pad_inches=0.1)
-    plt.close()
+    plt.show()
+    #plt.savefig(
+    #        "maxwellian_combined.png", dpi=200, 
+    #        bbox_inches='tight', pad_inches=0.1)
+    #plt.close()
 
 if __name__=="__main__":
-    #combined()
-    fig,ax = plt.subplots(1,1,figsize=(6,5))
-    at2020xnd_low_freq_late(ax)
-    plt.show()
+    combined()
+    #camel_late()

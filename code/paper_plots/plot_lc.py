@@ -11,8 +11,10 @@ because those are important too.
 
 import matplotlib
 from astropy.time import Time
+import sys
+sys.path.append("/Users/annaho/Dropbox/astronomy/papers_active/ZTF20acigmel/code")
 from get_radio import *
-from ssa_lc_fixalpha import *
+#from ssa_lc_fixalpha import *
 from format import *
 
 form = get_format()
@@ -41,8 +43,9 @@ def plot_all(ax):
     ax.scatter(31.8, 1.076, marker='+', c=form['colors']['3'][1], zorder=10)
 
     # Plot vertical lines indicating epochs for SEDs
-    for b in [18, 24, 30.3, 38, 46, 51.9]:
-        ax.axvline(x=b, lw=0.5, ls=':')
+    #for b in [18, 24, 30.3, 38, 46, 51.9]:
+    #    ax.axvline(x=b, lw=0.5, ls=':')
+    ax.axvline(x=300)
 
 
 def plot_panel(ax, choose):
@@ -134,7 +137,7 @@ if __name__=="__main__":
     axarr[0,0].set_yscale('log')
     axarr[0,0].set_ylim(0.015,1.3)
     axarr[0,0].set_xscale('log')
-    axarr[0,0].set_xlim(9,170)
+    axarr[0,0].set_xlim(9,365)
     for ax in axarr[:,0]:
         ax.set_ylabel("$f_{\\nu,\mathrm{obs}}$ (mJy)", fontsize=large)
         ax.tick_params(axis='both', labelsize=large)
@@ -149,6 +152,6 @@ if __name__=="__main__":
     # Display
     #plt.tight_layout()
     plt.subplots_adjust(hspace=0.05, wspace=0.1)
-    plt.show()
-    #plt.savefig("radio_lc.png", dpi=300, bbox_inches='tight')
-    #plt.close()
+    #plt.show()
+    plt.savefig("radio_lc.png", dpi=300, bbox_inches='tight')
+    plt.close()

@@ -45,7 +45,7 @@ def vele(ax):
     v = 0.05
     E = 9.385748112535813e+47
     ax.scatter(
-            v, E, marker='o', edgecolor='k', facecolor='k', s=50, label=None)
+            v, E, marker='d', edgecolor='k', facecolor='k', s=50, label="TDE")
     ax.text(
             v/1.5, E/1.1, "ASASSN14li", fontsize=d['font_small'],
             horizontalalignment='center',
@@ -211,7 +211,7 @@ def vele(ax):
     ax.set_ylabel(
             "Energy (erg) $= U_B/\epsilon_B$, $\qquad \epsilon_e=\epsilon_B=0.33$", 
             fontsize=d['font_med'])
-    ax.set_ylim(5E47, 9E49)
+    ax.set_ylim(5E47, 1E50)
     ax.tick_params(axis='both', labelsize=d['font_med'])
     ax.legend(loc='upper left', fontsize=d['font_small'])
 

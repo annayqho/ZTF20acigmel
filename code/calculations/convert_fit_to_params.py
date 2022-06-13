@@ -5,8 +5,12 @@ import sys
 sys.path.append("/Users/annaho/Dropbox/astronomy/papers_active/ZTF20acigmel/code")
 from basics import get_z
 z = get_z()
-d_mpc = Planck15.luminosity_distance(z=z).value
-d_cm = d_mpc * 3.086E24
+dL_mpc = Planck15.luminosity_distance(z=z).value
+dA_mpc = Planck15.angular_diameter_distance(z=z).value
+dA_cm = dA_mpc * 3.086E24
+
+# I think that for these equations you want the angular-diameter distance
+d_mpc = dA_mpc
 
 # Constants
 p = 3
@@ -36,6 +40,7 @@ ef_p = 0.08E-3
 nu_p = 22
 enu_p = 1
 t_d = 58
+et_d = 1
 
 # For a constant shock, we have
 alpha_1 = -2.1
@@ -51,6 +56,57 @@ nu_p = 23
 enu_p = 1
 t_d = 58
 et_d = 1
+# 
+
+# For the single-epoch fits
+
+# 18d in the observer-frame
+t_d = 15
+# combo 1
+f_p = 0.6E-3
+nu_p = 60
+# combo 2
+f_p = 0.3E-3
+nu_p = 100
+
+# 24d in the observer-frame
+t_d = 19
+# combo 1
+f_p = 1.2E-3
+nu_p = 50
+# combo 2
+#f_p = 0.6E-3
+#nu_p = 100
+
+# 30.3d in the observer-frame
+t_d = 25
+# combo 1
+f_p = 0.9E-3
+nu_p = 100
+# combo 2
+#f_p = 1.6E-3
+#nu_p = 72
+
+# default
+et_d = 1
+enu_p = 1
+ef_p = 0.1E-3
+
+# fit 38d in the observer-frame
+t_d = 31
+et_d = 1
+f_p = 1.38E-3
+ef_p = 0.04E-3
+nu_p = 61.7
+enu_p = 1.17
+
+# fit 46d in the observer-frame
+t_d = 37
+et_d = 1
+f_p = 1.05E-3
+ef_p = 0.04E-3
+nu_p = 52.6
+enu_p = 2.2
 
 
 print("First, estimate B and nu_c under two different assumptions.")

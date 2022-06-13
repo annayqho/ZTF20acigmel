@@ -3,6 +3,8 @@
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 import numpy as np
+import sys
+sys.path.append("/Users/annaho/Dropbox/astronomy/papers_active/ZTF20acigmel/code")
 from get_radio import *
 from format import *
 
@@ -60,7 +62,9 @@ yplot = fitfunc(xplot,*popt)
 plt.plot(xplot, yplot, lw=0.5, ls=':', c='k')
 ax.text(15, 0.2, r'$f_p \propto \nu_p^{%s}$' %np.round(popt[2],1), ha='right')
 
-ax.scatter(100,100,marker='o', c='lightgrey', label="Sparse LC")
+ax.scatter(
+        100,100,marker='o', edgecolor='lightgrey', 
+        facecolor='white', label="Sparse LC")
 plt.xscale('log')
 plt.yscale('log')
 plt.xlabel(r"$\nu_{\mathrm{rest}}$ (GHz)", fontsize=d['font_med'])

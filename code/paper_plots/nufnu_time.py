@@ -136,6 +136,8 @@ def grb030329(ax, col, legend):
     t = dat[:,0].astype(float)
     lum = dat[:,1].astype(float) * 1E-3 * 1E-23 * 4 * np.pi * d**2
     ax.plot(t, lum, c=col)
+    ax.text(t[1], lum[1]/1.1, 'GRB030329', 
+            color=col, va='top', ha='center', fontsize=form['font_small'])
 
 
 def grb181201A(ax, col, legend):
@@ -149,6 +151,8 @@ def grb181201A(ax, col, legend):
     flux = np.array([3.413, 1.987, 1.199, 0.624, 0.259])
     lum = flux * 1E-3 * 1E-23 * 4* np.pi*d**2
     ax.plot(t, lum, c=col)
+    ax.text(t[-1], lum[-1]*1.1, 'GRB181201A', 
+            color=col, va='bottom', ha='left', fontsize=form['font_small'])
 
 
 def grb161219B(ax, col, legend):
@@ -161,6 +165,8 @@ def grb161219B(ax, col, legend):
     flux = np.array([1244, 897, 500, 285, 51])
     lum = flux * 1E-6 * 1E-23 * 4* np.pi*d**2
     ax.plot(t, lum, c=col)
+    ax.text(t[-1], lum[-1]/1.1, 'GRB161219B', 
+            color=col, va='top', ha='center', fontsize=form['font_small'])
 
 
 def grb130427A(ax, col, legend):
@@ -187,6 +193,8 @@ def grb130427A(ax, col, legend):
     order =np.argsort(t)
 
     ax.plot(obs_t_2, obs_lum_2, c=col, label=legend)
+    ax.text(t[2], lum[2]/1.6, 'GRB130427A', 
+            color=col, va='top', ha='center', fontsize=form['font_small'])
 
 
 def j1644(ax, col, legend):
@@ -296,7 +304,7 @@ def at2020xnd(ax, col, legend):
     ax.scatter(dt, lum, c=col, marker='D', label=legend, zorder=10)
     ax.plot(dt, lum, c=col, ls=':', lw=2, label=None, zorder=10)
     ax.text(
-            dt[2]*1.1, lum[2], 'AT2020xnd', ha='left', va='bottom',
+            dt[-1]*1.1, lum[-1]/1.3, 'AT2020xnd', ha='center', va='top',
             color=col, fontsize=form['font_med'])
 
 
