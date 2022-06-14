@@ -450,10 +450,10 @@ def camel_late():
 
     # Display or save
     plt.tight_layout()
-    #plt.show()
-    plt.savefig("camel_sed_maxwellian_late.png", dpi=300, bbox_inches='tight',
-            pad_inches=0.1)
-    plt.close()
+    plt.show()
+    #plt.savefig("camel_sed_maxwellian_late.png", dpi=300, bbox_inches='tight',
+    #        pad_inches=0.1)
+    #plt.close()
 
 
 def camel_early_full():
@@ -601,5 +601,5 @@ def combined():
     #plt.close()
 
 if __name__=="__main__":
-    combined()
-    #camel_late()
+    #combined()
+    camel_late()
