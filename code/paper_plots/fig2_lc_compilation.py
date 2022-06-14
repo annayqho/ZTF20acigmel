@@ -359,8 +359,8 @@ if __name__=="__main__":
     ax.legend(fontsize=form['font_small'], loc='upper right')
 
     plt.tight_layout()
-    #plt.show()
-    plt.savefig(
-            "mm_lc_100ghz.png", dpi=300, 
-            bbox_inches='tight', pad_inches=0.1)
-    plt.close()
+    plt.show()
+    #plt.savefig(
+    #        "mm_lc_100ghz.png", dpi=300, 
+    #        bbox_inches='tight', pad_inches=0.1)
+    #plt.close()
