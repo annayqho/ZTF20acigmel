@@ -7,8 +7,8 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
-sys.path.append("/Users/annaho/Dropbox/astro/papers/projects_proto/IcBL/old/data/radio_compilations/Zauderer2011/")
 sys.path.append("/Users/annaho/Dropbox/astro/papers/papers_active/ZTF20acigmel/code")
+sys.path.append("/Users/annaho/Dropbox/astro/papers/papers_active/ZTF20acigmel/data/radio_compilations/Zauderer2011")
 from astropy.cosmology import Planck15
 from get_radio import *
 from scale_fluxes import sma_lc
