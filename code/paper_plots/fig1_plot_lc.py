@@ -132,7 +132,7 @@ if __name__=="__main__":
     axarr[0,0].set_yscale('log')
     axarr[0,0].set_ylim(0.015,1.3)
     axarr[0,0].set_xscale('log')
-    axarr[0,0].set_xlim(9,365)
+    axarr[0,0].set_xlim(9,200)
     for ax in axarr[:,0]:
         ax.set_ylabel("$f_{\\nu,\mathrm{obs}}$ (mJy)", fontsize=large)
         ax.tick_params(axis='both', labelsize=large)
