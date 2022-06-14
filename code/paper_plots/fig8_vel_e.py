@@ -8,7 +8,7 @@ These are two classic figures
 
 import matplotlib.pyplot as plt
 import sys
-sys.path.append("/Users/annaho/Dropbox/astronomy/papers_active/ZTF20acigmel/code")
+sys.path.append("..")
 import numpy as np
 from astropy.table import Table
 from astropy.cosmology import Planck15
@@ -234,6 +234,6 @@ fig,ax = plt.subplots(1,1, figsize=(5,5), dpi=100)
 vele(ax)
 
 plt.tight_layout()
-#plt.show()
-plt.savefig("vel_e.png", dpi=200)
-plt.close()
+plt.show()
+#plt.savefig("vel_e.png", dpi=200)
+#plt.close()
