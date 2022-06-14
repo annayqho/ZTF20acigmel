@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 import numpy as np
 import sys
-sys.path.append("/Users/annaho/Dropbox/astronomy/papers_active/ZTF20acigmel/code")
+sys.path.append("..")
 from get_radio import *
 from format import *
 
@@ -74,6 +74,6 @@ plt.xlim(6, 300)
 plt.ylim(0.07, 1)
 plt.tight_layout()
 plt.legend(fontsize=d['font_small'], loc='upper left')
-#plt.show()
-plt.savefig("peak_flux_with_freq.png", dpi=200)
-plt.close()
+plt.show()
+#plt.savefig("peak_flux_with_freq.png", dpi=200)
+#plt.close()
