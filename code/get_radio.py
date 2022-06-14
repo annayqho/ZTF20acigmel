@@ -18,7 +18,7 @@ def get_data_all():
     flux: flux of the data point
     eflux: estimate of uncertainty in flux of the data point
     """
-    data_dir = "/Users/annaho/Dropbox/astronomy/papers_active/ZTF20acigmel/data"
+    data_dir = "/Users/annaho/Dropbox/astro/papers/papers_active/ZTF20acigmel/data"
     dat = Table.read(
         "%s/radio_lc.dat" %data_dir, delimiter="&", format='ascii.no_header')
     days = np.array(dat['col1'])
