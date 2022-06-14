@@ -2,6 +2,8 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
+sys.path.append("..")
 from get_radio import *
 from format import *
 
@@ -165,7 +167,7 @@ ax.tick_params(axis='both', labelsize=d['font_med'])
 ax.set_xticks([20,30,40,60,100])
 ax.set_xticklabels([20,30,40,60,100])
 plt.tight_layout()
-#plt.show()
-plt.savefig("spindex_time.png", dpi=200, bbox_inches='tight')
-plt.close()
+plt.show()
+#plt.savefig("spindex_time.png", dpi=200, bbox_inches='tight')
+#plt.close()
 
