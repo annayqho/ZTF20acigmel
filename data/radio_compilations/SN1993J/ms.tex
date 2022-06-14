@@ -1,0 +1,1292 @@
+%SN 1993J Paper
+
+\documentclass[12pt,preprint]{aastex}
+
+%\documentclass{aastex}
+
+\newcommand{\vdag}{(v)^\dagger}
+
+%---------------Abbreviations---------------
+\newcommand{\kms}{km~s$^{-1}$}
+\newcommand{\ie}{{\it i.e., }}
+\newcommand{\etal}{{\it et al. }}
+\newcommand{\eg}{{\it e.g., }} 
+
+%\slugcomment{To appear in Astrophysical Journal} 
+%\slugcomment{\huge \bf DRAFT V50, 06MAR2007}
+
+\shorttitle{SN 1993J}
+\shortauthors{Weiler, \etal}
+
+
+\begin{document}
+
+\title{Long Term Radio Monitoring of SN~1993J}
+
+\author{Kurt W.~Weiler}
+\affil{Naval Research Laboratory, Code 7210, 
+Washington, DC 20375-5351; Kurt.Weiler@nrl.navy.mil}
+
+\author{Christopher L.~Williams\altaffilmark{1}}
+\affil{Naval Research Laboratory, Code 7213, 
+Washington, DC 20375-5351; clmw@mit.edu}
+
+\author{Nino Panagia\altaffilmark{2,}\altaffilmark{3}}
+\affil{Space Telescope Science Institute, 3700 San Martin Drive, Baltimore, MD 
+21218; panagia@stsci.edu}
+
+\author{Christopher J.~Stockdale and Matthew T. Kelley}
+\affil{Marquette University, Physics Department, P.O. Box 1881, Milwaukee, WI 53214-1881; christopher.stockdale@mu.edu and matthew.kelley@mu.edu}
+
+\author{Richard A.~Sramek}
+\affil{ PO Box 0, National Radio Astronomy Observatory, Socorro, NM 87801; dsramek@nrao.edu}
+
+\author{Schuyler D.~Van Dyk}
+\affil{IPAC/Caltech, Mail Code 100-22, Pasadena, CA 91125; vandyk@ipac.caltech.edu}
+
+\and
+
+\author{J.M.~Marcaide}
+\affil{Departamento de Astronomia, Universitat de Valencia, 46100 Burjassot, Spain; J.M.Marcaide@uv.es}
+
+\altaffiltext{1}{Present address: Massachusetts Institute of Technology,
+Kavli Institute for Astrophysics and Space Research, Cambridge, MA
+02139}
+\altaffiltext{2}{INAF - Osservatorio Astrofisico de Catania, Via S. Sofia 78, I-95123 Catania, Italy}
+\altaffiltext{3}{Supernova Ltd., Olde Yard Village \#131, Northsound
+Road, Virgin Gorda, British Virgin Islands.}
+
+\begin{abstract}
+We present our extensive observations of the radio emission from
+supernova (SN) 1993J, in M~81 (NGC~3031), made with the Very Large Array,
+at 90, 20, 6, 3.6, 2, 1.2, and 0.7 cm, as well as numerous
+measurements from other telescopes and at other wavelengths. The combined data set constitutes probably the most detailed set of measurements ever established for any
+SN outside of the Local Group in any wavelength range. Only the very subluminous SN~1987A in the Large Magellanic Cloud has been the subject of such an intensive observational program.  The radio emission evolves regularly in both time and frequency, and the usual interpretation in terms of shock interaction
+with a circumstellar medium (CSM) formed by a pre-supernova stellar wind describes the observations rather well considering the complexity of the phenomenon.  However: 1) The
+highest frequency measurements at 85 - 110 GHz at early times ($<40$
+days) are not well fitted by the parameterization which describes the cm
+wavelength measurements rather well. 2) At mid-cm wavelengths there is
+often deviation from the fitted radio light curves, particularly near
+the peak flux density, and considerable shorter term deviations in the
+declining portion when the emission has become optically thin. 3) At a time
+$\sim3100$ days after shock breakout, the decline rate of the
+radio emission steepens from (t$^{+\beta}$) $\beta \sim -0.7$ to $\beta
+\sim -2.7$ without change in the spectral index ($\nu^{+\alpha}$; $\alpha \sim -0.81$). However, this decline is best described not as a power-law, but as an exponential decay starting at day 3100 with an
+e-folding time of $\sim 1100$ days. 4) The best overall fit to all of the data is a model including both non-thermal synchrotron self-absorption (SSA) and a thermal free-free absorbing
+(FFA) components at early times, evolving to a constant spectral index, optically thin decline rate, until a break in that decline rate at day $\sim3100$ as mentioned above. Moreover, neither a
+purely SSA nor a purely FFA absorbing models can provide a  fit that
+simultaneously reproduces the light curves, the spectral index evolution,
+and the brightness temperature evolution. 5) The radio and X-ray light
+curves display quite similar behavior and both suggest a sudden drop in the supernova progenitor mass-loss rate at $\sim 8000$ years prior to shock breakout.
+\end{abstract}
+
+\keywords{galaxies: individual (NGC~3031 [M~81]) -- radio continuum: stars  -- 
+stars: mass-loss -- supernovae: general -- supernovae: individual (SN~1993J)}
+
+\section{Introduction}
+
+SN~1993J [RA(J2000) = $9^{\rm h}55^{\rm m}24{\fs}7740 \pm 0{\fs} 0006$, 
+Dec(J2000) =   +$69^{\circ}01\arcmin 13{\farcs}700 \pm 0\farcs 003$;
+\citealt{Marcaide93a}] in M 81 (NGC 3031) was discovered at magnitude
+$V\sim11{\fm}8$ on 28.91 March 1993 \citep{Ripero93}, and by 30 March,
+at maximum optical magnitude $V = 10{\fm}7$, had become the brightest supernova
+(SN) in the northern hemisphere since SN 1954A.  Hydrogen was soon
+identified in its optical spectrum, classifying it as a type II SN
+(SNII) \citep[see, e.g., ][]{Gomez93,Andrillat93,Filippenko93a}.
+
+From the outset, SN~1993J displayed unusual characteristics for a
+SNII.    The visual light curve was markedly different from both the
+SNIIL (linear) and SNIIP (plateau) subtypes in that it exhibited a
+second maximum $\sim17$ days after the first one \citep{VanDriel93}.  Its
+unusual light curve and spectrum were quickly interpreted by
+\citet{Podsiadlowski93,Nomoto93,Swartz93} as implying a red supergiant
+progenitor with a thin hydrogen envelope which would spectrally evolve
+from resembling a SNII to resembling a SNIb, thereby suggesting a SNIIb
+classification for SN 1993J.  Continuing observations of visual spectra
+by \citet{Filippenko93b} confirmed this transition.
+
+Due to its proximity ($3.63 \pm 0.34$ Mpc; \citealt{Freedman94}) and the
+fact that  SNII are expected to be strong radio emitters
+\citep{Weiler89}, \citet{Sramek93} made  very early attempts with the
+Very Large Array (VLA)\footnote{The VLA telescope of the National Radio
+Astronomy Observatory is operated by Associated Universities, Inc. under
+a cooperative agreement with the National Science Foundation.} to detect
+the SN.  After establishing upper limits at 3.6 cm and 20 cm on  UT
+31.07 March 1993 \citep{Sramek93}, radio emission was detected with the
+VLA on UT 02.30 April 1993, with a flux density of $0.8 \pm 0.2$ mJy at
+1.3 cm (\citealt{Weiler93}, see also \citealt{VanDyk93a,VanDyk93b}) and
+with the Ryle Telescope in Cambridge, UK on UT 5.7 April 1993 at 2 cm
+(15.3 GHz) by \citet{Pooley93a}.  By UT 25 April 1993 the rapidly expanding
+SN already had a measurable size of $0.25 \pm 0.1$ milliarcseconds (mas)
+with Very Long Baseline Interferometry (VLBI) techniques (\citealt{Marcaide93a,Marcaide93b}).
+
+High angular resolution VLBI size measurements of the expanding
+SN were conducted very early by \citet{Marcaide94} and \citet{Bartel94}
+and VLBI monitoring continues to the present at multiple wavelengths (see, e.g.,
+\citealp{Marcaide95a,Marcaide95b,Marcaide97,Marcaide05,Marcaide07,Bartel00,Bartel02,Bietenholz01,Bietenholz03}).
+
+Extensive radio monitoring of the integrated flux density of SN~1993J
+has been conducted by the VLA at 20 cm (1.4 GHz), 6 cm (4.9 GHz), 3.6 cm
+(8.4 GHz), 2 cm (14.9 GHz) and 1.2 cm (22.5 GHz) \citep{VanDyk94} and
+with the Ryle Telescope at 2 cm (15.3 GHz) \citep{Pooley93b}. 
+Additional observations were also conducted at 0.3 cm (85 - 110 GHz)
+with the Institut de Radioastronomie Millimetrique (IRAM) telescope \citep{Radford93} and at the
+Caltech Owens Valley Radio Observatory (OVRO)
+\citep{Phillips93a,Phillips93b}, and at 0.9 cm with the Effelsberg 100-m
+telescope of MPIfR (W.~Reich, private communication).  More recently,
+\citet{Chandra01} have conducted observations with the Giant Metrewave Radio Telescope (GMRT) in India at 49 cm
+(0.6 GHz) and 20 cm (1.4 GHz) and we have added new measurements with
+the VLA at 90 cm (0.3 GHz) and 0.7 cm (43 GHz).  
+
+In this paper we consider the integrated flux density measurements and
+their physical interpretation.
+
+\section{Radio Observations}\label{observations}
+
+Almost a decade and a half has passed since the explosion of SN 1993J so
+that it is an appropriate interval to consider the extensive set of
+radio observations which are now available from 90 cm at the longest
+wavelength to 0.3 cm at the shortest.  In addition to previously
+published VLA results \citep{VanDyk94}, we present here almost 200 new
+VLA observations of SN~1993J at 90, 20, 6, 3.6, 2, 1.2, and 0.7 cm along
+with all published results which could be found in the literature or
+have been provided to us as private communications at 49, 20, 0.9, and 0.3
+cm.  
+
+All of the available data are presented in Tables \ref{tab1} and
+\ref{tab2} and the data at the best sampled wavelengths of 90, 49, 20,
+6, 3.6, 2, 1.2 and 0.3 cm, principally from the VLA and the Cambridge
+Ryle telescope, along with contributions from the IRAM and OVRO millimeter telescopes and the GMRT, are plotted in and Figures \ref{fig1}, \ref{fig2}, \ref{fig8}, \ref{fig11}, and \ref{fig13}.  The previously published results from \citet{VanDyk94} are also included in Tables \ref{tab1} and \ref{tab2} and plotted in the Figures for completeness and ease of reference.  However, to reduce the size and complexity of Figures \ref{fig1}, \ref{fig2}, \ref{fig8}, \ref{fig11}, and \ref{fig13}, the sparse measurements at 32 and 43 GHz are not plotted
+even though they were used in the fitting procedure.
+
+The techniques of observation, editing, calibration, and error
+estimation are described in previous publications on the radio emission
+from SNe \citep[see, e.g., ][]{Weiler86,Weiler90}.  The ``primary''
+calibrator was 3C286, which is assumed to be constant in time with flux
+densities of 25.84, 14.45, 7.42, 5.20, 3.45, and 2.52 Jy at 90, 20, 6,
+3.6, 2, and 1.2 cm, respectively.  The ``secondary''
+calibrator\footnote{Secondary calibrators are chosen to be compact and
+unresolved by the longest VLA baselines.  While compact and serving as
+good phase references, such objects are usually variable, so that their
+flux density must be recalibrated regularly from the primary calibrators.} was normally J1048+717\footnote{Several of the early
+observations at 90 cm used J0834+555, with a position of RA(J2000) =
+$08^{\rm h}34^{\rm m}54{\fs}904117$, Dec(J2000) = +$55^{\circ}34\arcmin
+21{\farcs}070980$ as a secondary calibrator. Also, between 11 September 1993 and 08 February 1994, J0949+662 [RA(J2000) = $09^{\rm h}49^{\rm m}12{\fs}2100$, Dec(J2000) = +$66^{\circ}14\arcmin
+59{\farcs}321$] was used as a secondary calibrator at 20 cm.}, with a defined position
+of RA(J2000) = $10^{\rm h}48^{\rm m}27{\fs}619917$, Dec(J2000) =  
++$71^{\circ}43\arcmin 35{\farcs}938280$.  After flux density calibration
+by 3C286, it served as the actual gain and phase calibrator for
+SN~1993J.  As expected for secondary calibrators, the flux density of
+J1048+717 has been varying over the years, as can be seen in Table
+\ref{tab3} and Figure \ref{fig3}.
+
+The flux density measurement errors for SN~1993J are a combination of
+the rms map error, which measures the contribution of small unresolved
+fluctuations in the background emission and random map fluctuations due
+to receiver noise, and a basic fractional error $\epsilon$, included to
+account for the normal inaccuracy of VLA flux density calibration (see,
+e.g., \citealt{Weiler86}) and possible deviations of the primary
+calibrator from an absolute flux density scale.  The final errors
+($\sigma_f$) given for the measurements of SN~1993J are taken as
+
+\begin{equation}
+\label{eq1}
+\sigma_{f}^{2} = (\epsilon S_0)^2+\sigma_{0}^2 
+%\label{eq:err}
+\end{equation} 
+
+\noindent where $S_0$ is the measured flux density, $\sigma_0$ is the
+map rms for each observation, and $\epsilon = 0.15$ for 90 cm, 0.10 for
+20 cm, 0.05 for 6 and 3.6 cm, 0.075 for 2 cm, and 0.10 for 1.2 cm. All
+upper limits are listed as three sigma ($3\sigma$). 
+
+The appropriate errors to use for the Cambridge measurements at 2 cm are difficult to determine. The authors \citep{Pooley93b} mention that the variable nucleus of M81 is not fully resolved from SN~1993J, and that their calibrator B0954+658 is clearly variable. However, they have done their best to remove such effects and estimate that 5\% ``is a good estimate of the uncertainty in the observations.'' Because of our knowledge of the uncertainties of observations with the VLA at 2 cm wavelength, and our decision to use a standard minimum error of 7.5\% in Equation \ref{eq1} at that wavelength, we have chosen to assign a 10\% error to all Cambridge data to additionally account for possible systematic effects between the two telescopes and the two different secondary calibrators. Such a value may well be too conservative but, because of the large number of multi-frequency points in the data set, the assumption of possibility too large errors for the Cambridge data does not affect any of our fits or conclusions.
+
+\section{Radio Supernova Models}
+
+All known RSNe appear to share common properties of: 1) nonthermal
+synchrotron emission with high brightness temperature; 2) a decrease in
+absorption with time, resulting in a smooth turn-on first at shorter
+wavelengths and later at longer wavelengths; 3) a power-law decline of
+the flux density with time at each wavelength after the source becomes optically thin at that wavelength; and 4) a final, asymptotic approach of spectral index $\alpha$ ($S \propto
+\nu^{+\alpha}$) to an optically thin, nonthermal, constant negative
+value \citep{Weiler86,Weiler90}. 
+
+\citet{Chevalier82a,Chevalier82b} proposed that the relativistic
+electrons and enhanced magnetic field necessary for synchrotron emission
+arise from the SN blastwave interacting with a relatively high density
+CSM which has been ionized and heated by the initial UV/X-ray flash. 
+This CSM is presumed to have been established by a constant mass-loss
+($\dot M$) rate, constant velocity ($w_{\rm wind}$) wind (\ie $\rho
+\propto \frac{\dot M}{w_{\rm wind}~r^2}$) from a massive stellar
+progenitor or a companion.  This ionized CSM is the source of some or all
+of the initial free-free absorption (FFA) although more recently \citet{Chevalier98} has proposed that
+synchrotron self-absorption (SSA) may play a role at some times and in some objects.  
+
+A rapid rise in the observed radio flux density results from a decrease in these absorption processes as the radio emitting region expands and
+the absorption processes, either internal or along the line-of-sight,
+decrease.  \citet{Weiler90} have suggested that this CSM can be
+``clumpy'' or ``filamentary,'' leading to a slower radio turn-on, and
+\citet{Montes97} have found at least one example for the presence of
+a distant ionized medium along the line-of-sight which is time
+independent and can cause a spectral turn-over at low radio
+frequencies.  In addition to clumps or filaments, the CSM may be
+structured with significant density irregularities such as rings, disks,
+shells, or gradients and many, if not most, well studied RSNe appear to
+show a transition to a significantly less dense CSM after a number of
+years (several thousand years in the time frame of the presupernova
+wind; see, e.g., SN~1980K, \citet{Montes98}, SN~1988Z, \citet{VanDyk93c,Williams02}, and SN~2001gd, Stockdale
+\etal in press).
+
+\subsection{Radio Light Curves}
+
+Following the most recent RSN modeling discussion of \citet{Weiler02}
+and \citet{Sramek03}, we adopt a parameterized model :
+
+\begin{equation}
+\label{eq2}
+S(\mbox{mJy}) = K_1 \left(\frac{\nu}{\mbox{5\
+GHz}}\right)^{\alpha} \left(\frac{t-t_0}{\mbox{1\ day}}\right)^{\beta}
+e^{-\tau_{\rm external}} \left(\frac{1-e^{-\tau_{{\rm CSM}_{\rm clumps}}}}{\tau_{{\rm CSM}_{\rm
+clumps}}}\right) \left(\frac{1-e^{-\tau_{\rm internal}}}{\tau_{\rm internal}}\right) 
+\end{equation} 
+
+\noindent with  
+
+\begin{equation}
+\label{eq3}
+\tau_{\rm external}  =  \tau_{{\rm CSM}_{\rm homogeneous}}+\tau_{\rm distant},
+\end{equation}
+
+\noindent where
+
+\begin{equation}
+\label{eq4}
+\tau_{{\rm CSM}_{\rm homogeneous}}  =  K_2
+\left(\frac{\nu}{\mbox{5 GHz}}\right)^{-2.1}
+\left(\frac{t-t_0}{\mbox{1\ day}}\right)^{\delta}
+\end{equation}
+
+\begin{equation}
+\label{eq5}
+\tau_{\rm distant}  =  K_4  \left(\frac{\nu}{\mbox{5\
+GHz}}\right)^{-2.1}
+\end{equation} 
+
+\noindent and
+
+\begin{equation}
+\label{eq6}
+\tau_{{\rm CSM}_{\rm clumps}}  =  K_3 \left(\frac{\nu}{\mbox{5\
+GHz}}\right)^{-2.1} \left(\frac{t-t_0}{\mbox{1\
+day}}\right)^{\delta^{\prime}}
+\end{equation} 
+
+\noindent with $K_1$, $K_2$, $K_3$, and $K_4$ determined from fits to the data and corresponding, formally, to the flux density ($K_1$), homogeneous ($K_2$, $K_4$), and clumpy or filamentary ($K_3$) FFA 
+at 5~GHz one day after the explosion date $t_0$.  The terms $\tau_{{\rm CSM}_{\rm homogeneous}}$ and  $\tau_{{\rm CSM}_{\rm clumps}}$ describe the attenuation of local, homogeneous free-free absorption CSM and clumpy or filamentary free-free absorbing CSM, respectively, that are near enough to the SN progenitor that they are altered by the rapidly expanding SN blastwave.  The $\tau_{{\rm CSM}_{\rm homogeneous}}$ FFA is produced by an ionized medium that completely covers the emitting source (``homogeneous external absorption''), and the $(1-e^{-\tau_{{\rm CSM}_{\rm clumps}}}) \tau_{{\rm CSM}_{\rm clumps}}^{-1}$ term describes the attenuation produced by an inhomogeneous FFA medium \citep[``clumpy absorption''; see][for a more detailed discussion of attenuation in inhomogeneous media]{Natta84}. The $\tau_{\rm distant}$ term describes the attenuation produced by a homogeneous FFA medium which completely covers the source but is so far from the SN progenitor that it is not affected by the expanding SN blastwave and is consequently constant in time.  All external and clumpy absorbing media are assumed to be purely thermal, singly ionized gas which absorbs via free-free absorption (FFA) with frequency dependence $\nu^{-2.1}$ in the radio.  The parameters $\delta$
+and $\delta'$ describe the time dependence of the optical depths for the local homogeneous and clumpy or filamentary media, respectively. 
+
+Since it is physically realistic and may be needed in some RSNe where radio observations have been obtained at early times and high frequencies, Equation (\ref{eq2}) also includes the possibility for an internal absorption term\footnote{Note that for simplicity an internal absorber attenuation of the form $\left(\frac{1-e^{-\tau_{{\rm CSM}_{\rm internal}}}}{\tau_{{\rm CSM}_{\rm internal}}}\right)$, which is appropriate for a plane-parallel geometry, is used instead of the more complicated expression \citep[e.g., ][]{Osterbrock74} valid for the spherical case.  The assumption does not affect the quality of the analysis because, to within 5\% accuracy, the optical depth obtained with the spherical case formula is simply three-fourths of that obtained with the plane-parallel slab formula.}.  This internal absorption  ($\tau_{\rm internal}$) term may consist of two parts -- synchrotron self-absorption (SSA; $\tau_{{\rm internal}_{\rm SSA}}$), and mixed, thermal FFA/non-thermal emission ($\tau_{{\rm internal}_{\rm FFA}}$). 
+
+\begin{equation}
+\label{eq9}
+\tau_{\rm internal}  = \tau_{\rm internal_{\rm SSA}} + \tau_{\rm internal_{\rm FFA}}
+\end{equation}
+
+\begin{equation}
+\label{eq10}
+\tau_{\rm internal_{\rm SSA}} = K_5\left(\frac{\nu}{\mbox{5\
+GHz}}\right)^{\alpha-2.5}  \left(\frac{t-t_0}{\mbox{1\
+day}}\right)^{\delta^{\prime\prime}}
+\end{equation}
+
+\begin{equation}
+\label{eq11}
+\tau_{\rm internal_{\rm FFA}}  =   K_6  \left(\frac{\nu}{\mbox{5\
+GHz}}\right)^{-2.1} \left(\frac{t-t_0}{\mbox{1\
+day}}\right)^{\delta^{\prime\prime\prime}}
+\end{equation}
+
+\noindent with $K_5$ corresponding, formally, to the internal,
+non-thermal ($\nu^{\alpha - 2.5}$) SSA and $K_6$, corresponding, formally,
+to the internal thermal ($\nu^{-2.1}$) free-free absorption mixed with
+non-thermal emission, at 5~GHz one day after the explosion date $t_0$. 
+The parameters $\delta^{\prime \prime}$ and $\delta^{\prime \prime
+\prime}$ describe the time dependence of the optical depths for the SSA
+and FFA internal absorption components, respectively. 
+
+Application of this basic parameterization has been shown to be effective
+in describing the physical characteristics of the presupernova system,
+its CSM, and its final stages of evolution before explosion for objects
+ranging from the two decades of monitoring the complex radio emission
+from SN 1979C \citep{Montes00} through the unusual SN 1998bw (GRB980425)
+\citep{Weiler01} and most recent $\gamma$-ray bursters
+\citep{Weiler02,Weiler03}.
+
+\subsection{Brightness Temperature}
+
+Given the measured fluxes, we can compute the corresponding brightness
+temperatures if the angular size of the radio region is known.  \cite{Marcaide95a,Marcaide95b,Marcaide97,Marcaide05,Marcaide07} have measured the apparent expansion of SN 1993J in the radio with a series of VLBI experiments, starting as early
+as day 182 and extending up to day 3858.  \cite{Marcaide07} find
+that a power law of the form $r \propto t^m$ can provide a good, frequency independent fit to all observations of the angular diameter at 3.6, 6, and 18 cm with $m = 0.845 \pm 0.005$
+through day 1500. Although there are no measurements at early epochs,
+the remarkably good quality of the fit up to day 1500 justifies our assuming $m = 0.845$ since the epoch of the SN shock breakout.  Under this assumption we can express the angular expansion of SN~1993J as
+
+\begin{equation}
+\label{eq12}
+r = 6.2 \times (t/1 {\rm day})^{0.845} ~~~ \mu as
+\end{equation}
+
+\noindent which gives the radius $r$ of the circle in microarcseconds ($\mu$as) that encompasses half of
+the total radio flux density to better than 20\%, assuming isotropic radio emission.  Adopting this
+expansion rate, the brightness temperature turns out to be
+
+\begin{equation}
+\label{eq13}
+T_B = 1.30\times10^{10} (S_\nu(corr)/2) \lambda^2 t^{-1.69} ~{\rm K}
+\end{equation}
+
+\noindent where the radio flux density $S_\nu(corr)$ is the observed flux density, corrected for model estimated external free-free absorption, expressed in mJy, the wavelength ($\lambda$) in cm,
+and the time (t) in days.  The term $S_\nu/2$ accounts for the fact that the circular area inside
+$r$ is defined to include only half of the total flux density.
+
+\section{Fitting Results}
+
+Note that even approximate fitting of the data with our standard models
+requires splitting it into two parts: an ``early'' data set from the first radio detection 
+through day $\sim3100$ and a ``late'' data set for the period from day $\sim3100$ through
+the final measurements on day 4930. The reason for this splitting of the
+data set is that the decline rate $\beta$ is clearly much steeper after day $\sim3100$, which, for illustrative purposes, we have shown in Figures \ref{fig1}, \ref{fig2}, \ref{fig8}, \ref{fig11}, and \ref{fig13} as an exponential with e-folding time of 1100 days. Of course, the transition interval is gradual but, in order to maintain model simplicity, we have taken day 3100 as marking the break between the early and late fitting procedures.
+
+\subsection{Early data fitting}
+
+The early (day $<3100$) data were first fitted with two possible ``pure'' absorption models, namely
+pure SSA (i.e. negligible FFA at all times) and pure FFA
+(i.e.  negligible SSA at all times).
+The  parameters derived from these fits are listed in Table \ref{tab4}, Columns 2 and 3, respectively, 
+and the resulting curves are plotted with the data in Figures \ref{fig1}
+and \ref{fig2}, respectively.  We also show the spectral index evolution calculated for
+pairs of frequencies in Figures \ref{fig4} and \ref{fig5}. The lines in this case are derived from exactly the same models (pure SSA for Figure \ref{fig4} and pure FFA for Figure \ref{fig5}) as were derived for Figures \ref{fig1} and \ref{fig2}. We see that both models are able to represent the light curves as well as the spectral index evolution fairly well. However, there are some features that are
+systematically misrepresented by these ``pure'' models, which we discuss below. 
+
+We also calculate the apparent brightness temperature evolution from Equation \ref{eq13} for both the pure SSA and pure FFA models and plot them in Figures \ref{fig6} and \ref{fig7}, respectively. Note that, for Figures \ref{fig6} and \ref{fig7}, we have applied a correction derived from our models for the presumed external thermal absorption for the early data to obtain a ``true'' flux density, and thus a ``true'' brightness temperature, as if no thermal absorption were present.
+
+For the pure SSA model (Figure \ref{fig1}), the rising branch of the light curve at early times 
+tends to be ``too straight'' in that it cannot reproduce the apparent curvature in the flux density turn-on that is most noticeable at frequencies lower than 5 GHz.  Also, the spectral index evolution at early times (Figure \ref{fig4}) is clearly inadequate to represent the observations. This is to be expected because with pure SSA the asymptotic spectral index cannot exceed $\alpha = +2.5$ ($S \propto \nu^{+\alpha}$), clearly at variance with values of $\alpha = 4~{\rm to}~5$ observed at early epochs. Moreover, the corresponding brightness temperature evolution seen in Figure \ref{fig6} is rather strange in that the temperature appears to peak at later times for lower frequencies. 
+
+For the pure FFA model the rising branch of the light curves appears to provide a better fit for both the light curves (Figure \ref{fig2}) and the spectral index (Figure \ref{fig5}), but it fails the test of the brightness temperature (Figure \ref{fig7}). After flux density correction for the external, thermal absorption, the implied brightness temperature at early times, for several frequencies, exceeds the physical limit of $T_B \simeq 3\times 10^{11}$ K \citep[see, \eg][]{Kellermann69,Readhead94}.
+
+Thus, it is clear that no ``simple''  model, either pure SSA or pure FFA, can account for all observational
+aspects of the data and a combination of the two absorption mechanisms must be at work.
+
+The best results are achieved with a model that comprises both SSA and FFA; the best fit parameters are given in Table 4, Column 4 and the corresponding fits are displayed in Figures \ref{fig8}, \ref{fig9}, and \ref{fig10} which show the light curves, the spectral index evolution, and the brightness temperature evolution, respectively. As before, after day $\sim3100$ we have shown, for illustrative purposes, an exponential with an e-folding time of 1100 days for the plotted curve. These results are discussed further in $\S$\ref{Discussion}
+
+\subsection{Late time data fitting}
+
+Even though the data are well described after day $\sim3100$ by an exponential decay with an e-folding time of 1100 days, to show the increasing decline rate of the flux density at all wavelengths, it is perhaps worthwhile to describe the decline after day 3100 in terms of our standard model parameters.
+
+Since all of the absorption processes are negligible by the time
+of the steepening flux density decline around day $\sim3100$, the ``late'' radio
+light curves are essentially the same for both thermal, free-free absorption (FFA) and 
+non-thermal synchrotron-self absorption (SSA) models. Therefore, the only two remaining parameters to be determined are the spectral index ($\alpha$) and the decline rate ($\beta$). Least squares fitting reveals that the ``late'' data are consistent with a constant spectral index equal to that derived for
+the early data ($\alpha = -0.8$) but with a much faster rate of decline with $\beta$
+steepening from -0.7 to -2.7. However, examination of Figure \ref{fig11} shows that such a fit (shown as the dotted lines) does not describe the data well and an exponential decline with an e-folding time of 1100 days (the solid lines in Figure \ref{fig11}) provides a much better fit. \cite{Chandra04} have proposed a steepening of the spectral index after day 3200 but Figures \ref{fig9} and \ref{fig11}, both of which use constant spectral index models, do not appear to confirm their suggestion (see also $\S$\ref{SI}).
+
+\section{Discussion \label{Discussion}}
+
+\subsection{Synchrotron Self-Absorption vs. Thermal Free-Free
+Absorption}
+
+\citet{Chevalier98} proposed that nonthermal synchrotron self-absorption
+(SSA) could play a significant role in the early turn-on, absorption-dominated phase of the radio emission from supernovae.  While the
+possibility is included in the parameterization of the radio emission
+discussed above in Equations \ref{eq2} and \ref{eq10}, actual
+observational evidence for the difference in turn-on rate expected
+between thermal free-free absorption (FFA) and SSA has been difficult to
+establish.  Certainly there are valid physical arguments for expecting
+SSA to play a role in the radio emission from RSNe which are radio
+luminous at early times.
+
+The source brightness temperature (T$_{\rm B}$) is simply proportional to the source flux density (S), corrected where appropriate for suppression of the flux density by external free-free absorption, divided by the source angular size ($\sim\theta^2$).  T$_{\rm B}$ cannot exceed $3 \times 10^{11}$~K \citep{Kellermann69,Readhead94} without being quenched by inverse-Compton scattering and the consequent SSA. The problems in
+determining this relatively straightforward quantity are that the source angular size at very early times cannot be directly observed, even with VLBI techniques; there is likely to be some thermal, ionized, absorbing material surrounding these massive exploding stellar systems giving some
+level of initial thermal absorption; current models do not include a start-up engine to predict what the flux density would be without any absorption present; and the velocity of expansion of the radio emitting region may well change during the very early phases of the radio supernova phenomenon. All of these factors could lead to a false estimate of the source size and source flux density at early times, and to an incorrect estimate of the source brightness temperature and the likelihood of SSA dominating.
+
+In some objects such as GRBs, where there is evidence for very little external material to give rise to thermal absorption, and the objects are very compact and very radio luminous, the case for SSA seems clear. For example, the nearby GRB~980425 (SN1998bw), although somewhat ambiguous with \citet{Kulkarni98} claiming evidence for SSA while \citet{Weiler01} showing that FFA gives a fit to the data of equal quality, is probably a good example where SSA is dominant, at least early on.
+
+Several authors have discussed the possibility of SSA being a prominent
+absorption mechanism for SN 1993J (\citealt{Fransson98,Perez-Torres01,Bartel02}),
+whereas \citet{VanDyk94} were able to describe the early absorption
+effects entirely through FFA in a circumstellar medium with a density
+profile flatter ($\rho_{CSM} \propto r^{-1.5}$) than the $\rho_{CSM} \propto r^{-2}$ expected for a
+constant mass-loss rate, constant velocity, presupernova stellar wind. We have investigated the fitting of both pure SSA (Figures \ref{fig1} and \ref{fig4}) and pure FFA (Figures \ref{fig2} and \ref{fig5}) to the extensive data for SN~1993J and find that both models are acceptable from light curve fitting considerations alone ($\chi_{SSA}^2 = 12.8$, $\chi_{FFA}^2 = 8.8$) with each fitting some parts of the light curves slightly better, and some parts of the data slightly worse, than the other. However, when the additional parameter of the brightness temperature evolution is considered (Figures \ref{fig6} and \ref{fig7}) neither the pure SSA nor the pure FFA models can satisfy all physical  conditions, i.e. to reproduce simultaneously the light curves, the spectral index evolution, and the brightness temperature limit. However, a model which includes both SSA and FFA can account rather well ($\chi_{SSA+FFA}^2 = 8.1$) for the observed radio emission from SN~1993J without violating the brightness temperature limit and provides a good description of the spectral index evolution (see Figures \ref{fig8}, \ref{fig9}, and \ref{fig10}).
+
+\subsection{Evidence for a ``Flatter'' Circumstellar Density Profile}
+
+When \citet{VanDyk94} presented multi-frequency radio observations of SN~1993J for the first eight months of monitoring, they concluded that the CSM surrounding the supernova, which was likely established by the SN
+progenitor in the last stages of evolution, consists of: (1) a homogeneous medium (K$_2$) with embedded clumpy or filamentary components (K$_3$), and (2) a CSM with a density profile that is significantly flatter ($\rho_{CSM} \propto {\rm r}^{-1.5}$) than the $\rho_{CSM} \propto {\rm r}^{-2}$ expected for a constant mass-loss rate, constant velocity presupernova stellar wind.  Since the density, and therefore the radio emission, is proportional to the ratio of the mass-loss rate ($\dot M$) to the wind speed ($w$), i.e. ($\dot M/w$), and since the wind speed is unlikely to vary on relatively short time scales, \citet{VanDyk94} estimated that the mass-loss rate from the SN~1993J progenitor system decreased from $\sim 10^{-4}$ M$_{\sun}$ yr$^{-1}$ to $\sim 10^{-5}$ M$_{\sun}$ yr$^{-1}$ during the last 1000 years before explosion.  This conclusion was later supported by \cite{Immler01}, who found a similarly flat CSM density profile from X-ray observations, and accepted by other modeling work \citep{Fransson96}. However, \cite{Fransson98} later concluded that the flatter CSM density profile is not necessary and the results can be interpreted in terms of SSA with an r$^{-2}$ density profile and an electron cooling mechanism. Nevertheless, because the X-ray emission arises from the thermal component of the CSM, rather than the nonthermal component which gives rise to the radio emission, the support for a ``flatter'' CSM density profile from both radio and X-ray observations appears strong.
+
+With a model that includes both SSA and FFA, the radio data alone are not able to constrain the CSM profile efficiently because fits with steep $\delta$ slopes and high values of the K$_2$ can provide comparable accuracy to shallow $\delta$ slopes and low K$_2$ values. Therefore, to calculate our best model, which includes both SSA and FFA and satisfies all observational and physical constraints, we adopted a CSM density profile of $\rho_{CSM} \propto {\rm r}^{-1.61}$, which is close to the behavior determined from the evolution of the X-ray luminosity \citep[][see also $\S$ \ref{Radio-X-Ray}]{Immler01,Zimmermann03}. 
+
+With these assumptions, the mass-loss rate giving rise to uniform, external thermal absorption is given by a straightforward modification of Equation (16) of \citet{Weiler86} which becomes
+
+\begin{eqnarray}
+\label{eq14}
+\frac{\dot M (M_\odot\ {\rm yr}^{-1})}{( w_{\rm wind} / 10\ {\rm km\
+s}^{-1} )} & = & 3.0 \times 10^{-6}\ \phi \ \tau^{0.5} \ m^{-1.5}
+{\left(\frac{v_{\rm i}}{10^{4}\ {\rm km\ s}^{-1}}\right)}^{1.5} \times
+\nonumber \\ & & {\left(\frac{t_{\rm i}}{45\ {\rm days}}\right) }^{1.5}
+{\left(\frac{t}{t_{\rm i}}\right) }^{1.5 m}{\left(\frac{T}{10^{4}\ {\rm
+K}} \right)}^{0.68} .
+\end{eqnarray}
+
+\noindent Here, the extra factor $\phi$ is a small correction that takes into account the fact that, in this case, the CSM density behaves like $\rho_{CSM} \propto r^{-1.61}$ instead of  $r^{-2}$ as it does under
+the usual constant mass-loss assumption. The
+factor  $\phi$ is given by the square root of the ratio of the
+integration constant for $\tau$  in the case of $\rho_{CSM} \propto 
+r^{-1.61}$ to the one appropriate for $\rho_{CSM} \propto  r^{-2}$ , i.e.
+
+\begin{equation}
+\label{eq15}
+\phi \ = \ \left(\frac{2\times 1.61-1}{2\times 2 - 1}\right)^{0.5} \ = \ 0.86 .
+\end{equation}
+
+\noindent For Equation \ref{eq14} we assume $v_{\rm i} = 15,000$ \kms\ at $t_{\rm i} = 45$ days, which is
+a value consistent with the results of \cite{Marcaide07} and we adopt values of $T = 20,000$ K, $w_{\rm wind} = 10$ \kms\ (which is appropriate for a RSG wind), and $m=0.845$, as measured  by \cite{Marcaide07}.   With the assumptions for the blastwave and CSM properties discussed above, and the results for the best-fit parameters
+listed in Table \ref{tab4}, Column 4, our estimated presupernova mass-loss rate is $\dot M = 5.4\times 10^{-7}\ M_\odot$ yr$^{-1}$ at the time of shock breakout.  
+
+Additionally, we have to take into account the shallow slope of the CSM. The CSM density behaves like $\rho_{CSM} \propto  r^{-1.61}$, indicating that the mass-loss rate was not constant but was higher in the years
+leading up to the explosion, i.e. $\dot M \propto r^2 \rho w_{wind} \propto r^{0.39}$ for a constant  $w_{wind}$.   Thus, we calculate that when the abrupt change in the radio light curves occurred around day $\sim3100$ ($\sim8000$ years before explosion) the mass-loss rate was as high as $5.9\times 10^{-6}\ M_\odot$ yr$^{-1}$. Integrating the mass-loss rate over the last $\sim8000$ years, we find that during that time the progenitor star shed $\sim 0.04~M_\odot$ in a massive stellar wind. 
+
+At earlier epochs of the progenitor's evolution, more than 8,000 years before explosion, the mass-loss rate was considerably lower, as indicated by the radio light curve ``break'' discussed above and the transition of the blast wave to a lower density CSM at that time.  One has to keep in mind that these values are derived for an adopted pre-SN stellar wind speed of 10 \kms and blast wave speed of 15,000 \kms.  If the wind speed was appreciably higher than 10 \kms, then the mass-loss rates were proportionally higher.
+
+Thus, our current analysis of this larger data set of radio observations of SN~1993J is consistent with the early predictions of \citet{VanDyk94}, \citet{Immler01}, and \citet{Zimmermann03} of a flatter
+CSM density profile and a changing mass-loss rate in the millennia before explosion and inconsistent with a $\rho_{CSM} \propto  r^{-2}$ density profile with electron cooling proposed by \cite{Fransson98}.
+
+\subsection{Increased Flux Density Decline Rate}
+
+A noteworthy aspect of the radio emission from SN~1993J is that after
+day $\sim3100$, its decline rate significantly steepens. In Figures
+\ref{fig1}, \ref{fig2}, \ref{fig8}, \ref{fig11}, and \ref{fig13} this has been illustrated by
+multiplying the curve fitted to the early data by an exponential decay term that
+affects the emission after  day 3100 and has an e-folding time of 1100
+days, i.e. $exp(-(t-t_0-3100)/1100)$ for $t-t_0>3100$.
+
+While the visual description of the data is greatly enhanced by these
+curves, another way of describing this change in evolution is shown as
+the dotted lines in Figure \ref{fig11} where the data after day 3100 are
+fitted with the best fit ``early'' spectral index (the emission is
+optically thin at that time, so whether an SSA or FFA model is used at
+early times is of no consequence) and a new decline rate $\beta = -2.7$
+determined. Nevertheless, it should be noted that the exponential decay
+(solid lines in Figure \ref{fig11}) give a better description of the data
+than a power-law decline (dotted lines in Figure \ref{fig11}).
+
+Although our exponential decay is a purely empirical assumption, the fact that it is so successful in fitting all light curves at all frequencies simultaneously indicates that the decay is the  result of a
+phenomenon whose e-folding time at all frequencies is very short. In other words, the observed decay appears to be dominated by the decline of a synchrotron emission energy supply, such as that derived from the blast wave-CSM interaction, implying a sudden variation in the circumstellar density (and, therefore, in the mass-loss rate) rather than an energy loss reflecting the cooling times at individual frequencies.
+
+Interpreting this exponential decay in terms of a sudden decrease of the CSM density leads to a pre-supernova density distribution that decreases like $r^{-1.61}$ up a distance of  2.4$\times 10^{17}$cm, and has a sudden drop by a factor of $\sim3$ by a radius of $\sim 4\times 10^{17}$cm. To cause this, the mass-loss rate had to have a steep enhancement by at least a factor of 3 around 8,000 years before the supernova explosion and to decrease afterwards at a rate proportional to $t^{-0.39}$. This scenario is illustrated in Figure \ref{fig12}, that shows the mass-loss rate as function of the time before explosion (left hand panel) and the H number density as a function of radius (right hand panel). The heavy solid curves correspond to behaviors actually constrained by the radio observations, whereas the dashed curves are extrapolations as a simple power law very near to the star and as an exponential cutoff plus a constant mass-loss rate at large times (radii) before explosion. This last, an assumed constant mass-loss rate at large times before explosion is simply notional since our observations provide no constraints at such times (radii). The dotted lines are power law extrapolations of the density for larger radii or the mass-loss rate at earlier epochs, which are drawn just to guide the eye to better appreciate the variations. 
+
+In astrophysical terms our empirical result suggests that the progenitor star underwent a shell ejection that, $\sim8,000$ years before the supernova explosion, increasing the effective mass-loss rate from the star
+by possibly an order-of-magnitude, which then slowly decreased with time. This phenomenon is reminiscent of the recurrent shell ejections considered by Panagia and Bono (2001) for stars of masses around 12-14
+M$_\odot$ that become pulsationally unstable in their red supergiant
+phases.
+
+\subsection{Spectral Index Evolution \label{SI}}
+
+In addition to the radio light curves and their comparison with models, it is also possible to examine the spectral index evolution and its comparison with pure SSA (Figure \ref{fig4}) and pure FFA (Figure
+\ref{fig5}) model predictions. Examination of both figures shows that the spectral index evolution is reasonably well described only by the FFA model. However, as discussed earlier, the pure FFA model appears unrealistic when brightness temperature considerations (Figure \ref{fig7}) are included. Our best model, a combination of both SSA and FFA processes (Figure \ref{fig8}), fits the spectral index evolution (Figure \ref{fig9}) quite well and satisfies the brightness temperature limitations (Figure \ref{fig10}). Nevertheless, deviations can still be noticed in the light curves and in the spectral index evolution because, as mentioned earlier, we cannot expect simple models to describe such a complex phenomenon as a supernova explosion in detail.
+
+Particular note should be made of the late time spectral index evolution. \cite{Chandra04} suggest a break in the spectrum around day $\sim3200$, with higher frequency flux densities declining faster than lower frequency ones, leading to a steepening of the spectral index. From this they were able to calculate a number of physical properties of the radio emitting region. With data now extending to day $\sim5000$ it is possible to check for such a break. Examination of the agreement between our constant spectral index model curves and the data, particularly in Figure \ref{fig11}, does not appear to confirm this suggestion. 
+
+\subsection{Radio and X-ray evolution \label{Radio-X-Ray}}
+
+A comparison of the radio and X-ray light curves reveals features that can help to understand the SN~1993J
+phenomenon.  The top panel of Figure \ref{fig13} shows the X-ray light curve as summarized by \cite{Zimmermann03} plus two recent measurements obtained with the SWIFT satellite (S. Immler, private communication). We have calculated a fit to the upper envelope of the X-ray data that gives $L_X \propto t^{-0.22}$, i.e. a slope that is a little flatter than the \citet{Zimmermann03} value of -0.30, and that implies a density behavior of $\rho_{CSM} \propto r^{-1.61}$, again marginally flatter than \citet{Zimmermann03} estimate of $\rho_{CSM} \propto r^{-1.65}$.
+
+The other five panels display the observed radio data (without showing
+upper limits) at 1.2, 2, 3.6, 6, and 20 cm and their best-fit curves as
+already shown in Figure \ref{fig8} and given in Table \ref{tab4},
+Column 4. The two vertical dashed lines are meant to guide the eye to
+two particular events, the right-most being the already discussed
+steepening of the flux density decline rate of the radio emission after
+day $\sim3100$, and the left-most being an apparent ``dip'' of the X-ray
+luminosity around day $\sim460$. Even if the X-ray coverage at late
+times is rather sparse, the two most recent measurements  appear to
+confirm a  steepening seen in the radio decay rate after day
+3100, consistent with the same e-folding time of 1,100 days. Also, it is intriguing that the radio light curve at 1.2 cm
+appears to ``dip'' in a manner similar to the X-ray luminosity around
+day $\sim460$. Both the X-ray and the 1.2 cm light curves are well
+enough sampled to provide rough time scales for this event; i.e., the
+dip has $\sim70$ days half-power width at 1.2 cm and $\sim280$ days
+half-power width at X-ray wavelengths. 
+
+Since radio emission is due to synchrotron processes, whereas the X-ray
+emission is accounted for by reverse shock heating, these coincidences
+in the overall evolution suggest that the observed variations are the
+result of a change in the efficiency of the energy supply, \ie most
+likely due to anomalies in the circumstellar medium density
+distribution. 
+
+On the other hand, it is not clear why a significant variation is
+observed in the 1.2 cm flux density at the time of the  X-ray dip around
+460 days, but no appreciable changes are recorded at other equally well 
+sampled radio frequencies.
+
+\section{Conclusions}
+
+We present detailed radio observations of SN~1993J at multiple wavelengths for $\sim13$ years after explosion. This data collection arguably represents the most detailed set of observations of any supernova at any wavelength except for the nearby and spectacular SN~1987A.
+
+The radio emission evolves regularly in both time and frequency, and the usual interpretation in terms of shock interaction with a complex circumstellar medium (CSM) formed by a pre-supernova structured stellar wind, with the inclusion of both synchrotron self-absorption (SSA) and thermal free-free absorption (FFA) at early times, describes the observations rather well considering the complexity of the phenomenon.  However, there are some notable characteristics peculiar to SN~1993J. 1) At a time around day $\sim3100$ after shock breakout the decline rate of the radio emission steepens from (t$^{+\beta}$) $\beta \sim -0.7$ to $\beta \sim -2.7$ without change in the spectral index ($\nu^{+\alpha}$; $\alpha \sim -0.81$). This variation, however, can better be described in terms of an exponential decay starting at day $\sim3100$ with an e-folding time of $\sim 1100$ days. 2) The spectral index appears constant throughout our measurement era. 3) The best overall fit to all of the ``early'' (\i.e., before day 3100) data is a model including  both SSA and FFA components, evolving to a constant decline rate until the break at day $\sim3100$. In particular, neither a pure SSA nor a pure FFA absorbing model can provide a  fit that simultaneously reproduces the light curves and the spectral index evolution and provides a physically realistic brightness temperature evolution. 4) The radio and X-ray light curves display quite similar behavior and their comparison suggests the presence of at least two episodes of change in the supernova progenitor mass-loss rate in the last several thousand years before explosion.
+
+\acknowledgements
+We are indebted to the VLA TAC and schedulers for permitting and
+arranging our numerous observations over many years and to observers who have contributed
+data at other radio wavelengths, sometimes unpublished. KWW wishes to
+thank the Office of Naval Research (ONR) for the 6.1 funding supporting
+his research.  CJS is a Cottrell Scholar of Research Corporation and work on this project has been supported by the NASA Wisconsin Space Grant Consortium. NP is Astronomer Emeritus at the Space Telescope Science Institute (STScI) that kindly provided research facilities and partial support for this work. JMM acknowledges support from grant AYA2006-14986-C02-02. Additional information and data on radio supernovae can be found on {\it http://rsd-www.nrl.navy.mil/7213/weiler/sne-home.html}
+and linked pages.
+
+\begin{thebibliography}{}
+\bibitem[Andrillat \etal (1993)]{Andrillat93} Andrillat, Y., 
+Prugniel, P., Perelmuter, J.-M., Shanklin, J.~D., Kohl, R., Cianciolo, F., 
+Gearhart, R., \& Dosaj, A.\ 1993, \iaucirc, 5736
+\bibitem[Bartel, \etal (1994)]{Bartel94}  Bartel, N. ~\etal 1994, \nat, 368, 610
+\bibitem[Bartel, \etal (2000)]{Bartel00} Bartel, N. ~\etal 2000, Science, 287, 112
+\bibitem[Bartel \etal (2002)]{Bartel02} Bartel, N. ~\etal 2002, \apj, 581, 404
+\bibitem[Bietenholz, Bartel, \& Rupen(2001)]{Bietenholz01} Bietenholz, M.~F., Bartel, N., \& Rupen, M.~P.\ 2001, \apj, 557, 770 
+\bibitem[Bietenholz, Bartel, \& Rupen(2003)]{Bietenholz03} Bietenholz, M.~F., Bartel, N., \& Rupen, M.~P.\ 2003, \apj, 597, 374
+\bibitem[Chandra, Bhatnagar, \& Ray(2001)]{Chandra01} Chandra, P., Bhatnagar, S., \& Ray, A.\ 2001, \iaucirc, 7657
+\bibitem[Chandra, Ray, \& Bhatnagar(2004)]{Chandra04} Chandra, P., Ray, A., \& Bhatnagar, S.\ 2004, \apj, 612, 974 
+\bibitem[Chevalier (1982a)]{Chevalier82a} Chevalier, R.~A.~1982a, \apj, 259, 302
+\bibitem[Chevalier (1982b)]{Chevalier82b} Chevalier, R.~A.~1982b, \apjl, 259, L85
+\bibitem[Chevalier (1998)]{Chevalier98} Chevalier, R.\ A.\ 1998, \apj, 499, 810
+\bibitem[Filippenko, \etal (1993a)]{Filippenko93a} Filippenko, A.~V., Matheson, T., Kirshner, R.~P., Schmidt, B.~P., Caldwell, N., Merlin, J.-C., Neely, A., Schmeer, P., \& Vanmunster, T.~1993a, \iaucirc, 5740
+\bibitem[Filippenko, \etal (1993b)]{Filippenko93b} Filippenko, A.~V., Matheson, T., \& Ho., L.~1993b, \apj, 415, L103
+\bibitem[Fransson, Lundqvist, \& Chevalier (1996)]{Fransson96} Fransson, C., Lundqvist, P., \& Chevalier, R.~A.\ 1996, \apj, 461, 993 
+\bibitem[Fransson \& Bj{\"o}rnsson (1998)]{Fransson98} Fransson, C., \& Bj{\"o}rnsson, C.-I.\ 1998, \apj, 509, 861 
+\bibitem[Freedman \etal (1994)]{Freedman94} Freedman, W.~L.~\etal 1994, \apj, 427, 628 
+\bibitem[Gomez (1993)]{Gomez93} Gomez, G.~1993, \iaucirc ~5733
+\bibitem[Immler, Aschenbach, \& Wang (2001)]{Immler01} Immler, S., Aschenbach, B., \& Wang, Q.~D.\ 2001, \apjl, 561, L107 
+\bibitem[Kellermann \& Pauliny-Toth (1969)]{Kellermann69} Kellermann, 
+K.~I., \& Pauliny-Toth, I.~I.~K.\ 1969, \apjl, 155, L71 
+\bibitem[Kulkarni \etal (1998)]{Kulkarni98} Kulkarni, S.~R.~et 
+al.\ 1998, \nat, 395, 663 
+\bibitem[Marcaide \etal (1993a)]{Marcaide93a} Marcaide, J.~M.~et 
+al.\ 1993a, \iaucirc, 5785 
+\bibitem[Marcaide \etal (1993b)]{Marcaide93b} Marcaide, J.~M.~et 
+al.\ 1993b, \iaucirc, 5820
+\bibitem[Marcaide \etal (1994)]{Marcaide94}  Marcaide, J.~\etal  1994, \apjl, 424, L25
+\bibitem[Marcaide \etal (1995a)]{Marcaide95a} Marcaide, J.~\etal 1995a, \nat, 373, 44
+\bibitem[Marcaide \etal (1995b]{Marcaide95b} Marcaide, J., \etal 1995b, Science, 270, 1475
+\bibitem[Marcaide \etal (1997)]{Marcaide97} Marcaide, J.~M., \etal 1997, \apjl, 486, L31 
+\bibitem[Marcaide \etal (2005)]{Marcaide05} Marcaide, J.~M., \etal 2005, in ``1604-2004: Supernovae as Cosmological Lighthouses,'' M.~Turatto, S.~Benetti, S. Zampieri, \& W.~Shea, eds. Astronomical Society of the Pacific, p.~298 
+\bibitem[Marcaide \etal (2007)]{Marcaide07} Marcaide, J.~M., \etal 2007, in press 
+\bibitem[Montes, Weiler, \& Panagia (1997)]{Montes97} Montes, M.\ J., Weiler, K.\ W.,  \& Panagia, N.\ 1997, \apj, 488, 792
+\bibitem[Montes \etal (1998)]{Montes98} Montes M.\ J., Van Dyk S.\ D., Weiler K.\ W., Sramek R.\ A., \& Panagia N.~1998, \apj, 506, 874
+\bibitem[Montes \etal (2000)]{Montes00} Montes, M.~J., Weiler, K.~W., Van Dyk, S.~D., Panagia, N., Lacey, C.~K., Sramek, R.~A., \& Park, R.\ 2000, \apj, 532, 1124 
+\bibitem[Natta \& Panagia (1984)]{Natta84}  Natta, A., \& Panagia, N.~ 1984, \apj, 287, 228
+\bibitem[Nomoto \etal (1993)]{Nomoto93} Nomoto, K., Suzuki, T., Shigeyama, T., Kumagai, S., Yamaoka, H., \& Saio, H.\ 1993, \nat, 364, 507
+\bibitem[Osterbrock (1974)]{Osterbrock74}  Osterbrock, D.~E.~1974, Astrophysics of Gaseous Nebulae (Freeman, San Francisco), p. 82
+\bibitem[Panagia \& Bono (2001)]{Panagia01} Panagia, N., \& Bono, G.~2001, in ``The Largest Explosions since the Big Bang: Supernovae and Gamma Ray Bursts,'' M.~Livio, N.~Panagia, \& K.~Sahu, eds. Cambridge University Press, Cambridge, p.~184 
+\bibitem[P{\' e}rez-Torres, Alberdi, \& Marcaide(2001)]{Perez-Torres01} P{\' e}rez-Torres, M.~A., Alberdi, A., \& Marcaide, J.~M.\ 2001, \aap, 374, 997 
+\bibitem[P{\'e}rez-Torres et al.(2002)]{PerezTorres02}  P{\'e}rez-Torres, M.~A., Alberdi, A., \& Marcaide, J.~M.\ 2002, \aap, 394, 71 
+\bibitem[Phillips \& Kulkarni (1993a)]{Phillips93a}  Phillips, J.~A. \& Kulkarni, S.~R.~1993a, \iaucirc, 5763
+\bibitem[Phillips \& Kulkarni (1993b)]{Phillips93b}  Phillips, J.~A. \& Kulkarni, S.~R.~1993b, \iaucirc, 5775
+\bibitem[Phillips \& Kulkarni (1993c)]{Phillips93c}  Phillips, J.~A. \& Kulkarni, S.~R.~1993c, \iaucirc, 5884
+\bibitem[Podsiadlowski, \etal (1993)]{Podsiadlowski93} Podsiadlowski, 
+P., Hsu, J.~J.~L., Joss, P.~C., \& Ross, R.~R.\ 1993, \nat, 364, 509
+\bibitem[Pooley \& Green (1993a)]{Pooley93a}  Pooley, G.~G. \& Green, D.~A.~1993a, \iaucirc, 5751
+\bibitem[Pooley \& Green (1993b)]{Pooley93b}  Pooley, G.~G. \& Green, D.~A.~1993b, \mnras, 264, 17P
+\bibitem[Radford, \etal (1993)]{Radford93}  Radford, S., Neri, R., Guilloteau, S., \& Downes, D.~1993, \iaucirc, 5768
+\bibitem[Readhead (1994)]{Readhead94} Readhead, A.~C.~S.~ 1994, \apj, 426, 51
+\bibitem[Ripero, Garcia \& Rodriguez (1993)]{Ripero93}  Ripero, J., Garcia, F., Rodriguez, D.~1993, \iaucirc, 5731
+\bibitem[Swartz, \etal (1993)]{Swartz93} Swartz, D.~A., Clocchiatti, A., Benjamin, R., Lester, D.~F., \& Wheeler, J.~C.\ 1993, \nat, 365, 232 
+\bibitem[Sramek, \etal (1993)]{Sramek93}  Sramek, R.~A., Van Dyk, S.~D., Weiler, K.~W., \& Panagia, N.~1993, \iaucirc, 5743
+\bibitem[Sramek \& Weiler (2003)]{Sramek03}  Sramek, R.~A. \& Weiler, K.~W.~2003, in ``Supernovae and Gamma-Ray Bursters,'' K.~W.~ Weiler, ed., Springer-Verlag, Berlin, p.~153
+\bibitem[van Driel \etal (1993)]{VanDriel93} van Driel, W.~et al.\ 1993, \pasj, 45, L59 
+\bibitem[Van Dyk, \etal (1993a)]{VanDyk93a}  Van Dyk, S.~D., Weiler, K.~W., Rupen, M.~P., Sramek, R.~A., \& Panagia, N.~1993a, \iaucirc, 5759
+\bibitem[Van Dyk, \etal (1993b)]{VanDyk93b}  Van Dyk, S.~D., Nguyen, H.-A., Weiler, K.~W., Sramek, R.~A., Rupen, M.~P., \& Panagia, N.~1993b, \iaucirc, 5828
+\bibitem[Van Dyk \etal(1993c)]{VanDyk93c} Van Dyk S., Sramek R.\ A., Weiler K., \& Panagia N.\ 1993c, \apjl, 419, 69
+\bibitem[Van Dyk \etal (1994)]{VanDyk94} Van Dyk, S.~D., Weiler, K.~W., Sramek, R.~A., Rupen, M.~P., \& Panagia, N.\ 1994, \apjl, 432, L115 
+\bibitem[Weiler, \etal (1986)]{Weiler86}  Weiler, K.~W., Sramek, R.~A., Panagia, N., van der Hulst, J.~M., \& Salvati, M.~1986, \apj, 301, 790
+\bibitem[Weiler, \etal (1989)]{Weiler89}  Weiler, K.~W., Panagia, N., Sramek, R.~A., van der Hulst, J.~M., Roberts, M.~S., \& Nguyen, L.~1989, \apj, 336, 421
+\bibitem[Weiler, \etal (1990)]{Weiler90}  Weiler, K.~W., Panagia, N., \& Sramek, R.~A.~1990, \apj, 364, 611
+%\bibitem[Weiler \etal (1992)]{Weiler92} Weiler K., Van Dyk S., Panagia N., \& Sramek R.~1992, \apj, 398,248
+\bibitem[Weiler, \etal (1993)]{Weiler93}  Weiler, K.~W., Sramek, R.~A., Van Dyk, S.~D., Panagia, N.~1993, \iaucirc, 5752
+\bibitem[Weiler, Panagia, \& Montes(2001)]{Weiler01} Weiler, K.~W., Panagia, N., \& Montes, M.~J.\ 2001, \apj, 562, 670 
+\bibitem[Weiler \etal (2002)]{Weiler02} Weiler, K.~W., Panagia, N., Montes, M.~J., \& Sramek, R.~A.\ 2002, \araa, 40, 387 
+\bibitem[Weiler, Panagia, \& Montes (2003)]{Weiler03}  Weiler, K.~W., Panagia, N., \& Montes, M.~J.~2003, in ``Supernovae and Gamma-Ray Bursters,'' K.~W.~ Weiler, ed., Springer-Verlag, Berlin, p.~367
+\bibitem[Wheeler et al.(1993)]{Wheeler93} Wheeler, J.~C.~et al.\ 
+1993, \apjl, 417, L71 
+\bibitem[Williams \etal (2002)]{Williams02} Williams, C.~L., Panagia, N., Van Dyk, S.~D., Lacey, C.~K., Weiler, K.~W., \& Sramek, R.~A.\ 2002, \apj, 581, 396
+\bibitem[Zimmermann \& Aschenbach (2003)]{Zimmermann03} Zimmermann, H.-U., \& Aschenbach, B.\ 2003, \aap, 406, 969
+
+\end{thebibliography}
+
+
+\clearpage
+
+%Table 1
+\begin{deluxetable}{cccccccc}
+\tabletypesize{\scriptsize}
+\tablewidth{7.0in}
+%\table columns(8}
+\tablecaption{Flux Density Measurements for SN~1993J\label{tab1}
+}
+\tablehead{
+\colhead{Obs.} & \colhead{Days from} & \colhead{Tel/VLA} & \colhead{S(20cm) $\pm$ err\tablenotemark{a}} & \colhead{S(6cm) $\pm$ err\tablenotemark{a}} & \colhead{S(3.6cm) $\pm$ err\tablenotemark{a}} & \colhead{S(2cm) $\pm$ err\tablenotemark{a}} & \colhead{S(1.2cm) $\pm$ err\tablenotemark{a}} \\
+\colhead{Date} &  \colhead{Reference Date} & \colhead{Config.\tablenotemark{b}} & \colhead{(mJy)} & \colhead {(mJy)}  & \colhead{(mJy)} & \colhead{(mJy)} & \colhead{(mJy)}
+} 
+\startdata
+28-Mar-93 &  $= 0.00$  & & & & & & \\
+30-Mar-93 &   2.90 & Camb    & \nodata               & \nodata               & \nodata               & $<   0.6$           & \nodata               \\
+31-Mar-93 &   3.10 & VLA-B   & \nodata               & \nodata               & $<   0.090$           & \nodata               & \nodata               \\
+31-Mar-93 &   3.10 & VLA-B   & $<   0.180$           & \nodata               & \nodata               & \nodata               & \nodata               \\
+01-Apr-93 &   4.91 & Camb    & \nodata               & \nodata               & \nodata               & $<   2.4$           & \nodata               \\
+02-Apr-93 &   5.29 & VLA-B   & \nodata               & \nodata               & \nodata               & $<   0.348$           & \nodata               \\
+02-Apr-93 &   5.30 & VLA-B   & \nodata               & \nodata               & $<   0.120$           & \nodata               & \nodata               \\
+02-Apr-93 &   5.34 & VLA-B   & \nodata               & \nodata               & \nodata               & \nodata               & $   0.740\pm    0.195$\\
+02-Apr-93 &   5.77 & Camb    & \nodata               & \nodata               & \nodata               & $<   0.3$           & \nodata               \\
+03-Apr-93 &   6.91 & Camb    & \nodata               & \nodata               & \nodata               & $<   0.6$           & \nodata               \\
+04-Apr-93 &   7.72 & Camb    & \nodata               & \nodata               & \nodata               & $   1.1\pm    0.11$& \nodata               \\
+05-Apr-93 &   8.83 & Camb    & \nodata               & \nodata               & \nodata               & $   3.8\pm    0.38$& \nodata               \\
+06-Apr-93 &   9.88 & Camb    & \nodata               & \nodata               & \nodata               & $   5.0\pm    0.5$& \nodata               \\
+07-Apr-93 &  10.68 & Camb    & \nodata               & \nodata               & \nodata               & $   5.8\pm    0.58$& \nodata               \\
+07-Apr-93 &  10.81 & Camb    & \nodata               & \nodata               & \nodata               & $   6.4\pm    0.64$& \nodata               \\
+07-Apr-93 &  10.93 & Camb    & \nodata               & \nodata               & \nodata               & $   6.9\pm    0.69$& \nodata               \\
+08-Apr-93 &  11.08 & Camb    & \nodata               & \nodata               & \nodata               & $   7.9\pm    0.79$& \nodata               \\
+08-Apr-93 &  11.37 & VLA-B   & \nodata               & \nodata               & $   0.750\pm    0.063$& $   8.040\pm    0.629$& $  18.940\pm    1.905$\\
+08-Apr-93 &  11.69 & Camb    & \nodata               & \nodata               & \nodata               & $   8.0\pm    0.8$& \nodata               \\
+09-Apr-93 &  12.08 & Camb    & \nodata               & \nodata               & \nodata               & $   8.7\pm    0.87$& \nodata               \\
+09-Apr-93 &  12.33 & VLA-B   & \nodata               & \nodata               & \nodata               & $  10.569\pm    0.828$& $  22.487\pm    2.261$\\
+09-Apr-93 &  12.99 & Camb    & \nodata               & \nodata               & \nodata               & $  11.1\pm    1.11$& \nodata               \\
+10-Apr-93 &  13.04 & VLA-B   & \nodata               & \nodata               & $   1.330\pm    0.097$& \nodata               & $  25.753\pm    2.576$\\
+10-Apr-93 &  13.46 & VLA-B   & \nodata               & \nodata               & \nodata               & $  11.586\pm    0.934$& $  25.550\pm    2.578$\\
+10-Apr-93 &  13.73 & Camb    & \nodata               & \nodata               & \nodata               & $  11.1\pm    1.11$& \nodata               \\
+11-Apr-93 &  14.25 & VLA-B   & $<   0.180$           & \nodata               & $   1.890\pm    0.107$& $  14.610\pm    1.122$& $  28.640\pm    2.875$\\
+11-Apr-93 &  14.88 & Camb    & \nodata               & \nodata               & \nodata               & $  12.4\pm    1.24$& \nodata               \\
+12-Apr-93 &  15.73 & Camb    & \nodata               & \nodata               & \nodata               & $  16.0\pm    1.60$& \nodata               \\
+13-Apr-93 &  16.02 & VLA-B   & \nodata               & \nodata               & $   2.980\pm    0.169$& \nodata               & $  31.600\pm    5.336$\\
+13-Apr-93 &  16.53 & VLA-B   & \nodata               & $   0.327\pm    0.080$& $   3.140\pm    0.172$& $  17.680\pm    1.428$& $  33.200\pm    3.491$\\
+13-Apr-93 &  16.85 & Camb    & \nodata               & \nodata               & \nodata               & $  16.4\pm    1.64$& \nodata               \\
+14-Apr-93 &  17.07 & VLA-B   & \nodata               & $   0.280\pm    0.052$& $   3.590\pm    0.189$& $  20.140\pm    1.525$& $  35.250\pm    3.540$\\
+14-Apr-93 &  17.65 & Camb    & \nodata               & \nodata               & \nodata               & $  19.4\pm    1.94$& \nodata               \\
+16-Apr-93 &  19.02 & VLA-B   & \nodata               & $   0.360\pm    0.063$& \nodata               & \nodata               & $  39.860\pm    4.078$\\
+16-Apr-93 &  19.06 & Camb    & \nodata               & \nodata               & \nodata               & $  24.1\pm    2.41$& \nodata               \\
+17-Apr-93 &  20.07 & Camb    & \nodata               & \nodata               & \nodata               & $  26.0\pm    2.60$& \nodata               \\
+18-Apr-93 &  21.73 & Camb    & \nodata               & \nodata               & \nodata               & $  29.3\pm    2.93$& \nodata               \\
+19-Apr-93 &  22.25 & VLA-B   & \nodata               & $   0.880\pm    0.074$& $   7.860\pm    0.396$& $  31.440\pm    2.372$& $  39.140\pm    3.933$\\
+19-Apr-93 &  22.62 & Camb    & \nodata               & \nodata               & \nodata               & $  31.6\pm    3.16$& \nodata               \\
+19-Apr-93 &  22.97 & VLA-B   & \nodata               & $   0.870\pm    0.066$& $   8.990\pm    0.453$& $  34.910\pm    2.638$& \nodata               \\
+20-Apr-93 &  23.83 & Camb    & \nodata               & \nodata               & \nodata               & $  35.8\pm    3.58$& \nodata               \\
+21-Apr-93 &  24.51 & VLA-B   & \nodata               & $   1.290\pm    0.095$& $   9.710\pm    0.491$& $  34.770\pm    2.631$& $  38.420\pm    3.892$\\
+21-Apr-93 &  24.78 & Camb    & \nodata               & \nodata               & \nodata               & $  36.1\pm    3.61$& \nodata               \\
+22-Apr-93 &  25.48 & VLA-B   & \nodata               & $   1.700\pm    0.110$& $  11.770\pm    0.592$& $  37.350\pm    2.822$& $  39.940\pm    4.029$\\
+23-Apr-93 &  26.67 & Camb    & \nodata               & \nodata               & \nodata               & $  39.7\pm    3.97$& \nodata               \\
+23-Apr-93 &  26.88 & VLA-B   & $<   0.330$           & $   1.930\pm    0.113$& $  14.610\pm    0.735$& $  37.920\pm    2.865$& $  40.020\pm    4.150$\\
+24-Apr-93 &  27.71 & Camb    & \nodata               & \nodata               & \nodata               & $  42.2\pm    4.22$& \nodata               \\
+24-Apr-93 &  27.87 & VLA-B   & \nodata               & $   2.050\pm    0.130$& $  15.170\pm    0.763$& \nodata               & $  48.810\pm    5.062$\\
+25-Apr-93 &  28.71 & Camb    & \nodata               & \nodata               & \nodata               & $  46.0\pm    4.60$& \nodata               \\
+25-Apr-93 &  28.99 & VLA-B   & \nodata               & $   2.640\pm    0.149$& $  16.710\pm    0.839$& \nodata               & $  45.450\pm    4.626$\\
+26-Apr-93 &  29.70 & Camb    & \nodata               & \nodata               & \nodata               & $  46.0\pm    4.60$& \nodata               \\
+26-Apr-93 &  29.85 & VLA-B   & \nodata               & $   3.260\pm    0.182$& $  18.580\pm    0.932$& $  47.200\pm    3.594$& \nodata               \\
+27-Apr-93 &  30.84 & VLA-B   & \nodata               & $   3.180\pm    0.178$& $  19.730\pm    0.991$& \nodata               & $  51.260\pm    5.272$\\
+28-Apr-93 &  31.05 & Camb    & \nodata               & \nodata               & \nodata               & $  49.8\pm    4.98$& \nodata               \\
+28-Apr-93 &  31.52 & VLA-B   & \nodata               & $   3.630\pm    0.195$& $  20.550\pm    1.031$& $  51.450\pm    3.883$& $  55.380\pm    5.598$\\
+28-Apr-93 &  31.63 & Camb    & \nodata               & \nodata               & \nodata               & $  50.4\pm    5.04$& \nodata               \\
+29-Apr-93 &  32.50 & VLA-B   & \nodata               & $   4.110\pm    0.238$& $  21.930\pm    1.103$& \nodata               & $  45.010\pm    4.528$\\
+29-Apr-93 &  32.61 & Camb    & \nodata               & \nodata               & \nodata               & $  48.1\pm    4.81$& \nodata               \\
+30-Apr-93 &  33.71 & Camb    & \nodata               & \nodata               & \nodata               & $  56.6\pm    5.66$& \nodata               \\
+01-May-93 &  34.37 & VLA-B   & \nodata               & $   5.820\pm    0.299$& $  26.000\pm    1.302$& \nodata               & $  55.780\pm    5.639$\\
+01-May-93 &  34.93 & VLA-B   & $<   0.660$           & $   6.290\pm    0.327$& $  29.630\pm    1.484$& $  61.090\pm    4.585$& $  52.810\pm    5.288$\\
+02-May-93 &  35.63 & Camb    & \nodata               & \nodata               & \nodata               & $  60.4\pm    6.04$& \nodata               \\
+02-May-93 &  35.71 & VLA-B   & \nodata               & $   6.000\pm    0.310$& $  30.310\pm    1.518$& $  55.950\pm    4.205$& \nodata               \\
+03-May-93 &  36.66 & Camb    & \nodata               & \nodata               & \nodata               & $  60.4\pm    6.04$& \nodata               \\
+04-May-93 &  37.27 & VLA-B   &  \nodata & $   8.060\pm    0.406$& $  33.320\pm    1.668$      & $  67.320\pm    5.066$& $  62.900\pm    6.327$\\
+04-May-93 &  37.78 & Camb    & \nodata               & \nodata               & \nodata               & $  65.4\pm    6.54$& \nodata               \\
+05-May-93 &  38.79 & Camb    & \nodata               & \nodata               & \nodata               & $  63.1\pm    6.31$& \nodata               \\
+06-May-93 &  39.79 & Camb    & \nodata               & \nodata               & \nodata               & $  65.7\pm    6.57$& \nodata               \\
+07-May-93 &  40.11 & VLA-B   & \nodata               & $  10.510\pm    0.529$& $  37.070\pm    1.854$& $  67.440\pm    5.074$& $  53.640\pm    5.396$\\
+07-May-93 &  40.79 & Camb    & \nodata               & \nodata               & \nodata               & $  65.7\pm    6.57$& \nodata               \\
+09-May-93 &  42.78 & Camb    & \nodata               & \nodata               & \nodata               & $  64.0\pm    6.40$& \nodata               \\
+11-May-93 &  44.74 & VLA-B/C & \nodata               & $  15.550\pm    0.785$& $  52.100\pm    2.611$& $  69.900\pm    5.249$& $  46.700\pm    4.691$\\
+12-May-93 &  45.71 & Camb    & \nodata               & \nodata               & \nodata               & $  70.4\pm    7.04$& \nodata               \\
+13-May-93 &  46.74 & Camb    & \nodata               & \nodata               & \nodata               & $  70.9\pm    7.09$& \nodata               \\
+14-May-93 &  47.20 & VLA-B/C & \nodata               & $  18.170\pm    0.915$& $  59.030\pm    2.960$& $  77.150\pm    5.805$& $  61.070\pm    6.169$\\
+14-May-93 &  47.73 & Camb    & \nodata               & \nodata               & \nodata               & $  73.5\pm    7.35$& \nodata               \\
+16-May-93 &  49.70 & Camb    & \nodata               & \nodata               & \nodata               & $  71.0\pm    7.10$& \nodata               \\
+16-May-93 &  49.86 & VLA-B/C & $<   1.903$           & $  22.100\pm    1.110$& \nodata               & \nodata               & \nodata               \\
+17-May-93 &  50.00 & VLA\tablenotemark{c}& \nodata & \nodata & $63.0\pm 3.2$ &\nodata & \nodata \\
+17-May-93 &  50.13 & VLA-B/C & \nodata               & \nodata               & $  61.910\pm    3.099$& $  74.400\pm    5.582$& $  54.610\pm    5.470$\\
+17-May-93 &  50.69 & Camb    & \nodata               & \nodata               & \nodata               & $  70.2\pm    7.02$& \nodata               \\
+19-May-93 &  52.76 & Camb    & \nodata               & \nodata               & \nodata               & $  71.4\pm    7.14$& \nodata               \\
+20-May-93 &  53.17 & VLA-B/C & $<   1.045$           & $  25.819\pm    1.298$& $  63.900\pm    3.201$& $  72.698\pm    5.474$& $  54.749\pm    5.502$\\
+21-May-93 &  54.68 & Camb    & \nodata               & \nodata               & \nodata               & $  72.0\pm    7.20$& \nodata               \\
+22-May-93 &  55.65 & Camb    & \nodata               & \nodata               & \nodata               & $  72.6\pm    7.26$& \nodata               \\
+23-May-93 &  56.65 & Camb    & \nodata               & \nodata               & \nodata               & $  73.7\pm    7.37$& \nodata               \\
+24-May-93 &  57.68 & Camb    & \nodata               & \nodata               & \nodata               & $  76.7\pm    7.67$& \nodata               \\
+25-May-93 &  58.67 & Camb    & \nodata               & \nodata               & \nodata               & $  71.2\pm    7.12$& \nodata               \\
+25-May-93 &  58.99 & VLA-B/C & $<   0.613$           & $  34.560\pm    1.734$& $  77.920\pm    3.898$& $  79.480\pm    5.979$& $  67.480\pm    6.810$\\
+26-May-93 &  59.66 & Camb    & \nodata               & \nodata               & \nodata               & $  74.1\pm    7.41$& \nodata               \\
+30-May-93 &  63.04 & VLA-B/C & \nodata               & $  40.000\pm    2.007$& $  81.500\pm    4.080$& $  76.2\pm    5.726$& $  53.000\pm    5.342$\\
+01-Jun-93 &  65.72 & Camb    & \nodata               & \nodata               & \nodata               & $  77.2\pm    7.72$& \nodata               \\
+02-Jun-93 &  66.62 & Camb    & \nodata               & \nodata               & \nodata               & $  77.9\pm    7.79$& \nodata               \\
+03-Jun-93 &  67.57 & Camb    & \nodata               & \nodata               & \nodata               & $  75.9\pm    7.59$& \nodata               \\
+04-Jun-93 &  68.06 & VLA-B/C & $<   1.035$           & $  43.970\pm    2.220$& \nodata               & $  65.593\pm    4.960$& $  47.200\pm    4.759$\\
+06-Jun-93 &  70.71 & Camb    & \nodata               & \nodata               & \nodata               & $  76.9\pm    7.69$& \nodata               \\
+07-Jun-93 &  71.85 & Camb    & \nodata               & \nodata               & \nodata               & $  76.4\pm    7.64$& \nodata               \\
+09-Jun-93 &  73.71 & Camb    & \nodata               & \nodata               & \nodata               & $  78.2\pm    7.82$& \nodata               \\
+10-Jun-93 &  74.70 & Camb    & \nodata               & \nodata               & \nodata               & $  78.0\pm    7.80$& \nodata               \\
+11-Jun-93 &  75.06 & VLA-C   & $   0.650\pm    0.103$& $  56.330\pm    2.820$& $  90.740\pm    4.538$& $  77.270\pm    5.808$& $  51.140\pm    5.157$\\
+13-Jun-93 &  77.69 & Camb    & \nodata               & \nodata               & \nodata               & $  72.9\pm    7.29$& \nodata               \\
+18-Jun-93 &  82.92 & VLA-C   & $   1.220\pm    0.141$& $  70.740\pm    3.572$& $108.980\pm 5.472 $ & $  74.920\pm    5.641$& \nodata               \\
+20-Jun-93 &  84.59 & Camb    & \nodata               & \nodata               & \nodata               & $  67.9\pm    6.79$& \nodata               \\
+21-Jun-93 &  85.57 & Camb    & \nodata               & \nodata               & \nodata               & $  70.9\pm    7.09$& \nodata               \\
+22-Jun-93 &  86.60 & Camb    & \nodata               & \nodata               & \nodata               & $  71.3\pm    7.13$& \nodata               \\
+23-Jun-93 &  87.46 & Camb    & \nodata               & \nodata               & \nodata               & $  72.0\pm    7.20$& \nodata               \\
+24-Jun-93 &  88.77 & Camb    & \nodata               & \nodata               & \nodata               & $  72.2\pm    7.22$& \nodata               \\
+25-Jun-93 &  89.75 & VLA-C   & $   2.850\pm    0.314$& $  79.780\pm    4.018$& $ 101.370\pm    5.094$& $  75.860\pm    5.695$& $  51.820\pm    5.212$\\
+01-Jul-93 &  95.22 & VLA-C   & $   2.940\pm    0.330$& $  87.200\pm    4.379$& $ 102.730\pm    5.138$& $  73.660\pm    5.539$& $  44.850\pm    4.552$\\
+01-Jul-93 &  95.64 & Camb    & \nodata               & \nodata               & \nodata               & $  75.0\pm    7.50$& \nodata               \\
+07-Jul-93 & 101.82 & Camb    & \nodata               & \nodata               & \nodata               & $  69.1\pm    6.91$& \nodata               \\
+08-Jul-93 & 102.66 & Camb    & \nodata               & \nodata               & \nodata               & $  70.0\pm    7.00$& \nodata               \\
+08-Jul-93 & 102.76 & VLA-C   & $   4.090\pm    0.436$& $ 102.670\pm
+5.142$& $ 129.360\pm    6.472$& \nodata & \nodata               \\
+13-Jul-93 & 107.77 & VLA-C   & $   6.840\pm    0.694$& $ 111.420\pm    5.583$& $ 134.220\pm    6.716$& $  89.190\pm    6.718$& \nodata          \\
+19-Jul-93 & 113.02 & VLA-C   & $   6.520\pm    0.657$& $ 104.370\pm    5.223$& $ 108.630\pm    5.434$& $  72.960\pm    5.488$& $  47.630\pm    4.820$\\
+20-Jul-93 & 114.55 & Camb    & \nodata               & \nodata               & \nodata               & $  70.9\pm    7.09$& \nodata               \\
+30-Jul-93 & 124.38 & Camb    & \nodata               & \nodata               & \nodata               & $  64.9\pm    6.49$& \nodata               \\
+30-Jul-93 & 124.88 & VLA-C   & $   9.770\pm    0.982$& $ 110.540\pm    5.539$& $ 103.430\pm    5.179$& $  62.920\pm    4.761$& $  41.680\pm    4.457$\\
+02-Aug-93 & 127.74 & Camb    & \nodata               & \nodata               & \nodata               & $  56.7\pm    5.67$& \nodata               \\
+04-Aug-93 & 129.75 & Camb    & \nodata               & \nodata               & \nodata               & $  56.8\pm    5.68$& \nodata               \\
+05-Aug-93 & 130.34 & Camb    & \nodata               & \nodata               & \nodata               & $  61.3\pm    6.13$& \nodata               \\
+06-Aug-93 & 131.95 & VLA-C   & $  11.720\pm    1.430$& $ 116.930\pm    6.236$& $ 115.980\pm    6.075$& $  58.860\pm    4.513$& \nodata               \\
+10-Aug-93 & 135.94 & VLA-C/D & $  16.747\pm    1.752$& $ 112.510\pm    5.660$& $  84.150\pm    4.223$& $  37.856\pm    2.884$& $  19.540\pm    2.223$\\
+12-Aug-93 & 137.93 & VLA-C/D & $  17.193\pm    1.964$& $ 110.230\pm    5.523$& \nodata               & $  42.091\pm    3.219$& $  26.270\pm    2.859$\\
+13-Aug-93 & 138.32 & Camb    & \nodata               & \nodata               & \nodata               & $  54.7\pm    5.47$& \nodata               \\
+14-Aug-93 & 139.73 & Camb    & \nodata               & \nodata               & \nodata               & $  56.2\pm    5.62$& \nodata               \\
+16-Aug-93 & 141.72 & Camb    & \nodata               & \nodata               & \nodata               & $  56.6\pm    5.66$& \nodata               \\
+17-Aug-93 & 142.79 & VLA-C   & $  15.180\pm    1.583$& $ 114.720\pm    5.971$& $  92.280\pm    4.904$& \nodata               & $  31.360\pm    3.651$\\
+20-Aug-93 & 145.45 & Camb    & \nodata               & \nodata               & \nodata               & $  60.6\pm    6.06$& \nodata               \\
+21-Aug-93 & 146.41 & Camb    & \nodata               & \nodata               & \nodata               & $  54.8\pm    5.48$& \nodata               \\
+22-Aug-93 & 147.71 & Camb    & \nodata               & \nodata               & \nodata               & $  57.4\pm    5.74$& \nodata               \\
+23-Aug-93 & 148.54 & VLA-C   & $  15.137\pm    1.576$& $ 112.250\pm    5.925$& $  88.740\pm    4.574$& $  59.740\pm    4.502$& $  36.350\pm    3.716$\\
+25-Aug-93 & 150.49 & Camb    & \nodata               & \nodata               & \nodata               & $  56.1\pm    5.61$& \nodata               \\
+26-Aug-93 & 151.93 & VLA-C   & $  17.560\pm    1.906$& $120.120\pm
+6.057$ & $ 102.840\pm    5.334$& \nodata & $  35.540\pm    4.317$\\
+29-Aug-93 & 154.69 & Camb    & \nodata               & \nodata               & \nodata               & $  49.7\pm    4.97$& \nodata               \\
+31-Aug-93 & 156.78 & VLA-C/D & \nodata               & $ 111.520\pm    5.620$& $  92.185\pm    4.688$& $  47.432\pm    3.618$& $  27.964\pm    2.990$\\
+02-Sep-93 & 158.39 & Camb    & \nodata               & \nodata               & \nodata               & $  50.2\pm    5.02$& \nodata               \\
+03-Sep-93 & 159.33 & Camb    & \nodata               & \nodata               & \nodata               & $  50.6\pm    5.06$& \nodata               \\
+05-Sep-93 & 161.35 & Camb    & \nodata               & \nodata               & \nodata               & $  47.8\pm    4.78$& \nodata               \\
+06-Sep-93 & 162.48 & Camb    & \nodata               & \nodata               & \nodata               & $  48.5\pm    4.85$& \nodata               \\
+09-Sep-93 & 165.59 & Camb    & \nodata               & \nodata               & \nodata               & $  48.3\pm    4.83$& \nodata               \\
+11-Sep-93 & 167.91 & VLA-C/D & $  22.790\pm    2.751$& $ 103.650\pm
+5.202$& \nodata & \nodata & \nodata               \\
+13-Sep-93 & 169.59 & Camb    & \nodata               & \nodata               & \nodata               & $  48.1\pm    4.81$& \nodata               \\
+15-Sep-93 & 171.49 & Camb    & \nodata               & \nodata               & \nodata               & $  45.1\pm    4.51$& \nodata               \\
+18-Sep-93 & 174.33 & Camb    & \nodata               & \nodata               & \nodata               & $  43.5\pm    4.35$& \nodata               \\
+18-Sep-93 & 174.72 & VLA-C/D & \nodata               & \nodata               & $  78.700\pm    3.984$& $  49.500\pm    3.732$& $  39.100\pm    3.918$\\
+19-Sep-93 & 175.00 & VLA\tablenotemark{c} & \nodata & \nodata & $78.7\pm 4.0$ & $49.5\pm 3.0$ & \nodata \\
+19-Sep-93 & 175.75 & VLA-C/D & $  26.870\pm    3.148$& $ 103.990\pm    5.211$& $  61.341\pm    3.207$& $  37.243\pm    2.810$& $  22.630\pm    2.302$\\
+25-Sep-93 & 181.34 & Camb    & \nodata               & \nodata               & \nodata               & $  44.8\pm    4.48$& \nodata               \\
+26-Sep-93 & 182.75 & VLA-C/D & $  30.940\pm    3.488$& $ 104.930\pm    5.268$& $  70.460\pm    3.594$& $  43.950\pm    3.324$& $  28.000\pm    2.864$\\
+27-Sep-93 & 183.30 & Camb    & \nodata               & \nodata               & \nodata               & $  43.4\pm    4.34$& \nodata               \\
+29-Sep-93 & 185.62 & Camb    & \nodata               & \nodata               & \nodata               & $  42.7\pm    4.27$& \nodata               \\
+04-Oct-93 & 190.50 & Camb    & \nodata               & \nodata               & \nodata               & $  39.8\pm    3.98$& \nodata               \\
+04-Oct-93 & 190.66 & VLA-C/D & $  28.303\pm    3.098$& $ 100.050\pm    5.013$& $  68.947\pm    3.491$& $  39.930\pm    3.006$& $  24.152\pm    2.437$\\
+08-Oct-93 & 194.31 & Camb    & \nodata               & \nodata               & \nodata               & $  43.7\pm    4.37$& \nodata               \\
+09-Oct-93 & 195.27 & Camb    & \nodata               & \nodata               & \nodata               & $  42.7\pm    4.27$& \nodata               \\
+16-Oct-93 & 202.26 & Camb    & \nodata               & \nodata               & \nodata               & $  44.1\pm    4.41$& \nodata               \\
+17-Oct-93 & 203.80 & VLA-C/D & $  35.770\pm    3.982$& $  99.880\pm    5.012$& $  65.150\pm    3.791$& $  24.650\pm    2.003$& $  15.970\pm    1.939$\\
+25-Oct-93 & 211.56 & Camb    & \nodata               & \nodata               & \nodata               & $  37.9\pm    3.79$& \nodata               \\
+25-Oct-93 & 211.61 & VLA-C/D & $  33.220\pm    3.662$& $  97.260\pm 4.905$& \nodata & $  37.320\pm    2.830$& $  23.640\pm    2.486$\\
+01-Nov-93 & 218.58 & VLA-D   & $  24.590\pm    2.478$& $ 105.560\pm    5.474$& $  67.210\pm    3.471$& $  38.930\pm    2.954$& $  30.360\pm    3.101$\\
+05-Nov-93 & 222.26 & Camb    & \nodata               & \nodata               & \nodata               & $  37.8\pm    3.78$& \nodata               \\
+06-Nov-93 & 223.00 & VLA\tablenotemark{c} & $61.5\pm 5.8$ & $97.6\pm 4.9$ & $64.7 \pm 3.2$ & $39.6\pm 2.0$ & $25.7\pm 3.9$ \\
+06-Nov-93 & 223.21 & Camb    & \nodata               & \nodata               & \nodata               & $  38.4\pm    3.84$& \nodata               \\
+10-Nov-93 & 227.23 & Camb    & \nodata               & \nodata               & \nodata               & $  39.7\pm    3.97$& \nodata               \\
+11-Nov-93 & 228.22 & Camb    & \nodata               & \nodata               & \nodata               & $  36.4\pm    3.64$& \nodata               \\
+16-Nov-93 & 233.40 & Camb    & \nodata               & \nodata               & \nodata               & $  37.1\pm    3.71$& \nodata               \\
+19-Nov-93 & 236.58 & VLA-D   & $  34.510\pm    3.466$& $  97.110\pm    4.924$& $  64.320\pm    3.252$& $  38.610\pm    2.921$& $  25.790\pm    2.643$\\
+20-Nov-93 & 237.17 & Camb    & \nodata               & \nodata               & \nodata               & $  35.4\pm    3.54$& \nodata               \\
+23-Nov-93 & 240.06 & Camb    & \nodata               & \nodata               & \nodata               & $  36.1\pm    3.61$& \nodata               \\
+28-Nov-93 & 245.56 & VLA-D   & $  47.020\pm    5.230$& $  94.940\pm    4.758$& $  61.470\pm    3.083$& $  36.840\pm    2.813$& $  26.140\pm    2.701$\\
+29-Nov-93 & 246.45 & Camb    & \nodata               & \nodata               & \nodata               & $  32.2\pm    3.22$& \nodata               \\
+01-Dec-93 & 248.26 & Camb    & \nodata               & \nodata               & \nodata               & $  35.5\pm    3.55$& \nodata               \\
+02-Dec-93 & 249.14 & Camb    & \nodata               & \nodata               & \nodata               & $  32.7\pm    3.27$& \nodata               \\
+03-Dec-93 & 250.14 & Camb    & \nodata               & \nodata               & \nodata               & $  32.6\pm    3.26$& \nodata               \\
+05-Dec-93 & 252.14 & Camb    & \nodata               & \nodata               & \nodata               & $  33.5\pm    3.35$& \nodata               \\
+05-Dec-93 & 252.58 & VLA-D   & $  59.100\pm    6.118$& $  91.660\pm    4.674$& $  59.630\pm    2.994$& $  32.290\pm    2.440$& $  23.720\pm    2.468$\\
+06-Dec-93 & 253.13 & Camb    & \nodata               & \nodata               & \nodata               & $  32.6\pm    3.26$& \nodata               \\
+17-Dec-93 & 264.00 & VLA\tablenotemark{c} & $86.3\pm 4.7$ & $93.3\pm 4.7$ & $57.1\pm 2.9$ & $33.2\pm 1.7$ & $27.4\pm 2.0$ \\
+19-Dec-93 & 266.58 & VLA-D   & $  63.110\pm    6.642$& $  89.160\pm    4.517$& $  56.880\pm    2.873$& $  34.300\pm    2.625$& $  22.260\pm    2.365$\\
+20-Dec-93 & 267.15 & Camb    & \nodata               & \nodata               & \nodata               & $  34.0\pm    3.40$& \nodata               \\
+22-Dec-93 & 269.10 & Camb    & \nodata               & \nodata               & \nodata               & $  32.9\pm    3.29$& \nodata               \\
+25-Dec-93 & 272.09 & Camb    & \nodata               & \nodata               & \nodata               & $  32.5\pm    3.25$& \nodata               \\
+26-Dec-93 & 273.93 & Camb    & \nodata               & \nodata               & \nodata               & $  33.3\pm    3.33$& \nodata               \\
+27-Dec-93 & 274.56 & VLA-D   & $  63.590\pm    6.522$& $  87.350\pm    4.396$& $  55.750\pm    3.156$& $  33.280\pm    2.525$& $  23.520\pm    2.472$\\
+28-Dec-93 & 275.93 & Camb    & \nodata               & \nodata               & \nodata               & $  34.5\pm    3.45$& \nodata               \\
+03-Jan-94 & 281.07 & Camb    & \nodata               & \nodata               & \nodata               & $  33.2\pm    3.32$& \nodata               \\
+07-Jan-94 & 285.37 & VLA-D   & $  58.780\pm    5.965$& $  84.470\pm    4.238$& $  55.740\pm    2.817$& $  33.740\pm    2.547$ & $  23.080\pm    2.357$\\
+10-Jan-94 & 288.12 & Camb    & \nodata               & \nodata               & \nodata               & $  34.0\pm    3.40$& \nodata               \\
+13-Jan-94 & 291.51 & VLA-D   & $  58.900\pm    5.957$& $  84.850\pm    4.267$& $  54.640\pm    2.804$& $  32.480\pm    2.449$& $  23.420\pm    2.373$\\
+27-Jan-94 & 305.30 & VLA-D   & $  50.400\pm    5.125$& $  80.860\pm    4.052$& $  55.430\pm    2.832$& $  32.260\pm    2.443$& $  22.140\pm    2.302$\\
+28-Jan-94 & 306.00 & VLA\tablenotemark{c} & \nodata & $80.4\pm 4.000$ & $ 52.2\pm 2.6$ & $29.2\pm 2.9$ & \nodata \\
+28-Jan-94 & 306.86 & Camb    & \nodata               & \nodata               & \nodata               & $  29.9\pm    2.99$& \nodata               \\
+07-Feb-94 & 316.82 & Camb    & \nodata               & \nodata               & \nodata               & $  30.2\pm    3.02$& \nodata               \\
+08-Feb-94 & 317.22 & VLA-D   & $  60.830\pm    6.472$& $  94.640\pm    4.804$& $  60.240\pm    3.106$& $  31.230\pm    2.395$& $  24.950\pm    2.614$\\
+15-Feb-94 & 324.80 & Camb    & \nodata               & \nodata               & \nodata               & $  27.8\pm    2.78$& \nodata               \\
+17-Feb-94 & 326.90 & Camb    & \nodata               & \nodata               & \nodata               & $  26.6\pm    2.66$& \nodata               \\
+18-Feb-94 & 327.30 & VLA-A   & $  78.700\pm    7.882$& $  79.720\pm    4.031$& $  49.420\pm    2.490$& $  34.350\pm    2.610$& $  17.980\pm    2.057$\\
+19-Feb-94 & 328.96 & Camb    & \nodata               & \nodata               & \nodata               & $  26.1\pm    2.61$& \nodata               \\
+20-Feb-94 & 329.96 & Camb    & \nodata               & \nodata               & \nodata               & $  25.700\pm    2.570$& \nodata               \\
+08-Mar-94 & 345.18 & Camb    & \nodata               & \nodata               & \nodata               & $  27.4\pm    2.74$& \nodata               \\
+08-Mar-94 & 345.80 & Camb    & \nodata               & \nodata               & \nodata               & $  26.5\pm    2.65$& \nodata               \\
+15-Mar-94 & 352.00 & VLA\tablenotemark{c} & $99.1\pm 5.0$ & $ 71.4\pm 3.6$ & $45.7\pm 2.3$ & \nodata & \nodata \\
+20-Mar-94 & 357.36 & VLA-A   & $  91.217\pm    9.123$& $  74.070\pm    3.762$& $  43.370\pm    2.282$& $  29.717\pm    2.276$& $  15.540\pm    1.929$\\
+22-Mar-94 & 359.00 & Camb    & \nodata               & \nodata               & \nodata               & $  28.4\pm    2.84$& \nodata               \\
+07-Apr-94 & 375.70 & Camb    & \nodata               & \nodata               & \nodata               & $  21.3\pm    2.13$& \nodata               \\
+12-Apr-94 & 380.16 & VLA-A   & $  86.830\pm    8.684$& \nodata               & \nodata               & \nodata               & \nodata               \\
+22-Apr-94 & 390.00 & VLA\tablenotemark{c} & $102.7\pm 5.1$ & \nodata & \nodata &\nodata &\nodata \\
+22-Apr-94 & 390.10 & VLA-A   & \nodata               & $  65.820\pm    3.291$& $  42.210\pm    2.111$& \nodata               & \nodata               \\
+25-Apr-94 & 393.18 & VLA-A   & $  87.470\pm    8.772$& $  64.490\pm    3.274$& $  39.820\pm    2.009$& $  17.950\pm    1.447$& $  10.390\pm    1.247$\\
+14-May-94 & 412.57 & Camb    & \nodata               & \nodata               & \nodata               & $  21.8\pm    2.18$& \nodata               \\
+26-May-94 & 424.16 & VLA-A/B & $  96.810\pm    9.707$& $  73.280\pm    3.757$& $  40.290\pm    2.071$& $  26.790\pm    2.061$& $  12.320\pm    1.407$\\
+20-Jun-94 & 449.60 & Camb    & \nodata               & \nodata               & \nodata               & $  23.3\pm    2.33$& \nodata               \\
+22-Jun-94 & 451.00 & VLA\tablenotemark{c} & \nodata & $ 59.3\pm 3.0$ & $39.0\pm 2.0$ &\nodata &  \nodata \\
+23-Jun-94 & 452.98 & VLA-B   & $ 104.520\pm   10.534$& $  53.820\pm    2.919$& $  30.550\pm    1.627$& \nodata               & $   7.196\pm    0.896$\\
+01-Sep-94 & 522.69 & VLA-B   & $ 101.940\pm   10.297$& $  57.430\pm    3.041$& $  30.770\pm    1.674$& $  15.710\pm    1.313$& $   9.080\pm    1.442$\\
+13-Oct-94 & 564.64 & VLA-C   & $ 101.290\pm   10.215$& $  51.060\pm    3.135$& $  29.260\pm    2.183$& $  14.440\pm    1.248$& $   9.960\pm    1.622$\\
+31-Oct-94 & 582.00 & VLA\tablenotemark{c} & \nodata & $53.0\pm 2.6$ & $ 33.0\pm 1.7$ &\nodata & \nodata \\
+07-Nov-94 & 589.47 & VLA-C   & $ 112.280\pm   11.291$& $  42.450\pm    2.188$& $  31.480\pm    1.584$& \nodata               & \nodata               \\
+23-Dec-94 & 635.00 & VLA\tablenotemark{c} & \nodata & $49.0\pm 2.5$ & $31.9\pm 1.6$ & \nodata & \nodata \\
+05-Jan-95 & 648.39 & VLA-C/D & $ 107.010\pm   10.736$& $  45.210\pm    2.764$& $  23.210\pm    1.920$& $  16.220\pm    1.667$& $  15.290\pm    2.638$\\
+12-Feb-95 & 686.00 & VLA\tablenotemark{c} & $120.0\pm 10.0$ & $46.4\pm 2.3$ & $29.2\pm 1.5$ & \nodata & \nodata \\
+06-Apr-95 & 739.14 & VLA-D   & $ 118.840\pm   12.205$& $  44.230\pm    2.242$& $  28.200\pm    1.468$& $   9.670\pm    0.864$& $  14.800\pm    1.593$\\
+11-May-95 & 774.00 & VLA\tablenotemark{c} & \nodata & \nodata & $25.6\pm 1.5$ & \nodata & \nodata \\
+16-Jun-95 & 810.05 & VLA-D/A & $ 101.760 \pm   10.247$ & $  34.960\pm
+1.939$ & $  16.480\pm    0.877$&  $6.490 \pm 0.727$ &  \nodata \\
+18-Aug-95 & 873.00 & VLA\tablenotemark{c} & \nodata & $37.7\pm 1.9$ & $24.5\pm 1.2$ & \nodata & \nodata \\
+06-Oct-95 & 922.69 & VLA-B   & $  99.910\pm    9.992$& $  35.810\pm    1.965$& $  23.300\pm    1.425$& $  14.300\pm    1.152$& $   9.360\pm    1.086$\\
+19-Dec-95 & 996.00 & VLA\tablenotemark{c} & \nodata & $33.9\pm 1.7$ & $22.1\pm 1.1$ & \nodata & \nodata \\
+12-Jan-96 &1020.00 & VLA-B/C & $  84.007\pm    8.415$& $  33.770\pm    1.696$& $21.062\pm 1.061
+$ & $  13.345\pm    1.030$& $   9.393\pm    0.983$\\
+08-Apr-96 & 1107.00 & VLA\tablenotemark{c} & \nodata & $31.4\pm 1.6$ & $20.2\pm 1.1$ &\nodata & $10.3\pm 0.7$ \\
+01-Sep-96 & 1253.00 & VLA\tablenotemark{c} & \nodata & $29.0\pm 1.4$ & $ 19.1\pm 1.0$ & \nodata & \nodata \\
+05-Oct-96 &1287.57 & VLA-D/A & $70.860\pm7.132$ & $  26.950\pm    1.434$& $  16.310\pm    2.013$& $  10.370\pm    1.672$& $   9.160\pm    2.899$\\
+13-Dec-96 & 1356.00 & VLA\tablenotemark{c} & $70.8\pm 3.7$ & $ 28.6\pm 1.4$ & $ 18.7\pm 0.9$ & \nodata & \nodata \\
+23-Jan-97 &1397.21 & VLA-A/B & $  71.910\pm    7.297$& $  26.340\pm    1.573$& $  16.750\pm    0.965$& $  10.700\pm    0.915$& $   7.340\pm    0.974$\\
+07-Jun-97 & 1532.00 & VLA\tablenotemark{c} & \nodata & $26.3\pm 1.3$ & $17.2\pm 0.9$ & \nodata & \nodata \\
+14-Aug-97 &1600.99 & VLA-C/D & $  61.631\pm    6.176$& \nodata               & \nodata               & \nodata               & \nodata               \\
+15-Nov-97 & 1693.00 & VLA\tablenotemark{c} & $60.6\pm 3.3$ & $24.3\pm 1.3$ & $17.2\pm 0.9$ & $14.0\pm 2.6$ & $10.4\pm 1.3$ \\
+03-Jun-98 & 1893.00 & VLA\tablenotemark{c} & \nodata & $22.8\pm 1.3$ & $16.0\pm 1.0$
+ & \nodata & \nodata \\
+09-Jun-98 &1899.85 & VLA-A/B & $52.165\pm 5.356$ & $  20.803\pm    1.136$& $  9.632\pm 0.610$& $   4.735\pm    0.435$& $   3.927\pm    0.762$\\
+20-Nov-98 & 2063.00 & VLA\tablenotemark{c} &$ 48.2 \pm 2.8 $ & $20.5\pm 1.1$ & $ 13.9 \pm 0.7 $ & $ 12.3 \pm 1.0 $ & $ 7.7 \pm 0.9 $\\
+07-Dec-98 & 2080.00 & VLA\tablenotemark{c} &$ 47.9 \pm 2.8 $ & $20.7\pm 1.0$ & $ 14.3 \pm 0.8 $ & $ 12.3 \pm 1.3 $ & $ 5.1 \pm 1.0 $\\
+06-Jun-99 & 2261.00 & VLA\tablenotemark{c} &$ 39.6 \pm 2.1 $ & \nodata & $ 12.8 \pm 0.8 $ & $ 8.4 \pm 0.8 $ & $ 5.5 \pm 1.0 $\\
+13-Jun-99 &2268.96 & VLA-D/A & $  37.770\pm    3.799$& $  12.155\pm    0.927$& \nodata               & \nodata               & \nodata  \\
+16-Jun-99 & 2271.00 & VLA\tablenotemark{c} &\nodata & $ 20.9 \pm 1.2 $ & \nodata & \nodata & \nodata\\
+24-Nov-99 & 2432.00 & VLA\tablenotemark{c} &$ 38.8 \pm 2.3 $ & $ 17.5 \pm 0.9 $ & $ 12.5 \pm 0.7 $ & \nodata & \nodata\\
+25-Feb-00 & 2525.00 & VLA\tablenotemark{c} &\nodata & \nodata & $ 12.0 \pm 0.8 $ & $ 9.0 \pm 4.0 $ & \nodata\\
+08-Nov-00 & 2782.00 & GMRT\tablenotemark{d} &$ 35.1 \pm 3.5 $ & \nodata & \nodata & \nodata & \nodata\\
+13-Nov-00 & 2787.00 & VLA\tablenotemark{c} &$ 33.8 \pm 1.7 $ & \nodata & $ 10.9 \pm 0.6 $ & $ 8.3 \pm 0.8 $ & \nodata\\
+16-Dec-00 &2820.00 & GMRT\tablenotemark{d}    & $  36.1\pm    3.6$& \nodata & \nodata               & \nodata               & \nodata               \\
+19-Dec-00 & 2823.00 & VLA-A\tablenotemark{e} &$ 30.5 \pm 0.4\tablenotemark{f}$ &  \nodata  & \nodata & \nodata & \nodata\\
+19-Dec-00 & 2823.00 & VLA-A\tablenotemark{e} &$33.7\pm 0.4\tablenotemark{f}$ &\nodata &\nodata & \nodata &\nodata \\
+21-Dec-00 & 2825.00 & VLA-A\tablenotemark{e} & \nodata & $14.7 \pm 0.4$ & $10.4 \pm 0.2$ & $6.7 \pm 0.1$ &\nodata \\
+23-Jan-01 & 2858.00 & VLA\tablenotemark{c} &\nodata & \nodata & $ 9.7 \pm 0.7 $ & \nodata & \nodata\\
+02-Jun-01 &2988.00 & GMRT\tablenotemark{d}    & $  32.7\pm    3.3$& \nodata               & \nodata               & \nodata               & \nodata               \\
+10-Jun-01 & 2996.00 & VLA\tablenotemark{c} &$ 28.8 \pm 1.6 $ & $ 14.4 \pm 0.7 $ & $ 9.4 \pm 0.5 $ & \nodata & \nodata\\
+15-Oct-01 & 3123.00 & GMRT\tablenotemark{d} &$ 33.9 \pm 3.3 $ & \nodata & \nodata & \nodata & \nodata\\
+25-Nov-01 & 3164.00  & VLA-A\tablenotemark{c} &$ 24.4 \pm 1.5 $ & \nodata & $ 8.4 \pm 0.5 $ & \nodata & \nodata\\
+13-Jan-02 &3213.38 & VLA-D/A & $  31.440\pm    4.278$& $  15.000\pm    0.774$& $   7.880\pm    0.459$& $   4.490\pm    0.479$& $   2.495\pm    0.282$\\
+07-Apr-02 & 3297.00 & GMRT\tablenotemark{d} &$ 24.6 \pm 3.7 $ & \nodata & \nodata & \nodata & \nodata\\
+24-Jun-02 & 3375.00 & GMRT\tablenotemark{d} &$ 23.4 \pm 2.5 $ & \nodata & \nodata & \nodata & \nodata\\
+21-Sep-02 & 3464.00 & GMRT\tablenotemark{d} &$ 24.2 \pm 2.4 $ & \nodata & \nodata & \nodata & \nodata\\
+23-May-03 & 3708.93 & VLA-A &$ 17.377 \pm 1.968 $ & $ 6.962 \pm 0.429 $ & $ 3.943 \pm 0.207 $ & \nodata & $ 1.928 \pm 0.237 $\\
+13-Jun-03 & 3729.00 & GMRT\tablenotemark{d} &$ 20.2 \pm 2.1 $ & \nodata & \nodata & \nodata & \nodata\\
+26-Jun-03 & 3742.91 & VLA-A &\nodata & $ 8.349 \pm 0.424 $ & \nodata & $ \leq 0.975 $ & $ \leq 0.816 $\\
+29-Jan-04 & 3959.47 & VLA-B/C &$ 14.359 \pm 1.469 $ & $ 6.973 \pm 0.376 $ & $ 4.513 \pm 0.241 $ & $ 2.492 \pm 0.215 $ & $ 1.792 \pm 0.191 $\\
+10-Sep-04 & 4184.57 & VLA-A &$ 11.309 \pm 1.142 $ & $ 5.526 \pm 0.304 $ & $ 3.220 \pm 0.257 $ & $ 2.470 \pm 0.323 $ & $ 0.967 \pm 0.217 $\\
+13-Jun-05 & 4460.90 & VLA-B/C &$ 8.893 \pm 0.894 $ & $ 3.906 \pm 0.276 $ & $ 2.562 \pm 0.136 $ & $ 0.990 \pm 0.152 $ & $ 0.897 \pm 0.139 $\\
+24-Jan-06 & 4685.17 & VLA-D &\nodata & $ 3.880 \pm 0.480 $ & $ 1.307 \pm 0.371 $ & $ \leq 1.440 $ & \nodata\\
+28-Jun-06 & 4840.05 & VLA-B &$ 5.303 \pm 0.469 $ & \nodata & \nodata & \nodata & \nodata\\
+25-Sep-06 & 4929.64 & VLA-B/C &\nodata & $ \leq 1.800 $ & $ \leq
+0.957 $ & \nodata & \nodata \\
+\enddata  
+\tablenotetext{a}{All upper limits are three times the map rms ($3\sigma$).}
+\tablenotetext{b}{The ``Camb'' data are all from the Ryle Telescope \citep[and private communication]{Pooley93a,Pooley93b}. For a discussion of why 10\% errors were assumed for the Cambridge data, see $\S$\ref{observations}.}
+\tablenotetext{c}{\citet{Bartel02}}
+\tablenotetext{d}{\citet{Chandra04}}
+\tablenotetext{e}{\citet{PerezTorres02}}
+\tablenotetext{f}{\citet{PerezTorres02} give two measurements of SN1993J in the 20~cm band, a value of $30.5\pm 0.4$ at 1.67~GHz and $33.7\pm 0.4$ at 1.34~GHz. We include both measurements here.}
+\end{deluxetable}
+
+\clearpage
+
+%Table 2
+\begin{deluxetable}{cccccc}
+\tabletypesize{\scriptsize}
+\tablecaption{Other Flux Density Measurements for SN~1993J\label{tab2}}
+\tablewidth{0pt}
+\tablehead{
+\colhead{Obs.} & \colhead{Days from} 
+& \colhead{Telescope} & \colhead{Flux Density $\pm$ Error} & \colhead{Frequency} & \colhead{Ref.\tablenotemark{a}}\\
+\colhead{Date} & \colhead{Reference Date} & \colhead{} &
+\colhead{} & \colhead{} \\
+\colhead{} & \colhead{} & \colhead{} & \colhead{(mJy)} & \colhead{(GHz)} }
+\startdata
+28-Mar-93 &= 0.00  & & & \\
+09-Apr-93 &  12.00 & IRAM   &$ 11.0 \pm  3.0 $ & 87 &1\\
+11-Apr-93 &  14.00 & IRAM   &$ 11.0 \pm  3.0 $ & 87 &1\\
+11-Apr-93 &  14.39 & OVRO   &$ 18 \pm  4 $ & 99.4 &2\\
+12-Apr-93 &  15.00 & IRAM   &$ 13.5 \pm  3.4 $ & 87 &1\\
+14-Apr-93 &  17.39 & OVRO   &$ 17 \pm  4 $ & 99.4 &2\\
+15-Apr-93 &  18.00 & IRAM   &$ 12.5 \pm  3.2 $ & 87 &1\\
+16-Apr-93 &  19.00 & IRAM   &$ 10.0 \pm  2.8 $ &110 &1\\
+21-Apr-93 &  24.00 & IRAM   &$ 14.3 \pm  3.5 $ & 86.2 &3\\
+21-Apr-93 &  24.38 & OVRO   &$ 20 \pm  4 $ & 99.4 &2\\
+30-Apr-93 &  33.28 & OVRO   &$ 17.0 \pm  3.5 $ & 99.4 &3\\
+30-Apr-93 &  33.65 & Bonn   &$ 59.1 \pm 16.8 $ & 32 &4\\
+10-May-93 &  43.00 & Bonn   &$ 65.8 \pm 17.8 $ & 32 &4\\
+10-May-93 &  43.39 & OVRO   &$ 23.0 \pm  4.8 $ & 99.4 &3\\
+11-May-93 &  44.00 & Bonn   &$ 64.8 \pm 17.7 $ & 32 &4\\
+17-May-93 &  50.00 & Bonn   &$ 62.0 \pm 19.5 $ & 32 &4\\
+24-May-93 &  57.00 & Bonn   &$ 63.9 \pm 17.5 $ & 32 &4\\
+25-May-93 &  58.00 & Bonn   &$ 67.7 \pm 24.2 $ & 32 &4\\
+30-May-93 &  63.32 & OVRO   &$ 19.0 \pm  3.8 $ & 99.4 &3\\
+02-Jun-93 &  66.33 & OVRO   &$ 22.0 \pm  4.5 $ & 99.4 &3\\
+18-Jun-93 &  82.23 & OVRO   &$ 14.0 \pm  2.8 $ & 99.4 &3\\
+03-Jul-93 &  97.17 & OVRO   &$ 16.0 \pm  3.2 $ & 99.4 &3\\
+12-Sep-93 & 168.80 & OVRO   &$ 13 \pm  3 $ & 99.4 &5\\
+09-Oct-93 & 195.61 & OVRO   &$  8 \pm  2 $ & 99.4 &5\\
+14-Nov-93 & 231.67 & OVRO   &$  8.0 \pm  1.7 $ & 99.4 &3\\
+28-Jul-94 & 487.93 & VLA-B  &$ <31.662$        & 0.330\tablenotemark{b} & 6\\
+16-Jun-95 & 810.10 & VLA-D/A&$ <27.386$        & 0.330 &6\\
+06-Oct-95 & 922.74 &VLA-B   &$ 15.500 \pm  3.161 $ & 0.330\tablenotemark{b} & 6\\
+12-Dec-95 & 989.49 & VLA-B  &$<33.513$         & 0.330\tablenotemark{b} & 6\\
+12-Jan-96 &1020.41 &VLA-B/C &$<65.100 $ & 0.330\tablenotemark{b}  &6\\
+23-Jan-97 &1397.17 &VLA-A/B &$ 83.700 \pm 21.195 $ & 0.330 &6\\
+09-Jun-98 &1899.89 &VLA-A/B &$ 63.690 \pm 24.758 $ & 0.330 &6\\
+24-Nov-99 &2432.00     & VLA & $108 \pm 20$        & 0.330 & 7\\
+19-Dec-00 &2823.00     & VLA-A & $71.1 \pm 3.4$    & 0.324 & 8\\
+24-Mar-01 &2918.00 & GMRT   &$ 56.1 \pm  5.5 $ & 0.610 &9\\
+05-Jul-01 &3021.00 & GMRT   &$69.2 \pm 15.8 $ & 0.325 & 9\\
+24-Aug-01 &3071.00 & GMRT   &$55.8 \pm 5.7 $  & 0.610 & 9\\
+30-Dec-01 &3199.00 & GMRT   &$47.8 \pm 5.5 $  & 0.610 & 9\\
+31-Dec-01 &3200.00 & GMRT   &$57.8 \pm 7.6 $  & 0.239 & 9\\
+19-Jan-02 &3219.49 & VLA-A  &$ 61.501 \pm 10.136 $ & 0.330 &6\\
+07-Mar-02 &3266.00 & GMRT   &$56.2 \pm 7.4 $  & 0.325 & 9\\
+08-Mar-02 &3267.00 & GMRT   &$60.9 \pm 10.8$  & 0.243 & 9\\
+08-Mar-02 &3267.00 & GMRT   &$44.4 \pm 4.5 $  & 0.610 & 9\\
+19-May-02 &3339.00 & GMRT   &$44.6 \pm 4.5 $  & 0.610 & 9\\
+16-Aug-02 &3428.00 & GMRT   &$61.8 \pm 8.8 $  & 0.325 & 9\\
+16-Sep-02 &3459.00 & GMRT   &$56.7 \pm 8.7 $  & 0.243 & 9\\
+16-Sep-02 &3459.00 & GMRT   &$37.5 \pm 3.8 $  & 0.610 & 9\\
+23-May-03 &3708.89 & VLA-A  & $62.673 \pm 13.793 $& 0.330 & 6\\
+23-May-03 &3708.99 & VLA-A  & $<0.667$ & 43.315 &6\\
+17-Jun-03 &3733.00 & GMRT   &$58.2 \pm 11.8 $ &0.243 & 9\\
+17-Jun-03 &3733.00 & GMRT   &$33.4 \pm 4.3  $ &0.610 & 9\\
+10-Sep-04 &4184.55 & VLA-A  &$ 35.500 \pm 8.480 $ & 0.330 &6\\
+
+
+\enddata
+\tablenotetext{a}{References: 1. \cite{Radford93};
+  2. \cite{Phillips93b}; 3. S. Radford, private communication;
+  4. W. Reich, private communication; 5. \cite{Phillips93c};
+  6. Current paper; 7. \cite{Bartel02}; 8. \cite{Perez-Torres01}; 9. \cite{Chandra04}}
+\tablenotetext{b}{Calibrator is J1331+305 (3C286)}
+\end{deluxetable}
+	  
+\clearpage
+
+%Table 3
+\begin{deluxetable}{cccccccc}
+\tabletypesize{\scriptsize}
+\tablewidth{5.5in}
+%\table columns(8}
+\tablecaption{Flux Density Measurements for the VLA Secondary Calibrator J1048+717\tablenotemark{a}\label{tab3}
+}
+\tablehead{
+\colhead{Obs.} & \colhead{Days from} & \colhead{Tel/VLA} & \colhead{S(20cm)} & \colhead{S(6cm)} & \colhead{S(3.6cm)} & \colhead{S(2cm)} & \colhead{S(1.2cm)} \\
+\colhead{Date} &  \colhead{Reference Date} & \colhead{Config.} & \colhead{(mJy)} & \colhead {(mJy)}  & \colhead{(mJy)} & \colhead{(mJy)} & \colhead{(mJy)}
+} 
+\startdata
+31-Mar-93 &   3.10 & VLA-B   &  \nodata  & \nodata               & $   0.566$            & \nodata               & \nodata               \\
+31-Mar-93 &   3.10 & VLA-B   & $   0.754$  & \nodata               & \nodata               & \nodata               & \nodata               \\
+02-Apr-93 &   5.29 & VLA-B   & \nodata               & \nodata               & \nodata               & $   0.577$            & \nodata               \\
+02-Apr-93 &   5.30 & VLA-B   & \nodata               & \nodata               & $   0.583$            & \nodata               & \nodata               \\
+02-Apr-93 &   5.34 & VLA-B   & \nodata               & \nodata               & \nodata               & \nodata               & $   0.596$            \\
+08-Apr-93 &  11.37 & VLA-B   & \nodata               & \nodata               & $   0.582$            & $   0.583$            & $   0.611$            \\
+09-Apr-93 &  12.33 & VLA-B   & \nodata               & \nodata               & \nodata               & $   0.591$\tablenotemark{b}            & $   0.616$\tablenotemark{b}            \\
+10-Apr-93 &  13.04 & VLA-B   & \nodata               & \nodata               & $   0.585$\tablenotemark{b}            & \nodata               & $   0.619$\tablenotemark{b}            \\
+10-Apr-93 &  13.46 & VLA-B   & \nodata               & \nodata               & \nodata               & $   0.602$\tablenotemark{b}           & $   0.621$\tablenotemark{b}            \\
+11-Apr-93 &  14.25 & VLA-B   & $   0.715$            & \nodata               & $   0.588$            & $   0.609$            & $   0.624$            \\
+13-Apr-93 &  16.02 & VLA-B   & \nodata               & \nodata               & $   0.581$\tablenotemark{b}            & \nodata               & $   0.613$\tablenotemark{b}            \\
+13-Apr-93 &  16.53 & VLA-B   & \nodata               & $   0.601$\tablenotemark{b}            & $   0.581$\tablenotemark{b}            & $   0.593$\tablenotemark{b}            & $   0.613$\tablenotemark{b}            \\
+14-Apr-93 &  17.07 & VLA-B   & \nodata               & $   0.599$            & $   0.574$            & $   0.577$            & $   0.602$            \\
+16-Apr-93 &  19.02 & VLA-B   & \nodata               & $   0.598$\tablenotemark{b}            & \nodata               & \nodata               & $   0.596$\tablenotemark{b}            \\
+19-Apr-93 &  22.25 & VLA-B   & \nodata               & $   0.597$            & $   0.563$            & $   0.577$            & $   0.591$            \\
+19-Apr-93 &  22.97 & VLA-B   & \nodata               & $   0.593$\tablenotemark{b}            & $   0.565$\tablenotemark{b}            & $   0.568$\tablenotemark{b}            & \nodata               \\
+21-Apr-93 &  24.51 & VLA-B   & \nodata               & $   0.593$\tablenotemark{b}            & $   0.565$\tablenotemark{b}            & $   0.568$\tablenotemark{b}            & $   0.563$\tablenotemark{b}            \\
+22-Apr-93 &  25.48 & VLA-B   & \nodata               & $   0.589$            & $   0.567$            & $   0.559$            & $   0.535$            \\
+23-Apr-93 &  26.88 & VLA-B   & $   0.710$\tablenotemark{b}            & $   0.589$\tablenotemark{b}            & $   0.566$\tablenotemark{b}            & $   0.569$\tablenotemark{b}            & $   0.570$\tablenotemark{b}            \\
+24-Apr-93 &  27.87 & VLA-B   & \nodata               & $   0.589$\tablenotemark{b}            & $   0.566$\tablenotemark{b}            & \nodata               & $   0.570$\tablenotemark{b}            \\
+25-Apr-93 &  28.99 & VLA-B   & \nodata               & $   0.589$\tablenotemark{b}            & $   0.566$\tablenotemark{b}            & \nodata               & $   0.570$\tablenotemark{b}            \\
+26-Apr-93 &  29.85 & VLA-B   & \nodata               & $   0.589$\tablenotemark{b}            & $   0.566$\tablenotemark{b}            & $   0.569$\tablenotemark{b}            & \nodata               \\
+27-Apr-93 &  30.84 & VLA-B   & \nodata               & $   0.589$\tablenotemark{b}            & $   0.566$\tablenotemark{b}            & \nodata               & $   0.570$\tablenotemark{b}            \\
+28-Apr-93 &  31.52 & VLA-B   & \nodata               & $   0.589$\tablenotemark{b}            & $   0.566$\tablenotemark{b}            & $   0.569$\tablenotemark{b}            & $   0.570$\tablenotemark{b}            \\
+29-Apr-93 &  32.50 & VLA-B   & \nodata               & $   0.589$\tablenotemark{b}            & $   0.566$\tablenotemark{b}            & \nodata               & $   0.570$\tablenotemark{b}            \\
+01-May-93 &  34.37 & VLA-B   & \nodata               & $   0.589$            & $   0.564$            & \nodata               & $   0.604$            \\
+01-May-93 &  34.93 & VLA-B   & $   0.692$            & $   0.589$\tablenotemark{b}            & $   0.565$\tablenotemark{b}            & $   0.573$\tablenotemark{b}            & $   0.596$\tablenotemark{b}            \\
+02-May-93 &  35.71 & VLA-B   & \nodata               & $   0.590$\tablenotemark{b}            & $   0.565$\tablenotemark{b}            & $   0.573$\tablenotemark{b}            & \nodata               \\
+04-May-93 &  37.27 & VLA-B   & \nodata            & $   0.591$            & $   0.566$            & $   0.567$            & $   0.587$            \\
+07-May-93 &  40.11 & VLA-B   & \nodata               & $   0.595$            & $   0.574$            & $   0.582$            & $   0.535$            \\
+11-May-93 &  44.74 & VLA-B/C & \nodata               & $   0.595$            & $   0.573$            & $   0.582$            & $   0.535$            \\
+14-May-93 &  47.20 & VLA-B/C & \nodata               & $   0.586$            & $   0.577$            & $   0.599$            & $   0.566$            \\
+16-May-93 &  49.86 & VLA-B/C & $   0.754$\tablenotemark{b}            & $   0.595$            & \nodata               & \nodata               & \nodata               \\
+17-May-93 &  50.13 & VLA-B/C & \nodata               & \nodata               & $   0.579$            & $   0.604$            & $   0.618$            \\
+20-May-93 &  53.17 & VLA-B/C & $   0.754$\tablenotemark{b}            & $   0.595$\tablenotemark{b}            & $   0.585$\tablenotemark{b}            & $   0.613$\tablenotemark{b}            & $   0.688$\tablenotemark{b}            \\
+25-May-93 &  58.99 & VLA-B/C & $   0.637$            & $   0.604$            & $   0.596$            & $   0.627$            & $   0.734$            \\
+30-May-93 &  63.04 & VLA-B/C & \nodata               & $   0.595$            & $   0.576$            & $   0.581$            & $   0.596$            \\
+04-Jun-93 &  68.06 & VLA-B/C & $   0.711$            & $   0.594$            & \nodata               & $   0.566$            & $   0.604$            \\
+11-Jun-93 &  75.06 & VLA-C   & $   0.754$            & $   0.610$            & $   0.593$            & $   0.615$            & $   0.622$            \\
+18-Jun-93 &  82.92 & VLA-C   & \nodata            & $   0.597$            & \nodata               & $   0.596$\tablenotemark{b}            & \nodata               \\
+25-Jun-93 &  89.75 & VLA-C   & $   0.747$\tablenotemark{b}           & $   0.603$\tablenotemark{b}            & $   0.582$\tablenotemark{b}            & $   0.596$\tablenotemark{b}            & $   0.580$\tablenotemark{b}            \\
+01-Jul-93 &  95.22 & VLA-C   & $   0.740$            & $   0.597$            & $   0.571$            & $   0.578$            & $   0.539$            \\
+08-Jul-93 & 102.76 & VLA-C   & $   0.737$\tablenotemark{b}
+& $   0.629$\tablenotemark{b}            & $   0.615$\tablenotemark{b}
+& \nodata & \nodata               \\
+13-Jul-93 & 107.77 & VLA-C   & $   0.734$            & $   0.662$            & $   0.659$            & $   0.600$            & \nodata               \\
+19-Jul-93 & 113.02 & VLA-C   & $   0.739$            & $   0.614$            & $   0.592$            & $   0.611$            & $   0.603$            \\
+30-Jul-93 & 124.88 & VLA-C   & $   0.765$            & $   0.601$            & $   0.589$            & $   0.605$            & $   0.623$            \\
+06-Aug-93 & 131.95 & VLA-C   & $   0.744$            & $   0.568$            & $   0.677$            & $   0.506$            & \nodata               \\
+10-Aug-93 & 135.94 & VLA-C/D & $   0.818$\tablenotemark{b}            & $   0.607$\tablenotemark{b}            & $   0.568$\tablenotemark{b}            & $   0.608$\tablenotemark{b}            & $   0.618$\tablenotemark{b}            \\
+12-Aug-93 & 137.93 & VLA-C/D & $   0.828$\tablenotemark{b}            & $   0.608$\tablenotemark{b}            & \nodata               & $   0.609$\tablenotemark{b}            & $   0.616$\tablenotemark{b}            \\
+17-Aug-93 & 142.79 & VLA-C   & $   0.758$            & $   0.636$            & $   0.628$            & \nodata               & $   0.664$            \\
+23-Aug-93 & 148.54 & VLA-C   & $   0.760$            & $   0.618$            & $   0.602$            & $   0.620$            & $   0.568$            \\
+26-Aug-93 & 151.93 & VLA-C   & $   0.811$ & $   0.650$               & $   0.684$            & \nodata            & $   0.914$            \\
+31-Aug-93 & 156.78 & VLA-C/D & \nodata               & $   0.604$            & $   0.671$\tablenotemark{b}            & $   0.634$\tablenotemark{b}            & $   0.651$\tablenotemark{b}            \\
+11-Sep-93 & 167.91 & VLA-C/D & $   2.238$            & $   0.616$            & \nodata            & \nodata            & \nodata               \\
+18-Sep-93 & 174.72 & VLA-C/D & \nodata               & \nodata               & $   0.863$            & $   0.889$            & $   0.996$            \\
+19-Sep-93 & 175.75 & VLA-C/D & $   2.200$            & $   0.626$            & $   0.620$            & $   0.654$            & $   0.660$            \\
+26-Sep-93 & 182.75 & VLA-C/D & $   2.231$            & $   0.624$            & $   0.618$            & $   0.640$            & $   0.638$            \\
+04-Oct-93 & 190.66 & VLA-C/D & $   2.200$            & $   0.636$            & $   0.625$            & $   0.624$            & $   0.591$            \\
+17-Oct-93 & 203.80 & VLA-C/D & $   2.236$            & $   0.631$            & $   0.616$            & $   0.588$            & $   0.489$            \\
+25-Oct-93 & 211.61 & VLA-C/D & $   2.260$            & $   0.637$            & \nodata  & $   0.620$            & $   0.582$            \\
+01-Nov-93 & 218.58 & VLA-D   & $   2.205$            & $   0.649$            & $   0.637$            & $   0.620$            & $   0.590$            \\
+19-Nov-93 & 236.58 & VLA-D   & $   2.230$            & $   0.633$            & $   0.617$            & $   0.601$            & $   0.563$            \\
+28-Nov-93 & 245.56 & VLA-D   & $   2.237$            & $   0.636$            & $   0.623$            & $   0.604$            & $   0.581$            \\
+05-Dec-93 & 252.58 & VLA-D   & $   2.230$            & $   0.640$            & $   0.624$            & $   0.595$            & $   0.561$            \\
+19-Dec-93 & 266.58 & VLA-D   & $   2.226$            & $   0.650$            & $   0.641$            & $   0.625$            & $   0.600$            \\
+27-Dec-93 & 274.56 & VLA-D   & $   2.234$            & $   0.646$            & $   0.646$            & $   0.649$            & $   0.631$            \\
+07-Jan-94 & 285.37 & VLA-D   & $   2.226$            & $   0.658$            & $   0.653$            & $   0.628$            & $   0.590$            \\
+13-Jan-94 & 291.51 & VLA-D   & $   2.230$            & $   0.671$            & $   0.659$            & $   0.644$            & $   0.600$            \\
+27-Jan-94 & 305.30 & VLA-D   & $   2.226$            & $   0.647$            & $   0.658$            & $   0.664$            & $   0.620$            \\
+08-Feb-94 & 317.22 & VLA-D   & $   2.236$            & $   0.652$            & $   0.673$            & $   0.705$            & $   0.754$            \\
+18-Feb-94 & 327.30 & VLA-A   & $   0.698$            & $   0.671$            & $   0.670$            & $   0.744$            & $   0.767$            \\
+20-Mar-94 & 357.36 & VLA-A   & $   0.688$            & $   0.727$            & $   0.842$            & $   1.160$            & $   1.159$            \\
+25-Apr-94 & 393.18 & VLA-A   & $   0.698$            & $   0.816$            & $   0.836$            & $   0.742$            & $   0.668$            \\
+26-May-94 & 424.16 & VLA-A/B & $   0.713$            & $   0.937$            & $   0.965$            & $   0.905$            & $   0.845$            \\
+23-Jun-94 & 452.98 & VLA-B   & $   0.733$            & $   0.968$            & $   0.979$            & \nodata               & $   0.874$            \\
+07-Nov-94 & 589.47 & VLA-C   & $   0.786$            & $   1.102$            & $   1.091$            & \nodata               & \nodata               \\
+05-Jan-95 & 648.39 & VLA-C/D & $   0.788$            & $   1.129$            & $   1.098$            & $   0.973$            & $   0.934$            \\
+06-Apr-95 & 739.14 & VLA-D   & $   0.790$            & $   1.156$            & $   1.103$            & $   1.029$            & $   0.941$            \\
+16-Jun-95 & 810.05 & VLA-D/A & $   0.837$            & $   1.113$            & $   0.989$            & $   0.763$            & \nodata            \\
+06-Oct-95 & 922.69 & VLA-B   & $   0.786$            & $   1.029$            & $   0.986$            & $   0.939$            & $   1.110$            \\
+12-Jan-96 &1020.00 & VLA-B/C & $   0.821$            & $   1.066$            & $1.069$& $   1.094$            & $   1.100$            \\
+05-Oct-96 &1287.57 & VLA-D/A & $0.978$ & $   1.578$            & $   1.489$            & $   1.157$            & $   1.145$            \\
+23-Jan-97 &1397.21 & VLA-A/B & $   1.096$            & $   1.719$            & $   1.711$            & $   1.691$            & $   1.570$            \\
+14-Aug-97 &1600.99 & VLA-C/D & $   1.256$            & \nodata               & \nodata               & \nodata               & \nodata               \\
+09-Jun-98 &1899.85 & VLA-A/B & $1.335$ & $   1.647$            & $   1.411$            & $   1.209$            & $   1.125$            \\
+13-Jun-99 &2268.96 & VLA-D/A & $   1.299$            & $   1.117$            & \nodata               & \nodata               & \nodata               \\
+13-Jan-02 &3213.38 & VLA-D/A & $   1.610$            & $   1.774$            & $   1.181$            & $   1.307$            & $   1.295$            \\
+23-May-03 &3708.93	& VLA-A	& $ 1.397	$ & $ 1.347	$ & $ 1.249	$ & \nodata	& $ 1.383	$  \\
+26-Jun-03 &3742.91	& VLA-A	& \nodata	& $ 1.358	$\tablenotemark{b} & \nodata & $ 1.406	$ & $ 1.55	$  \\
+29-Jan-04 &3959.47	& VLA-B/C	& $ 1.464	$ & $ 1.353	$ & $ 1.247	$ & $ 1.181	$ & $ 1.102	$  \\
+10-Sep-04 &4184.57	& VLA-A	& $ 1.312$      & $ 1.323	$ & $ 1.445	$ & $ 1.734	$ & $ 1.830	$  \\
+13-Jun-05 &4460.90	& VLA-B/C	& $ 1.277	$ & $ 1.825	$ & $ 2.008	$ & $ 2.117	$ & $ 2.102	$  \\
+24-Jan-06 &4685.17	& VLA-D	& \nodata	& $ 2.178	$ & $ 2.418	$ & $ 2.768	$ & \nodata	 \\
+28-Jun-06 &4840.05	& VLA-B	& $ 1.556	$ & \nodata	& \nodata	& \nodata	& \nodata	 \\
+25-Sep-06 &4929.64	& VLA-B/C	& \nodata	& $ 3.058	$ & $ 1.182	$ & \nodata	& \nodata	 \\
+
+\enddata
+\tablenotetext{a}{For the measurements from 11 September 1993 through 08 February 1994, the secondary calibrator at 20 cm was J0949+662.} 
+\tablenotetext{b}{A primary calibrator was not measured, so the flux density for the secondary calibrator was determined from earlier observations.} 
+\end{deluxetable}
+
+\clearpage
+
+%Table 4
+\begin{deluxetable}{cccc}
+\tabletypesize{\footnotesize}
+\tablewidth{4.6in}
+\tablecaption{Model Fitting Results for SN~1993J\label{tab4}}
+\tablehead{\colhead{Parameter\tablenotemark{a}} & \multicolumn{3}{c}{Early Data\tablenotemark{b}}\\
+\cline{2-4} 
+\colhead{ }& \colhead{SSA only} &\colhead{FFA only}&\colhead{SSA + FFA}\\
+\colhead{ }& \colhead{Fit} &\colhead{Fit}&\colhead{``Best'' Fit}\\
+} 
+\startdata
+$K_1$               & $3.3 \times 10^3$ & $4.9 \times 10^3$ & $4.8 \times 10^3$ \\  
+$\alpha$            & -0.77 & -0.82 & -0.81 \\ 
+$\beta$             & -0.68 & -0.73 & -0.73 \\ 
+$K_2$               & 0\tablenotemark{c} & $1.7 \times 10^2$ & $1.6 \times 10^2$ \\
+$\delta$            & \nodata & -1.42 & -1.88 \\
+$K_3$               & 0\tablenotemark{c} & $4.3 \times 10^5$ & $4.6 \times 10^5$ \\
+${\delta}^{\prime}$ & \nodata & -2.84 & -2.83 \\
+$K_4$               & 0\tablenotemark{c} & 0\tablenotemark{c} & 0\tablenotemark{c} \\
+$K_5$               & $9.2 \times 10^6$ & 0\tablenotemark{c} & $2.62 \times 10^3$ \\
+${\delta}^{\prime\prime}$ & -3.41 & \nodata & -2.05 \\
+%$K_6$               & 0\tablenotemark{c} & 0\tablenotemark{c} & 0\tablenotemark{c} \\
+%${\delta}^{\prime\prime\prime}$ & \nodata & \nodata & \nodata \\
+$\chi^2$           & 12.8 & 8.8 & 8.1 \\
+Shock breakout\tablenotemark{d}      & 28.0 March 1993 & 28.0 March 1993 & 28.0 March 1993 \\
+Distance\tablenotemark{e} &  & & $3.63 \pm 0.34$ Mpc\\
+$\dot M$ ($M_\odot$ yr$^{-1}$)\tablenotemark{f} & & & $(0.5-5.9) \times 10^{-6}$\\
+${\rm t_{max}({6 cm~peak})}$ &  & & 133 days\\
+${\rm S_{max}({6 cm~peak})}$ &  & & 96.9 mJy\\
+${\rm L_{max}({6 cm~peak})}$ &  & & $1.5 \times 10^{27}$ erg s$^{-1}$ Hz$^{-1}$\\
+\enddata 
+\tablenotetext{a}{See the text for an explanation of the model fitting parameters.}
+\tablenotetext{b}{Using data from the first radio detection to day 3100.}
+\tablenotetext{c}{Defined fixed for the fit.}
+\tablenotetext{d}{From \citet{Wheeler93}}
+\tablenotetext{e}{From \citet{Freedman94}}
+\tablenotetext{f}{Assuming $w_{\rm wind}= 10~{\rm km}~{\rm s}^{-1}$, ${\rm t_i} = 45~{\rm days}$, ${\rm v_{i}} = 15,000~\rm{km}~\rm{s}^{-1}$, 
+$\rm{T} = 20,000~\rm{K}$, and ${\rm m = 0.845}$ (see Equation \ref{eq14}).}
+\end{deluxetable}
+
+\clearpage
+
+\begin{figure}
+\figurenum{1}
+\epsscale{0.8}
+\plotone{f1.eps}
+\figcaption[fig1]{The radio light curves for SN~1993J are plotted from left to right and top to bottom at 0.3, 1.2, 2, 3.6, 6, 20, 49, and 90 cm.  The solid lines represent the best fit ``pure'' synchrotron self-absorption (SSA) model as described in the text with the parameters listed in Table \ref{tab4}, Column 2 and an exponential flux density decline after day 3100 with an e-folding time of 1100 days. The extrapolation of the best-fit model curves without the exponential roll-off is shown as the dashed lines. Upper limits ($3\sigma$) are shown as open inverted triangles ($\triangledown$).
+\label{fig1}}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\figurenum{2}
+\epsscale{0.8}
+\plotone{f2.eps}
+\figcaption[fig2]{The radio light curves for SN~1993J are plotted from left to right and top to bottom at 0.3, 1.2, 2, 3.6, 6, 20, 49, and 90 cm.  The solid lines represent the best fit ``pure'' thermal, free-free absorption (FFA) model as described in the text with the parameters listed in Table \ref{tab4}, Column 3 and an exponential flux density decline after day 3100 with an e-folding time of 1100 days. The extrapolation of the best-fit model curves without the exponential roll-off is shown as the dashed lines. Upper limits ($3\sigma$) are shown as open inverted triangles ($\triangledown$).
+\label{fig2}}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\figurenum{3}
+\epsscale{0.8}
+\plotone{f3.eps}
+\figcaption[fig3]{Flux density measurements for the VLA secondary
+calibrator J1048+717 at wavelengths of 1.2, 2, 3.6, 6, and 20 cm. Calibration measurements at other observing bands were too sparse to show any trends.
+\label{fig3}}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\figurenum{4}
+\epsscale{1.0}
+\plotone{f4.eps}
+\figcaption[fig4]{The spectral index ($\alpha$; S $\propto \nu^{+\alpha}$) evolution for SN~1993J between 1.2 and 2 cm (top left), between 2 and 3.6 cm (top right), between 3.6 and 6 cm (bottom left), and between 6 and 20 cm (bottom right).  As in Figure \ref{fig1} the lines represent the best fit pure synchrotron self-absorption (SSA) model as described in the text with the parameters listed in Table \ref{tab4}, Column 2. Note that the observed spectral index values at early times are much in excess of the asymptotic SSA value of $\alpha = +2.5$.
+\label{fig4}}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\figurenum{5}
+\epsscale{1.0}
+\plotone{f5.eps}
+\figcaption[fig5]{The spectral index ($\alpha$; S $\propto \nu^{+\alpha}$) evolution for SN~1993J between 1.2 and 2 cm (top left), between 2 and 3.6 cm (top right), between 3.6 and 6 cm (bottom left), and between 6 and 20 cm (bottom right).  As in Figure \ref{fig2} the lines represent the best fit pure thermal, free-free absorption (FFA) model as described in the text with the parameters listed in Table \ref{tab4}, Column 3. 
+\label{fig5}}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\figurenum{6}
+\epsscale{0.9}
+\plotone{f6.eps}
+\figcaption[fig6]{The brightness temperature (T$_B$) evolution for
+SN~1993J for, from left to right, 0.3 cm (cross), 1.2 cm (filled square), 2 cm (open square), 3.6 cm (filled circle), 6 cm (open triangle), 20 cm (filled triangle), 49 cm (star), and 90 cm (open diamond) for the case of a pure synchrotron self-absorption (SSA) model as described in the text with the parameters listed in Table \ref{tab4}, Column 2. The horizontal dashed line denotes the limiting value of T$_B\simeq 3\times 10^{11}$K \citep{Kellermann69,Readhead94}, which is not reached at any frequency.  Note that the brightness temperature is low at early times, reaches a peak which always falls well below $3\times 10^{11}$ K, and occurs at later times for lower frequencies.
+\label{fig6}}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\figurenum{7}
+\epsscale{0.9}
+\plotone{f7.eps}
+\figcaption[fig7]{The brightness temperature (T$_B$) evolution for SN~1993J for, from left to right, 0.3 cm (cross), 1.2 cm (filled square), 2 cm (open square), 3.6 cm (filled circle), 6 cm (open triangle), 20 cm (filled triangle), 49 cm (star), and 90 cm (open diamond) for the case of a pure thermal, free-free absorption (FFA) model as described in the text with the parameters listed in Table \ref{tab4}, Column 3. To obtain the ``true'' brightness temperature at early times the measured flux densities have been corrected for the model estimated external, thermal, free-free absorption. The horizontal dashed line denotes the limiting value of T$_B\simeq 3\times 10^{11}$K \citep{Kellermann69,Readhead94}, which is greatly exceeded for most frequencies at early times.
+\label{fig7}}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\figurenum{8}
+\epsscale{0.8}
+\plotone{f8.eps}
+\figcaption[fig8]{The radio light curves for SN~1993J are plotted from left to right and top to bottom at 0.3, 1.2, 2, 3.6, 6, 20, 49, and 90 cm.  The solid lines represent the best fit combined synchrotron self-absorption (SSA) and thermal, free-free absorption (FFA) model as described in the text with the parameters listed in Table \ref{tab4}, Column 4 and an exponential flux density decline after day 3100 with an e-folding time of 1100 days. The extrapolation of the best-fit model curves without the exponential roll-off is shown as the dashed lines. Upper limits ($3\sigma$) are shown as open inverted triangles ($\triangledown$).
+\label{fig8}}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\figurenum{9}
+\epsscale{1.0}
+\plotone{f9.eps}
+\figcaption[fig9]{The spectral index ($\alpha$; S $\propto \nu^{+\alpha}$) evolution for SN~1993J between 1.2 and 2 cm (top left), between 2 and 3.6 cm (top right), between 3.6 and 6 cm (bottom left), and between 6 and 20 cm (bottom right).  As in Figure \ref{fig8} the lines represent the best fit combined synchrotron self-absorption (SSA) and thermal, free-free absorption (FFA) model as described in the text with the parameters listed in Table \ref{tab4}, Column 4. 
+\label{fig9}}
+\end{figure}
+
+\clearpage
+
+
+\begin{figure}
+\figurenum{10}
+\epsscale{1.0}
+\plotone{f10.eps}
+\figcaption[fig10]{The brightness temperature (T$_B$) evolution for SN~1993J for, from left to right, 0.3 cm (cross), 1.2 cm (filled square), 2 cm (open square), 3.6 cm (filled circle), 6 cm (open triangle), 20 cm (filled triangle), 49 cm (star), and 90 cm (open diamond) corrected for extended, free-free absorption flux density suppression at early times as described in the text, with the parameters listed in Table \ref{tab4}, Column 4. The horizontal dashed line denotes the limiting value of T$_B\simeq 3\times 10^{11}$K \citep{Kellermann69,Readhead94}, which is not exceeded at any frequency.
+\label{fig10}}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\figurenum{11}
+\epsscale{0.9}
+\plotone{f11.ps}
+\figcaption[fig11]{The ``late'' (after day 3100) radio light curves are plotted from left to right and top to bottom at 1.2, 2, 3.6, 6, 20, and 49 cm. Since all absorption processes are negligible, the best model consists of a constant spectral index $\alpha$ fixed from the best fit ``early'' light curve model, a decline rate $\beta$, and a normalization K$_1$.  Whereas the ``early'' data before day 3100 were described by a decline rate of $\beta = -0.7$, the ``late'' data require a decline rate of $\beta = -2.7$, shown as the dotted lines. However, a constant decline rate $\beta$ is clearly not the best description of the data and an exponential decline with an e-folding time of 1100 days (solid lines) is a better description. Upper limits ($3\sigma$) are shown as open inverted triangles ($\triangledown$).
+\label{fig11}}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\figurenum{12}
+\includegraphics[angle=-90,scale=.65]{f12.ps}
+\figcaption[fig12]{(left) The pre-supernova mass loss rate as function of the time before explosion and (right) the CSM hydrogen number density as a function of radius. The heavy solid curves correspond to behaviors actually constrained by the radio observations, whereas the dashed curves are extrapolations as a simple power law very near to the star and an exponential cutoff plus a constant mass-loss rate at large times (radii) before explosion. This last, an assumed constant mass-loss rate at large times before explosion is simply notional since our observations provide no constraints at such times (radii). The dotted lines are power law extrapolations of the density for larger radii or the mass-loss rate at earlier epochs, which are drawn just to guide the eye to better appreciate the variations. \label{fig12}}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\figurenum{13}
+\epsscale{0.7}
+\plotone{f13.ps}
+\figcaption[fig13]{The X-ray and the best populated radio data sets (no upper limits are shown) are plotted on the same time scale for comparison. Each frame is labeled with the wavelength of the observations. The vertical dashed lines denote the epoch of a prominent dip in the X-ray light curve (around day $\sim460$) and the beginning of the overall decay at all frequencies (around day $\sim3100$).  Note that the first X-ray dip corresponds to a similar dip in the 1.2 cm radio light curve that is not prominent at longer radio wavelengths. \label{fig13}}
+\end{figure}
+
+\end{document}
