@@ -3,6 +3,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import rc
+import sys
+sys.path.append("..")
 from get_radio import *
 from format import *
 
@@ -101,9 +103,9 @@ if __name__=="__main__":
 
     # Final formatting
     plt.tight_layout()
-    #plt.show()
-    plt.savefig("radio_sed.png", dpi=300)
-    plt.close()
+    plt.show()
+    #plt.savefig("radio_sed.png", dpi=300)
+    #plt.close()
 
 
 

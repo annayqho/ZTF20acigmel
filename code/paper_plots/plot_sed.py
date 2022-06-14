@@ -3,6 +3,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from astropy.cosmology import Planck15
+import sys
+sys.path.append("..")
 from format import *
 
 d = get_format()
@@ -76,7 +78,7 @@ plt.yticks(fontsize=bigsize)
 plt.legend(fontsize=smallsize, loc='lower right')
 
 plt.tight_layout()
-plt.savefig("sed.png", dpi=200, bbox_inches='tight', pad_inches=0.05)
-plt.close()
+#plt.savefig("sed.png", dpi=200, bbox_inches='tight', pad_inches=0.05)
+#plt.close()
 
-#plt.show()
+plt.show()
