@@ -6,7 +6,7 @@ from mpl_toolkits.axes_grid1.inset_locator import mark_inset,inset_axes
 from scipy.optimize import curve_fit
 from astropy.cosmology import Planck15
 import sys
-sys.path.append("/Users/annaho/Dropbox/astronomy/papers_active/ZTF20acigmel/code")
+sys.path.append("..")
 from format import *
 from get_radio import *
 from basics import get_z, get_dL, get_dcm
@@ -534,7 +534,8 @@ def combined():
             at2018cow_panel(ax,50)
 
         # Then, plot the ultra-long GRB part
-        ultralong_panel(ax,col='k')
+        # not for the paper
+        #ultralong_panel(ax,col='k')
 
         # Now CSS161010
         if i==0:
