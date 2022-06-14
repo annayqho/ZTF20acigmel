@@ -518,7 +518,7 @@ def run_early_time():
     ax.set_xscale('log')
     ax.legend(loc='lower right', ncol=2, fontsize=d['font_small'])
     ax.set_xlim(6.2, 300)
-    ax.set_ylim(1E-2, 0.6)
+    ax.set_ylim(1E-2, 1)
     ax.set_xlabel(r"$\nu_{\mathrm{rest}}$ (GHz)", fontsize=d['font_small'])
     ax.set_ylabel(r"$f_\nu$ (mJy)", fontsize=d['font_small'])
     ax.tick_params(axis='both', labelsize=d['font_small'])
@@ -531,4 +531,5 @@ def run_early_time():
 
 
 if __name__=="__main__":
-    run_late_time()
+    #run_late_time()
+    run_early_time()
