@@ -1,7 +1,7 @@
 """ Peak lum phase space for Ic-BL SNe """
 
 import sys
-sys.path.append("/Users/annaho/Dropbox/astronomy/papers_active/ZTF20acigmel/code")
+sys.path.append("..")
 from matplotlib import rc
 import matplotlib.pyplot as plt
 import numpy as np
@@ -387,6 +387,6 @@ plt.tight_layout()
 
 
      
-#plt.show()
-plt.savefig("lum_tnu.png", dpi=300)
-plt.close()
+plt.show()
+#plt.savefig("lum_tnu.png", dpi=300)
+#plt.close()
