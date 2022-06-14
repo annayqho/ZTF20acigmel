@@ -5,8 +5,8 @@ and determine the evolution of that SED with time
 
 from scipy.optimize import curve_fit
 import sys
-sys.path.append("/Users/annaho/Dropbox/astronomy/papers_active/ZTF20acigmel/code")
-sys.path.append("/Users/annaho/Dropbox/astronomy/papers_active/ZTF20acigmel/code/fit_combined")
+sys.path.append("..")
+sys.path.append("../fit_combined")
 from astropy.cosmology import Planck15
 from get_radio import *
 from get_cow_mm import *
